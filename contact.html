@@ -106,6 +106,7 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
 .footer-legal a{font-size:.8rem;color:var(--muted);text-decoration:none;transition:color .2s}
 .footer-legal a:hover{color:var(--accent)}
 
+@media(max-width:1024px){.doc-layout{grid-template-columns:1fr}.contact-grid{grid-template-columns:1fr}.feature-big{grid-template-columns:1fr}.feature-big.reverse{direction:ltr}.main-wrap{grid-template-columns:1fr}.form-card{max-width:100%}}
 @media(max-width:768px){
   .nav-links,.nav-cta{display:none}
   .hamburger{display:flex}
@@ -114,7 +115,47 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
   .footer-top{grid-template-columns:1fr 1fr}
   .footer-bottom{flex-direction:column;text-align:center}
 }
-@media(max-width:480px){.footer-top{grid-template-columns:1fr}}
+@media(max-width:480px){
+  .page-hero{padding:5rem 5% 2rem}
+  .page-title{font-size:clamp(1.6rem,7vw,2.2rem) !important}
+  .section-title{font-size:clamp(1.3rem,5vw,1.8rem) !important}
+  .doc-layout{padding:1.5rem 5%;grid-template-columns:1fr}
+  .toc{display:none}
+  .form-row{grid-template-columns:1fr}
+  .plan-selector{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .how-grid{grid-template-columns:1fr}
+  .features-grid{grid-template-columns:1fr}
+  .testi-grid{grid-template-columns:1fr}
+  .offices-grid{grid-template-columns:1fr}
+  .faq-list{max-width:100%}
+  .step-row{grid-template-columns:1fr}
+  .step-row::after{display:none}
+  .step-num{flex-direction:row;justify-content:flex-start}
+  .billing-toggle{flex-wrap:wrap;justify-content:center}
+  .pricing-grid{grid-template-columns:1fr;max-width:340px;margin:2rem auto 0}
+  .compare-table{font-size:.72rem}
+  .compare-table th,.compare-table td{padding:.5rem .35rem}
+  .tab-row{gap:.35rem}
+  .tab-btn{font-size:.78rem;padding:.4rem .75rem}
+  section{padding:3rem 5%}
+  .cta-box{padding:2rem 1.25rem}
+  .cta-btns{flex-direction:column;align-items:center}
+  .btn-primary,.btn-secondary{width:100%;max-width:280px;text-align:center;display:block}
+  .contact-method{padding:.75rem}
+  .main-wrap{grid-template-columns:1fr}
+  .left-panel,.right-panel{padding:2rem 5%}
+  .form-card{max-width:100%}
+  .contact-grid{grid-template-columns:1fr}
+  .feature-big{grid-template-columns:1fr !important}
+  .feature-big.reverse{direction:ltr !important}
+  nav{padding:.875rem 5%}
+  .logo{font-size:1.2rem}
+  .hero-stats{gap:1rem}
+  .stat-row{grid-template-columns:1fr 1fr}
+}
+
 </style>
 </head>
 <body>
