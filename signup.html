@@ -1,289 +1,116 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign Up — HireIQ</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>
-:root{--bg:#040d1a;--bg2:#071628;--accent:#0ea5e9;--accent2:#38bdf8;--text:#f0f6ff;--muted:#7aa0c0;--border:rgba(14,165,233,0.15);--card:rgba(7,22,40,0.9);--success:#22c55e;--danger:#ef4444}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem 1rem;position:relative;overflow-x:hidden}
-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
-.hero-bg{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse 80% 60% at 70% 50%,rgba(14,165,233,0.08) 0%,transparent 60%)}
-.wrap{position:relative;z-index:1;width:100%;max-width:460px}
-.logo-wrap{text-align:center;margin-bottom:1.75rem}
-.logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.8rem;font-weight:800;color:var(--text);text-decoration:none;letter-spacing:-.02em}
-.logo span{color:var(--accent)}
-.logo-sub{font-size:.82rem;color:var(--muted);margin-top:.3rem}
-.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;backdrop-filter:blur(12px)}
-.card-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:.3rem}
-.card-sub{font-size:.875rem;color:var(--muted);margin-bottom:1.75rem}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.875rem}
-.form-group{margin-bottom:1rem}
-.form-label{font-size:.82rem;font-weight:500;color:var(--muted);margin-bottom:.4rem;display:block}
-.form-input{width:100%;padding:.8rem 1rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text);font-size:.9rem;outline:none;transition:border-color .2s;font-family:'DM Sans',sans-serif}
-.form-input:focus{border-color:var(--accent)}
-.form-input::placeholder{color:var(--muted)}
-.form-select{width:100%;padding:.8rem 1rem;border-radius:8px;border:1px solid var(--border);background:#071628;color:var(--text);font-size:.9rem;outline:none;transition:border-color .2s;font-family:'DM Sans',sans-serif;cursor:pointer}
-.form-select:focus{border-color:var(--accent)}
-.password-wrap{position:relative}
-.password-toggle{position:absolute;right:.875rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:.9rem}
-.strength-bar{height:4px;border-radius:2px;background:rgba(255,255,255,0.06);margin-top:.4rem;overflow:hidden}
-.strength-fill{height:100%;border-radius:2px;transition:all .3s;width:0%}
-.strength-text{font-size:.72rem;color:var(--muted);margin-top:.3rem}
-.plan-row{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:1rem}
-.plan-opt{border:1px solid var(--border);border-radius:8px;padding:.6rem .5rem;text-align:center;cursor:pointer;transition:all .2s}
-.plan-opt:hover,.plan-opt.sel{border-color:var(--accent);background:rgba(14,165,233,0.06)}
-.plan-opt-name{font-size:.78rem;font-weight:700;color:var(--text)}
-.plan-opt-price{font-size:.68rem;color:var(--muted);margin-top:.1rem}
-.trial-note{font-size:.78rem;color:var(--muted);text-align:center;margin-bottom:1rem}
-.trial-note span{color:var(--success);font-weight:600}
-.submit-btn{width:100%;padding:.875rem;border-radius:8px;background:var(--accent);color:#fff;font-size:.95rem;font-weight:600;border:none;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;margin-top:.25rem;display:flex;align-items:center;justify-content:center;gap:.5rem}
-.submit-btn:hover{background:var(--accent2);transform:translateY(-1px)}
-.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
-.terms-note{font-size:.75rem;color:var(--muted);text-align:center;margin-top:.875rem;line-height:1.5}
-.terms-note a{color:var(--accent);text-decoration:none}
-.divider{display:flex;align-items:center;gap:.875rem;margin:1.25rem 0}
-.divider-line{flex:1;height:1px;background:var(--border)}
-.divider-text{font-size:.78rem;color:var(--muted);white-space:nowrap}
-.google-btn{width:100%;padding:.8rem;border-radius:8px;background:rgba(255,255,255,0.05);color:var(--text);font-size:.9rem;font-weight:500;border:1px solid var(--border);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:.6rem}
-.google-btn:hover{border-color:var(--accent);background:rgba(14,165,233,0.05)}
-.switch-link{text-align:center;margin-top:1.25rem;font-size:.875rem;color:var(--muted)}
-.switch-link a{color:var(--accent);text-decoration:none;font-weight:600}
-.alert{padding:.75rem 1rem;border-radius:8px;font-size:.85rem;margin-bottom:1rem;display:none;align-items:center;gap:.5rem}
-.alert.error{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);color:#f87171;display:flex}
-.alert.success{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);color:#4ade80;display:flex}
-.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
-@keyframes spin{to{transform:rotate(360deg)}}
-.back-link{display:flex;align-items:center;gap:.4rem;color:var(--muted);text-decoration:none;font-size:.82rem;margin-bottom:1.25rem;transition:color .2s;width:fit-content}
-.back-link:hover{color:var(--text)}
-.benefits{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.5rem}
-.benefit-item{display:flex;align-items:center;gap:.5rem;font-size:.82rem;color:var(--muted)}
-.benefit-item span:first-child{color:var(--success);flex-shrink:0}
-@media(max-width:480px){.form-row{grid-template-columns:1fr}.plan-row{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-<div class="hero-bg"></div>
-<canvas id="c"></canvas>
-
-<div class="wrap">
-  <a href="index.html" class="back-link">← Back to HireIQ</a>
-  <div class="logo-wrap">
-    <a href="index.html" class="logo">Hire<span>IQ</span></a>
-    <div class="logo-sub">AI-Powered CV Screening</div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">Start screening smarter 🚀</div>
-    <div class="card-sub">Create your free account — no credit card required</div>
-
-    <div class="benefits">
-      <div class="benefit-item"><span>✓</span><span>14-day free trial with full Pro access</span></div>
-      <div class="benefit-item"><span>✓</span><span>Screen 100 CVs in under 2 minutes</span></div>
-      <div class="benefit-item"><span>✓</span><span>No credit card required to start</span></div>
-    </div>
-
-    <div class="alert" id="alertBox"></div>
-
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">First name *</label>
-        <input type="text" class="form-input" id="firstName" placeholder="Muhammad">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Last name *</label>
-        <input type="text" class="form-input" id="lastName" placeholder="Ahmed">
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Work email *</label>
-      <input type="email" class="form-input" id="email" placeholder="you@company.com">
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Company name *</label>
-      <input type="text" class="form-input" id="company" placeholder="Your Company Ltd">
-    </div>
-
-    <div class="form-row">
-      <div class="form-group">
-        <label class="form-label">Company size</label>
-        <select class="form-select" id="companySize">
-          <option value="">Select size</option>
-          <option>1–10</option>
-          <option>11–50</option>
-          <option>51–200</option>
-          <option>201–500</option>
-          <option>500+</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Your role</label>
-        <select class="form-select" id="role">
-          <option value="">Select role</option>
-          <option>HR Manager</option>
-          <option>HR Director</option>
-          <option>Recruiter</option>
-          <option>CEO / Founder</option>
-          <option>Other</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="form-label">Password *</label>
-      <div class="password-wrap">
-        <input type="password" class="form-input" id="password" placeholder="Min 8 characters" oninput="checkStrength(this.value)">
-        <button class="password-toggle" onclick="togglePass('password',this)" type="button">👁</button>
-      </div>
-      <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
-      <div class="strength-text" id="strengthText"></div>
-    </div>
-
-    <div class="form-group" style="margin-bottom:1.25rem">
-      <label class="form-label">Select your plan</label>
-      <div class="plan-row">
-        <div class="plan-opt" onclick="selectPlan(this,'starter')"><div class="plan-opt-name">Starter</div><div class="plan-opt-price">$99/mo</div></div>
-        <div class="plan-opt sel" onclick="selectPlan(this,'pro')"><div class="plan-opt-name">Pro ⭐</div><div class="plan-opt-price">$249/mo</div></div>
-        <div class="plan-opt" onclick="selectPlan(this,'enterprise')"><div class="plan-opt-name">Enterprise</div><div class="plan-opt-price">$599/mo</div></div>
-      </div>
-      <div class="trial-note"><span>✓ 14 days free</span> — no payment needed until trial ends</div>
-    </div>
-
-    <button class="submit-btn" id="signupBtn" onclick="signup()">
-      Create Free Account
-    </button>
-
-    <div class="terms-note">
-      By signing up you agree to our <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>
-    </div>
-
-    <div class="divider"><div class="divider-line"></div><div class="divider-text">or sign up with</div><div class="divider-line"></div></div>
-
-    <button class="google-btn" onclick="signupGoogle()">
-      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"/><path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17z"/><path fill="#FBBC05" d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18l2.67-2.07z"/><path fill="#EA4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z"/></svg>
-      Continue with Google
-    </button>
-  </div>
-
-  <div class="switch-link">
-    Already have an account? <a href="login.html">Sign in</a>
-  </div>
-</div>
-
 <script>
 const SUPABASE_URL = 'https://muvdkmfxytywsbzmjbbn.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_Des6mpIhcXQe5gLPwU0GoA_3CnYFfdc';
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
+// 1. Agar user pehle se login hai to seedha dashboard bhejo
 sb.auth.getSession().then(({ data }) => {
-  if(data.session) window.location.href = 'dashboard.html';
+    if(data.session) window.location.href = 'dashboard.html';
 });
 
 let selectedPlan = 'pro';
 function selectPlan(el, plan) {
-  document.querySelectorAll('.plan-opt').forEach(o => o.classList.remove('sel'));
-  el.classList.add('sel');
-  selectedPlan = plan;
+    document.querySelectorAll('.plan-opt').forEach(o => o.classList.remove('sel'));
+    el.classList.add('sel');
+    selectedPlan = plan;
 }
 
 function togglePass(id, btn) {
-  const el = document.getElementById(id);
-  el.type = el.type === 'password' ? 'text' : 'password';
-  btn.textContent = el.type === 'password' ? '👁' : '🙈';
+    const el = document.getElementById(id);
+    el.type = el.type === 'password' ? 'text' : 'password';
+    btn.textContent = el.type === 'password' ? '👁' : '🙈';
 }
 
 function checkStrength(val) {
-  const fill = document.getElementById('strengthFill');
-  const text = document.getElementById('strengthText');
-  let score = 0;
-  if(val.length >= 8) score++;
-  if(/[A-Z]/.test(val)) score++;
-  if(/[0-9]/.test(val)) score++;
-  if(/[^A-Za-z0-9]/.test(val)) score++;
-  const colors = ['#ef4444','#f59e0b','#22c55e','#22c55e'];
-  const labels = ['Too weak','Fair','Strong','Very strong'];
-  const widths = ['25%','50%','75%','100%'];
-  if(val.length === 0) { fill.style.width='0%'; text.textContent=''; return; }
-  fill.style.width = widths[score-1]||'25%';
-  fill.style.background = colors[score-1]||'#ef4444';
-  text.textContent = labels[score-1]||'Too weak';
-  text.style.color = colors[score-1]||'#ef4444';
+    const fill = document.getElementById('strengthFill');
+    const text = document.getElementById('strengthText');
+    let score = 0;
+    if(val.length >= 8) score++;
+    if(/[A-Z]/.test(val)) score++;
+    if(/[0-9]/.test(val)) score++;
+    if(/[^A-Za-z0-9]/.test(val)) score++;
+    const colors = ['#ef4444','#f59e0b','#22c55e','#22c55e'];
+    const labels = ['Too weak','Fair','Strong','Very strong'];
+    const widths = ['25%','50%','75%','100%'];
+    if(val.length === 0) { fill.style.width='0%'; text.textContent=''; return; }
+    fill.style.width = widths[score-1]||'25%';
+    fill.style.background = colors[score-1]||'#ef4444';
+    text.textContent = labels[score-1]||'Too weak';
+    text.style.color = colors[score-1]||'#ef4444';
 }
 
 function showAlert(msg, type) {
-  const el = document.getElementById('alertBox');
-  el.textContent = msg;
-  el.className = 'alert ' + type;
+    const el = document.getElementById('alertBox');
+    el.textContent = msg;
+    el.className = 'alert ' + type;
 }
 
 async function signup() {
-  const firstName = document.getElementById('firstName').value.trim();
-  const lastName = document.getElementById('lastName').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const company = document.getElementById('company').value.trim();
-  const password = document.getElementById('password').value;
-  const btn = document.getElementById('signupBtn');
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const company = document.getElementById('company').value.trim();
+    const password = document.getElementById('password').value;
+    const btn = document.getElementById('signupBtn');
 
-  if(!firstName) { showAlert('Please enter your first name.', 'error'); return; }
-  if(!lastName) { showAlert('Please enter your last name.', 'error'); return; }
-  if(!email || !email.includes('@')) { showAlert('Please enter a valid email address.', 'error'); return; }
-  if(!company) { showAlert('Please enter your company name.', 'error'); return; }
-  if(password.length < 8) { showAlert('Password must be at least 8 characters.', 'error'); return; }
-
-  btn.disabled = true;
-  btn.innerHTML = '<div class="spinner"></div> Creating account...';
-
-  const { data, error } = await sb.auth.signUp({
-    email,
-    password,
-    options: {
-      data: {
-        full_name: firstName + ' ' + lastName,
-        first_name: firstName,
-        last_name: lastName,
-        company: company,
-        plan: selectedPlan,
-        company_size: document.getElementById('companySize').value,
-        role: document.getElementById('role').value,
-      }
+    if(!firstName || !lastName || !email || !company || !password) {
+        showAlert('Please fill all required fields.', 'error');
+        return;
     }
-  });
 
-  if(error) {
-    showAlert(error.message, 'error');
-    btn.disabled = false;
-    btn.innerHTML = 'Create Free Account';
-  } else if(data.user && !data.session) {
-    showAlert('✅ Check your email to confirm your account, then log in!', 'success');
-    btn.innerHTML = '✅ Check your email!';
-  } else {
-    showAlert('✅ Account created! Redirecting to dashboard...', 'success');
-    setTimeout(() => window.location.href = 'dashboard.html', 1200);
-  }
+    btn.disabled = true;
+    btn.innerHTML = '<div class="spinner"></div> Creating account...';
+
+    // Signup Process
+    const { data, error } = await sb.auth.signUp({
+        email,
+        password,
+        options: {
+            data: {
+                full_name: firstName + ' ' + lastName,
+                company: company,
+                plan: selectedPlan
+            }
+        }
+    });
+
+    if(error) {
+        showAlert(error.message, 'error');
+        btn.disabled = false;
+        btn.innerHTML = 'Create Free Account';
+    } else {
+        // AGAR EMAIL CONFIRMATION ON HAI:
+        if (data.user && !data.session) {
+            showAlert('✅ Signup Successful! Please check your email to confirm, then you can login.', 'success');
+            // Option: Aap yahan redirect kar sakte hain login page par
+            setTimeout(() => window.location.href = 'login.html', 3000);
+        } 
+        // AGAR EMAIL CONFIRMATION OFF HAI (DIRECT LOGIN):
+        else {
+            showAlert('✅ Account created! Redirecting to dashboard...', 'success');
+            setTimeout(() => window.location.href = 'dashboard.html', 1000);
+        }
+    }
 }
 
 async function signupGoogle() {
-  await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin + '/dashboard.html' } });
+    await sb.auth.signInWithOAuth({ 
+        provider: 'google', 
+        options: { redirectTo: window.location.origin + '/dashboard.html' } 
+    });
 }
 
-// PARTICLES
+// PARTICLES (Animation)
 const cv = document.getElementById('c'), ctx = cv.getContext('2d');
 let W, H, pts = [];
 function resize() { W = cv.width = window.innerWidth; H = cv.height = window.innerHeight; }
 resize(); window.addEventListener('resize', resize);
 for(let i = 0; i < 60; i++) pts.push({ x: Math.random()*W, y: Math.random()*H, vx: (Math.random()-.5)*.3, vy: (Math.random()-.5)*.3, r: Math.random()*1.2+.4, a: Math.random()*.4+.1 });
 function draw() {
-  ctx.clearRect(0,0,W,H);
-  pts.forEach(p => { p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`rgba(14,165,233,${p.a})`; ctx.fill(); });
-  requestAnimationFrame(draw);
+    ctx.clearRect(0,0,W,H);
+    pts.forEach(p => { p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`rgba(14,165,233,${p.a})`; ctx.fill(); });
+    requestAnimationFrame(draw);
 }
 draw();
 </script>
-</body>
-</html>
