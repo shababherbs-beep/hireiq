@@ -622,6 +622,7 @@ function updateCharCount() { document.getElementById('charCount').textContent = 
 // ============================================================
 // REAL API SCREENING
 // ============================================================
+const GEMINI_API_KEY = "AIzaSyAQ5d3qpqU7U7YptlGM_rJvaD6kZV-bD1Y";
 async function startScreening() {
   // Move to processing step
   document.querySelectorAll('.wizard-card').forEach(c => c.classList.remove('active'));
@@ -657,16 +658,23 @@ async function startScreening() {
   formData.append('job_description', jobText);
   uploadedFiles.forEach(f => formData.append('files', f));
 
-  try {
-    const response = await fetch(API_URL + '/screen', {
-      method: 'POST',
-      body: formData
-    });
+const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
-    if(!response.ok) {
-      const errText = await response.text();
-      throw new Error('Server error ' + response.status + ': ' + errText);
-    }
+const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        contents: [{
+            parts: [{
+                text: `Job Title and Description: ${jobText}. Please screen the uploaded CVs and provide a score.`
+            }]
+        }]
+    })
+
+if (!response.ok) {
+    const errText = await response.text();
+    throw new Error('Server error ' + response.status + ': ' + errText);
+}
 
     const data = await response.json();
 
