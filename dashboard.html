@@ -121,10 +121,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 .btn-start{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:.875rem 2.5rem;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;box-shadow:0 0 28px rgba(14,165,233,0.3)}
 .btn-start:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(14,165,233,0.4)}
 
-/* ERROR BANNER */
-.error-banner{background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1rem;font-size:.875rem;color:#f87171;display:none;align-items:center;gap:.75rem}
-.error-banner.show{display:flex}
-
 /* RESULTS SCREEN */
 .results-wrap{display:none}
 .results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
@@ -163,16 +159,12 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 .cc-reason{font-size:.85rem;color:var(--muted);line-height:1.7;margin-bottom:.875rem}
 .cc-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.875rem}
 .skill-tag{font-size:.72rem;padding:.2rem .6rem;border-radius:4px;background:rgba(14,165,233,0.08);color:var(--accent2);border:1px solid var(--border);font-weight:500}
+.skill-tag.missing{background:rgba(239,68,68,0.08);color:#f87171;border-color:rgba(239,68,68,0.2)}
 .cc-actions{display:flex;gap:.6rem;flex-wrap:wrap}
 .cc-btn{padding:.4rem .875rem;border-radius:6px;font-size:.78rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text);font-family:'DM Sans',sans-serif;transition:all .2s}
 .cc-btn:hover{border-color:var(--accent);color:var(--accent)}
 .cc-btn.approve{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:var(--success)}
 .cc-btn.reject{background:rgba(239,68,68,0.08);border-color:rgba(239,68,68,0.2);color:#f87171}
-
-/* VERDICT BADGE */
-.verdict-badge{font-size:.72rem;padding:.2rem .7rem;border-radius:20px;font-weight:700}
-.verdict-shortlist{background:rgba(34,197,94,0.1);color:var(--success);border:1px solid rgba(34,197,94,0.3)}
-.verdict-reject{background:rgba(239,68,68,0.08);color:#f87171;border:1px solid rgba(239,68,68,0.2)}
 
 /* PROCESSING */
 .processing-wrap{text-align:center;padding:3rem 1rem}
@@ -228,21 +220,21 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
   </div>
   <nav class="sidebar-nav">
     <div class="nav-section">Main</div>
-    <button class="nav-item active" onclick="showSection('wizard',this)">
+    <button class="nav-item active" onclick="showSection('wizard')">
       <span class="nav-icon">🎯</span> New Screening
     </button>
-    <button class="nav-item" onclick="showSection('history',this)">
+    <button class="nav-item" onclick="showSection('history')">
       <span class="nav-icon">📋</span> History
       <span class="nav-badge">3</span>
     </button>
-    <button class="nav-item" onclick="showSection('candidates',this)">
+    <button class="nav-item" onclick="showSection('candidates')">
       <span class="nav-icon">👥</span> Saved Candidates
     </button>
     <div class="nav-section" style="margin-top:.5rem">Account</div>
-    <button class="nav-item" onclick="showSection('settings',this)">
+    <button class="nav-item" onclick="showSection('settings')">
       <span class="nav-icon">⚙️</span> Settings
     </button>
-    <button class="nav-item" onclick="showSection('billing',this)">
+    <button class="nav-item" onclick="showSection('billing')">
       <span class="nav-icon">💳</span> Billing
     </button>
     <a href="index.html" class="nav-item">
@@ -426,24 +418,15 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
           <div class="processing-wrap">
             <div class="processing-icon">⚙️</div>
             <div class="processing-title">AI is screening your CVs...</div>
-            <div class="processing-sub">Please wait — this usually takes 1–2 minutes per CV</div>
+            <div class="processing-sub">Please wait — this usually takes 1–2 minutes</div>
             <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
             <div style="font-size:.78rem;color:var(--muted);margin-top:.5rem" id="progressText">0% complete</div>
             <div class="processing-steps">
-              <div class="proc-step" id="ps1">📄 Reading CVs...</div>
+              <div class="proc-step active" id="ps1">📄 Reading CVs...</div>
               <div class="proc-step" id="ps2">🤖 AI analyzing candidates...</div>
               <div class="proc-step" id="ps3">📊 Scoring & ranking...</div>
               <div class="proc-step" id="ps4">✅ Generating report...</div>
             </div>
-          </div>
-          <!-- Error banner inside step 5 -->
-          <div class="error-banner" id="errorBanner">
-            <span>⚠️</span>
-            <div>
-              <strong>Error:</strong> <span id="errorMsg">Something went wrong.</span>
-              <br><span style="font-size:.78rem">Please check your files and try again.</span>
-            </div>
-            <button onclick="goStep(4)" style="margin-left:auto;background:var(--danger);color:#fff;border:none;border-radius:6px;padding:.3rem .75rem;font-size:.78rem;cursor:pointer;font-family:'DM Sans',sans-serif">Go Back</button>
           </div>
         </div>
 
@@ -480,17 +463,17 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
         <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
           <div style="flex:1;min-width:200px"><div style="font-weight:600;margin-bottom:.2rem">Senior Python Developer</div><div style="font-size:.78rem;color:var(--muted)">42 CVs · 2 days ago</div></div>
           <div style="font-size:.82rem;color:var(--success);font-weight:600">8 strong matches</div>
-          <button class="action-btn">View Results</button>
+          <button class="action-btn" onclick="alert('View results coming soon!')">View Results</button>
         </div>
         <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
           <div style="flex:1;min-width:200px"><div style="font-weight:600;margin-bottom:.2rem">HR Manager</div><div style="font-size:.78rem;color:var(--muted)">28 CVs · 5 days ago</div></div>
           <div style="font-size:.82rem;color:var(--success);font-weight:600">5 strong matches</div>
-          <button class="action-btn">View Results</button>
+          <button class="action-btn" onclick="alert('View results coming soon!')">View Results</button>
         </div>
         <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
           <div style="flex:1;min-width:200px"><div style="font-weight:600;margin-bottom:.2rem">Data Analyst</div><div style="font-size:.78rem;color:var(--muted)">55 CVs · 1 week ago</div></div>
           <div style="font-size:.82rem;color:var(--success);font-weight:600">12 strong matches</div>
-          <button class="action-btn">View Results</button>
+          <button class="action-btn" onclick="alert('View results coming soon!')">View Results</button>
         </div>
       </div>
     </div>
@@ -522,26 +505,18 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 </div>
 
 <script>
-// ============================================================
-// CONFIG — Railway Backend URL
-// ============================================================
-const API_URL = 'https://hireiq-production-fbaa.up.railway.app';
-
 let currentStep = 1;
 let uploadedFiles = [];
-let screeningStartTime = 0;
 
-// ============================================================
 // NAVIGATION
-// ============================================================
-function showSection(name, btn) {
+function showSection(name) {
   ['wizard','history','candidates','settings','billing'].forEach(s => {
     document.getElementById('section-'+s).style.display = s===name ? 'block' : 'none';
   });
   const titles = {wizard:'New Screening',history:'Screening History',candidates:'Saved Candidates',settings:'Settings',billing:'Billing'};
   document.getElementById('topbarTitle').textContent = titles[name] || name;
   document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-  if(btn) btn.classList.add('active');
+  event.currentTarget.classList.add('active');
   if(window.innerWidth <= 768) document.getElementById('sidebar').classList.remove('open');
 }
 
@@ -549,9 +524,7 @@ function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
 }
 
-// ============================================================
 // WIZARD STEPS
-// ============================================================
 function goStep(n) {
   if(n === 2) {
     const title = document.getElementById('jobTitle').value.trim();
@@ -564,7 +537,7 @@ function goStep(n) {
     document.getElementById('review-cvs').textContent = uploadedFiles.length + ' CVs';
     const selected = document.querySelectorAll('.criteria-item.selected').length;
     document.getElementById('review-criteria').textContent = selected + ' criteria';
-    const t = Math.max(1, Math.ceil(uploadedFiles.length * 0.5));
+    const t = Math.max(1, Math.ceil(uploadedFiles.length / 25));
     document.getElementById('review-time').textContent = '~' + t + '-' + (t+1) + ' minutes';
   }
   markStep(currentStep, 'done');
@@ -572,8 +545,6 @@ function goStep(n) {
   document.querySelectorAll('.wizard-card').forEach(c => c.classList.remove('active'));
   document.getElementById('step'+n).classList.add('active');
   markStep(n, 'active');
-  // Hide error banner when navigating
-  document.getElementById('errorBanner').classList.remove('show');
 }
 
 function markStep(n, state) {
@@ -584,14 +555,10 @@ function markStep(n, state) {
   if(state === 'done') {
     circle.textContent = '✓';
     if(n < 5) document.getElementById('line'+n).classList.add('done');
-  } else if(state === 'active') {
-    if(circle.textContent === '✓') circle.textContent = n;
   }
 }
 
-// ============================================================
 // FILE UPLOAD
-// ============================================================
 function handleFiles(files) {
   Array.from(files).forEach(f => {
     if(!uploadedFiles.find(x => x.name === f.name)) uploadedFiles.push(f);
@@ -616,158 +583,95 @@ function removeFile(i) { uploadedFiles.splice(i,1); renderFiles(); }
 function dragOver(e) { e.preventDefault(); document.getElementById('uploadArea').classList.add('dragover'); }
 function dragLeave(e) { document.getElementById('uploadArea').classList.remove('dragover'); }
 function dropFiles(e) { e.preventDefault(); dragLeave(e); handleFiles(e.dataTransfer.files); }
+
 function toggleCriteria(el) { el.classList.toggle('selected'); el.querySelector('.criteria-check').textContent = el.classList.contains('selected') ? '✓' : ''; }
 function updateCharCount() { document.getElementById('charCount').textContent = document.getElementById('jobDesc').value.length; }
 
-// ============================================================
-// REAL API SCREENING
-// ============================================================
-const GEMINI_API_KEY = "AIzaSyAQ5d3qpqU7U7YptlGM_rJvaD6kZV-bD1Y";
-async function startScreening() {
-  // Move to processing step
+// SCREENING SIMULATION
+function startScreening() {
   document.querySelectorAll('.wizard-card').forEach(c => c.classList.remove('active'));
   document.getElementById('step5').classList.add('active');
-  markStep(4, 'done');
-  markStep(5, 'active');
-  document.getElementById('errorBanner').classList.remove('show');
-
-  screeningStartTime = Date.now();
+  markStep(4,'done');
+  markStep(5,'active');
 
   const bar = document.getElementById('progressBar');
   const txt = document.getElementById('progressText');
-  const ps1 = document.getElementById('ps1');
-  const ps2 = document.getElementById('ps2');
-  const ps3 = document.getElementById('ps3');
-  const ps4 = document.getElementById('ps4');
-
-  // Animate progress slowly while waiting for API
-  ps1.className = 'proc-step active';
+  const steps = ['ps1','ps2','ps3','ps4'];
   let prog = 0;
   const interval = setInterval(() => {
-    prog += 1;
-    if(prog > 85) prog = 85; // hold at 85% until API responds
+    prog += Math.random() * 8 + 2;
+    if(prog > 100) prog = 100;
     bar.style.width = prog + '%';
     txt.textContent = Math.round(prog) + '% complete';
-    if(prog > 20) ps2.className = 'proc-step active';
-    if(prog > 50) ps3.className = 'proc-step active';
-  }, 300);
-
-  // Build FormData for API
-  const jobText = document.getElementById('jobTitle').value + '\n\n' + document.getElementById('jobDesc').value;
-  const formData = new FormData();
-  formData.append('job_description', jobText);
-  uploadedFiles.forEach(f => formData.append('files', f));
-
-const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
-
-const response = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-        contents: [{
-            parts: [{
-                text: `Job Title and Description: ${jobText}. Please screen the uploaded CVs and provide a score.`
-            }]
-        }]
-    })
-
-if (!response.ok) {
-    const errText = await response.text();
-    throw new Error('Server error ' + response.status + ': ' + errText);
+    const si = Math.floor(prog / 25);
+    steps.forEach((s,i) => {
+      const el = document.getElementById(s);
+      if(i < si) { el.className = 'proc-step done'; el.textContent = '✅ ' + el.textContent.replace('📄 ','').replace('🤖 ','').replace('📊 ','').replace('✅ ',''); }
+      else if(i === si) el.className = 'proc-step active';
+    });
+    if(prog >= 100) { clearInterval(interval); setTimeout(showResults, 600); }
+  }, 200);
 }
 
-    const data = await response.json();
-
-    // Complete progress
-    clearInterval(interval);
-    bar.style.width = '100%';
-    txt.textContent = '100% complete';
-    ps1.className = 'proc-step done'; ps1.textContent = '✅ CVs read successfully';
-    ps2.className = 'proc-step done'; ps2.textContent = '✅ AI analysis complete';
-    ps3.className = 'proc-step done'; ps3.textContent = '✅ Scoring & ranking done';
-    ps4.className = 'proc-step active'; ps4.textContent = '✅ Generating report...';
-
-    setTimeout(() => showResults(data.results), 700);
-
-  } catch(err) {
-    clearInterval(interval);
-    bar.style.width = '0%';
-    txt.textContent = '0% complete';
-    // Reset proc steps
-    ps1.className='proc-step'; ps1.textContent='📄 Reading CVs...';
-    ps2.className='proc-step'; ps2.textContent='🤖 AI analyzing candidates...';
-    ps3.className='proc-step'; ps3.textContent='📊 Scoring & ranking...';
-    ps4.className='proc-step'; ps4.textContent='✅ Generating report...';
-
-    // Show error
-    document.getElementById('errorMsg').textContent = err.message;
-    document.getElementById('errorBanner').classList.add('show');
-    console.error('API Error:', err);
-  }
-}
-
-// ============================================================
-// SHOW RESULTS (from real API data)
-// ============================================================
-function showResults(apiResults) {
+function showResults() {
   document.getElementById('step5').classList.remove('active');
-  markStep(5, 'done');
-  const wrap = document.getElementById('resultsWrap');
-  wrap.style.display = 'block';
-  wrap.scrollIntoView({behavior:'smooth', block:'start'});
+  markStep(5,'done');
+  document.getElementById('resultsWrap').style.display = 'block';
+  document.getElementById('resultsWrap').scrollIntoView({behavior:'smooth',block:'start'});
 
   const jobTitle = document.getElementById('jobTitle').value || 'Job Screening';
-  const total = apiResults.length;
-  const timeTaken = Math.round((Date.now() - screeningStartTime) / 1000);
-
+  const total = uploadedFiles.length;
   document.getElementById('res-jobtitle').textContent = 'Results: ' + jobTitle;
   document.getElementById('res-meta').textContent = total + ' CVs screened · Completed just now';
   document.getElementById('res-total').textContent = total;
 
-  const strong = apiResults.filter(c => c.score >= 75).length;
-  const avg = total > 0 ? Math.round(apiResults.reduce((a,c) => a + c.score, 0) / total) : 0;
-  document.getElementById('res-strong').textContent = strong;
-  document.getElementById('res-avg').textContent = avg + '%';
-  document.getElementById('res-time').textContent = timeTaken + 's';
-
-  const rankClasses = ['rank-1','rank-2','rank-3'];
-  const avatarColors = [
-    'linear-gradient(135deg,#0ea5e9,#38bdf8)',
-    'linear-gradient(135deg,#8b5cf6,#a78bfa)',
-    'linear-gradient(135deg,#f59e0b,#fbbf24)',
-    'linear-gradient(135deg,#10b981,#34d399)',
-    'linear-gradient(135deg,#ef4444,#f87171)',
-    'linear-gradient(135deg,#ec4899,#f9a8d4)',
-    'linear-gradient(135deg,#14b8a6,#5eead4)',
+  // Generate mock candidates
+  const names = [
+    {n:'James Mitchell',r:'5 yrs · Python · Django · AWS',av:'JM',c:'linear-gradient(135deg,#0ea5e9,#38bdf8)',score:94,tags:['Python','Django','AWS','Docker'],missing:[]},
+    {n:'Sarah Thompson',r:'4 yrs · Python · FastAPI · GCP',av:'ST',c:'linear-gradient(135deg,#8b5cf6,#a78bfa)',score:87,tags:['Python','FastAPI'],missing:['AWS']},
+    {n:'Ali Hassan',r:'3 yrs · Python · Flask · Docker',av:'AH',c:'linear-gradient(135deg,#f59e0b,#fbbf24)',score:79,tags:['Python','Flask','Docker'],missing:['AWS','GCP']},
+    {n:'Emma Williams',r:'2 yrs · Python · Django',av:'EW',c:'linear-gradient(135deg,#10b981,#34d399)',score:62,tags:['Python','Django'],missing:['AWS','Docker','GCP']},
+    {n:'Omar Sheikh',r:'1 yr · Python · Beginner',av:'OS',c:'linear-gradient(135deg,#ef4444,#f87171)',score:38,tags:['Python'],missing:['AWS','Docker','Django','GCP']},
   ];
-  const scoreClass = s => s >= 75 ? 'score-high' : s >= 50 ? 'score-mid' : 'score-low';
+
+  const reasons = [
+    'Excellent match — all required skills present with 5+ years of relevant experience. Strong AWS and Django background aligns perfectly with the role.',
+    'Strong candidate with solid Python and FastAPI skills. Missing AWS experience but could be trained. Career progression shows consistent growth.',
+    'Good foundational skills in Python and Docker. Lacks cloud experience (AWS/GCP) which is a key requirement. Worth considering for a junior variation.',
+    'Limited experience level for this role. Core Python skills are present but most technical requirements are not met. May suit a junior position.',
+    'Currently underqualified for this senior role. Only 1 year of experience with basic Python knowledge. Recommend rejecting for this position.',
+  ];
 
   const cards = document.getElementById('candidateCards');
-  cards.innerHTML = apiResults.map((c, i) => {
-    const initials = c.name ? c.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2) : '??';
-    const rankClass = i < 3 ? rankClasses[i] : 'rank-other';
-    const avatarColor = avatarColors[i % avatarColors.length];
-    const verdictClass = c.verdict === 'Shortlist' ? 'verdict-shortlist' : 'verdict-reject';
-    const strengthTags = (c.strengths || []).map(s => `<span class="skill-tag">✓ ${s}</span>`).join('');
+  const strong = names.filter(c => c.score >= 75).length;
+  const avg = Math.round(names.reduce((a,c) => a+c.score,0)/names.length);
+  document.getElementById('res-strong').textContent = strong;
+  document.getElementById('res-avg').textContent = avg + '%';
+  document.getElementById('res-time').textContent = Math.round(total * 2.5) + 's';
 
-    return `
+  const rankClasses = ['rank-1','rank-2','rank-3','rank-other','rank-other'];
+  const scoreClass = s => s>=75 ? 'score-high' : s>=50 ? 'score-mid' : 'score-low';
+
+  cards.innerHTML = names.map((c,i) => `
     <div class="candidate-card" onclick="toggleCard(this)">
       <div class="cc-top">
-        <div class="cc-rank ${rankClass}">${i+1}</div>
-        <div class="cc-avatar" style="background:${avatarColor}">${initials}</div>
+        <div class="cc-rank ${rankClasses[i]}">${i+1}</div>
+        <div class="cc-avatar" style="background:${c.c}">${c.av}</div>
         <div class="cc-info">
-          <div class="cc-name">${c.name || c.filename || 'Unknown'}</div>
-          <div class="cc-file">📎 ${c.filename || ''}</div>
+          <div class="cc-name">${c.n}</div>
+          <div class="cc-file">${c.r}</div>
         </div>
         <div class="cc-right">
           <div class="cc-score ${scoreClass(c.score)}">${c.score}</div>
           <div class="cc-bar-wrap"><div class="cc-bar" style="width:0%" data-width="${c.score}%"></div></div>
-          <span class="verdict-badge ${verdictClass}">${c.verdict || 'Review'}</span>
         </div>
       </div>
       <div class="cc-expand">
-        <div class="cc-reason">${c.summary || 'No summary available.'}</div>
-        <div class="cc-tags">${strengthTags}</div>
+        <div class="cc-reason">${reasons[i]}</div>
+        <div class="cc-tags">
+          ${c.tags.map(t => `<span class="skill-tag">✓ ${t}</span>`).join('')}
+          ${c.missing.map(t => `<span class="skill-tag missing">✗ ${t}</span>`).join('')}
+        </div>
         <div class="cc-actions">
           <button class="cc-btn approve" onclick="event.stopPropagation()">✓ Shortlist</button>
           <button class="cc-btn reject" onclick="event.stopPropagation()">✗ Reject</button>
@@ -775,10 +679,9 @@ function showResults(apiResults) {
           <button class="cc-btn" onclick="event.stopPropagation()">📋 Notes</button>
         </div>
       </div>
-    </div>`;
-  }).join('');
+    </div>`).join('');
 
-  // Animate score bars
+  // Animate bars
   setTimeout(() => {
     document.querySelectorAll('.cc-bar').forEach(b => { b.style.width = b.dataset.width; });
   }, 300);
@@ -786,9 +689,6 @@ function showResults(apiResults) {
 
 function toggleCard(el) { el.classList.toggle('expanded'); }
 
-// ============================================================
-// RESET
-// ============================================================
 function resetWizard() {
   currentStep = 1;
   uploadedFiles = [];
@@ -801,10 +701,9 @@ function resetWizard() {
   document.getElementById('resultsWrap').style.display = 'none';
   document.getElementById('progressBar').style.width = '0%';
   document.getElementById('progressText').textContent = '0% complete';
-  document.getElementById('errorBanner').classList.remove('show');
-  const labels = ['📄 Reading CVs...','🤖 AI analyzing candidates...','📊 Scoring & ranking...','✅ Generating report...'];
   ['ps1','ps2','ps3','ps4'].forEach((s,i) => {
     const el = document.getElementById(s);
+    const labels = ['📄 Reading CVs...','🤖 AI analyzing candidates...','📊 Scoring & ranking...','✅ Generating report...'];
     el.className = 'proc-step';
     el.textContent = labels[i];
   });
@@ -818,6 +717,7 @@ function resetWizard() {
   }
   document.querySelectorAll('.wizard-card').forEach(c => c.classList.remove('active'));
   document.getElementById('step1').classList.add('active');
+  document.getElementById('resultsWrap').scrollIntoView ? null : null;
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
