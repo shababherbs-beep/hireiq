@@ -209,6 +209,29 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
   .progress-steps{gap:0}
   .step-label{font-size:.62rem}
 }
+
+/* UPGRADE MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal-box{background:#071628;border:1px solid rgba(14,165,233,0.3);border-radius:16px;padding:2rem;max-width:520px;width:100%;position:relative;box-shadow:0 0 60px rgba(14,165,233,0.15)}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;padding:.25rem}
+.modal-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:.4rem;text-align:center}
+.modal-sub{font-size:.875rem;color:var(--muted);text-align:center;margin-bottom:1.75rem}
+.plan-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-bottom:1.5rem}
+.plan-card-sm{border:1px solid var(--border);border-radius:10px;padding:1rem;text-align:center;cursor:pointer;transition:all .2s}
+.plan-card-sm:hover,.plan-card-sm.selected{border-color:var(--accent);background:rgba(14,165,233,0.06)}
+.plan-card-sm.featured{border-color:var(--accent);background:rgba(14,165,233,0.08)}
+.pcn{font-size:.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.pcp{font-size:1.4rem;font-weight:800;font-family:'Plus Jakarta Sans',sans-serif;color:var(--text);margin:.3rem 0 .1rem}
+.pcd{font-size:.72rem;color:var(--muted)}
+.modal-btn{width:100%;padding:.875rem;border-radius:8px;background:var(--accent);color:#fff;font-size:.95rem;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.modal-btn:hover{background:var(--accent2);transform:translateY(-1px)}
+/* AVATAR UPLOAD */
+.avatar-upload{position:relative;width:64px;height:64px;cursor:pointer}
+.avatar-upload img{width:64px;height:64px;border-radius:50%;object-fit:cover}
+.avatar-upload-overlay{position:absolute;inset:0;border-radius:50%;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;font-size:.7rem;color:#fff;text-align:center}
+.avatar-upload:hover .avatar-upload-overlay{opacity:1}
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -238,9 +261,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
     <button class="nav-item" onclick="showSection('billing')">
       <span class="nav-icon">💳</span> Billing
     </button>
-    <a href="index.html" class="nav-item">
-      <span class="nav-icon">🏠</span> Back to Website
-    </a>
+
   </nav>
   <div class="sidebar-footer">
     <div class="user-info">
@@ -262,7 +283,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
     </div>
     <div class="topbar-right">
       <span class="trial-badge">⏰ 12 days left</span>
-      <a href="pricing.html" class="upgrade-btn">Upgrade</a>
+      <button class="upgrade-btn" onclick="showUpgradeModal()">⚡ Upgrade</button>
     </div>
   </div>
 
@@ -610,7 +631,7 @@ async function readPDFText(file) {
         else if(c === 10 || c === 13) text += ' ';
       }
       // Clean up extracted text
-      text = text.replace(/[^ -~\n\r]/g, ' ').replace(/\s+/g, ' ').trim();
+     text = text.replace(/[^ -~\n\r]/g, ' ').replace(/\s+/g, ' ').trim();
       // Get meaningful chunks
       const words = text.split(' ').filter(w => w.length > 2);
       resolve(words.slice(0, 500).join(' '));
@@ -1131,8 +1152,69 @@ document.addEventListener('click', function(e) {
   }
 });
 
+
+// ============ UPGRADE MODAL ============
+let selectedUpgradePlan = 'pro';
+
+function showUpgradeModal() {
+  document.getElementById('upgradeModal').classList.add('open');
+}
+
+function closeUpgradeModal() {
+  document.getElementById('upgradeModal').classList.remove('open');
+}
+
+function selectUpgradePlan(el, plan) {
+  document.querySelectorAll('.plan-card-sm').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedUpgradePlan = plan;
+}
+
+function proceedUpgrade() {
+  closeUpgradeModal();
+  showToast('Redirecting to payment... (Stripe coming soon!)');
+  setTimeout(() => {
+    window.open('pricing.html', '_blank');
+  }, 1000);
+}
+
+// Close modal on outside click
+document.getElementById('upgradeModal').addEventListener('click', function(e) {
+  if(e.target === this) closeUpgradeModal();
+});
+
 // ADD SUPABASE CDN + INIT
 init();
 </script>
+
+<!-- UPGRADE MODAL -->
+<div class="modal-overlay" id="upgradeModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeUpgradeModal()">✕</button>
+    <div class="modal-title">⚡ Upgrade HireIQ</div>
+    <div class="modal-sub">Choose a plan to unlock full AI screening power</div>
+    <div class="plan-cards">
+      <div class="plan-card-sm" onclick="selectUpgradePlan(this,'starter')">
+        <div class="pcn">Starter</div>
+        <div class="pcp">$99<span style="font-size:.75rem;font-weight:400;color:var(--muted)">/mo</span></div>
+        <div class="pcd">50 CVs/screening</div>
+      </div>
+      <div class="plan-card-sm featured selected" onclick="selectUpgradePlan(this,'pro')">
+        <div style="font-size:.65rem;color:var(--accent);font-weight:700;margin-bottom:.25rem">⭐ POPULAR</div>
+        <div class="pcn">Pro</div>
+        <div class="pcp">$249<span style="font-size:.75rem;font-weight:400;color:var(--muted)">/mo</span></div>
+        <div class="pcd">Unlimited CVs</div>
+      </div>
+      <div class="plan-card-sm" onclick="selectUpgradePlan(this,'enterprise')">
+        <div class="pcn">Enterprise</div>
+        <div class="pcp">$599<span style="font-size:.75rem;font-weight:400;color:var(--muted)">/mo</span></div>
+        <div class="pcd">Team + API</div>
+      </div>
+    </div>
+    <button class="modal-btn" onclick="proceedUpgrade()">Continue to Payment →</button>
+    <p style="font-size:.75rem;color:var(--muted);text-align:center;margin-top:.75rem">Secure payment · Cancel anytime · 14-day money back</p>
+  </div>
+</div>
+
 </body>
 </html>
