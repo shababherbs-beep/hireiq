@@ -610,7 +610,7 @@ async function readPDFText(file) {
         else if(c === 10 || c === 13) text += ' ';
       }
       // Clean up extracted text
-      text = text.replace(/[^ -~]/g, ' ').replace(/\s+/g, ' ').trim();
+      text = text.replace(/[^ -~\n\r]/g, ' ').replace(/\s+/g, ' ').trim();
       // Get meaningful chunks
       const words = text.split(' ').filter(w => w.length > 2);
       resolve(words.slice(0, 500).join(' '));
