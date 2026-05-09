@@ -519,11 +519,11 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
       </div>
     </div>
     <div id="section-billing" style="display:none">
-      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:1rem">Billing</div>
+      <div style="font-size:1.2rem;font-weight:700;margin-bottom:1.25rem">Billing</div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;text-align:center">
         <div style="font-size:1rem;font-weight:600;margin-bottom:.5rem" id="billingPlan">Loading plan...</div>
         <div style="font-size:.85rem;color:var(--muted);margin-bottom:1.5rem" id="billingDays"></div>
-        <a href="pricing.html" class="btn-start" style="display:inline-block;text-decoration:none">Upgrade to Pro — $249/mo</a>
+        <button class="btn-start" onclick="showUpgradeModal()" style="width:100%">⚡ Upgrade to Pro — $249/mo</button>
       </div>
     </div>
 
@@ -619,22 +619,42 @@ const GEMINI_KEY = 'AIzaSyAQ5d3qpqU7U7YptlGM_rJvaD6kZV-bD1Y';
 
 // Read PDF text using FileReader
 async function readPDFText(file) {
+  // Use PDF.js for proper text extraction
+  if(typeof pdfjsLib !== "undefined" && file.name.toLowerCase().endsWith(".pdf")) {
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      let fullText = "";
+      const maxPages = Math.min(pdf.numPages, 5);
+      for(let i = 1; i <= maxPages; i++) {
+        const page = await pdf.getPage(i);
+        const content = await page.getTextContent();
+        const pageText = content.items.map(item => item.str).join(" ");
+        fullText += pageText + " ";
+      }
+      fullText = fullText.replace(/[ ]+/g, " ").trim();
+      if(fullText.length > 50) {
+        console.log("PDF.js extracted:", fullText.slice(0,100));
+        return fullText.slice(0, 3000);
+      }
+    } catch(e) {
+      console.log("PDF.js failed, using fallback:", e.message);
+    }
+  }
+  // Fallback for DOC/DOCX
   return new Promise((resolve) => {
     const reader = new FileReader();
     reader.onload = (e) => {
-      // Extract readable text from PDF bytes
       const bytes = new Uint8Array(e.target.result);
-      let text = '';
+      let text = "";
       for(let i = 0; i < bytes.length; i++) {
         const c = bytes[i];
-        if(c >= 32 && c < 127) text += String.fromCharCode(c);
-        else if(c === 10 || c === 13) text += ' ';
+        if(c >= 32 && c <= 126) text += String.fromCharCode(c);
+        else if(c === 10 || c === 13) text += " ";
       }
-      // Clean up extracted text
-     text = text.replace(/[^ -~\n\r]/g, ' ').replace(/\s+/g, ' ').trim();
-      // Get meaningful chunks
-      const words = text.split(' ').filter(w => w.length > 2);
-      resolve(words.slice(0, 500).join(' '));
+      text = text.replace(/[ ]+/g, " ").replace(/[^a-zA-Z0-9 @.,:-]/g, " ").trim();
+      const words = text.split(" ").filter(w => w.length >= 3 && /[a-zA-Z]/.test(w));
+      resolve(words.slice(0, 600).join(" ") || "Could not extract CV text");
     };
     reader.readAsArrayBuffer(file);
   });
@@ -958,8 +978,8 @@ async function loadProfile() {
     document.getElementById('settingsCompany').value = data.company || '';
 
     // Billing
-    document.getElementById('billingPlan').textContent = `You are on the ${data.plan === 'trial' ? 'Pro Trial' : data.plan} plan`;
-    document.getElementById('billingDays').textContent = data.plan === 'trial' ? `${trialDays} days remaining in your free trial` : 'Active subscription';
+    document.getElementById('billingPlan').textContent = 'Current Plan: ' + (data.plan === 'trial' ? 'Pro Trial' : (data.plan || 'Trial'));
+    document.getElementById('billingDays').textContent = data.plan === 'trial' ? trialDays + ' days remaining in your free trial' : 'Active subscription';
   }
 }
 
