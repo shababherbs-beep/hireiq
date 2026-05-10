@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ATS CV Checker — HireIQ</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>if(typeof pdfjsLib!=="undefined")pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";</script>
+<style>
+:root{--bg:#040d1a;--bg2:#071628;--accent:#0ea5e9;--accent2:#38bdf8;--gold:#f59e0b;--text:#f0f6ff;--muted:#7aa0c0;--border:rgba(14,165,233,0.15);--card:rgba(7,22,40,0.9);--success:#22c55e;--warning:#f59e0b;--danger:#ef4444}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;min-height:100vh;overflow-x:hidden;line-height:1.6}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;background:rgba(4,13,26,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.logo{font-family:"Plus Jakarta Sans",sans-serif;font-size:1.35rem;font-weight:800;color:var(--text);text-decoration:none;letter-spacing:-.02em}
+.logo span{color:var(--accent)}
+.nav-right{display:flex;align-items:center;gap:.875rem}
+.nav-btn{font-size:.85rem;padding:.45rem 1rem;border-radius:6px;text-decoration:none;font-weight:500;transition:all .2s}
+.nav-btn.outline{border:1px solid var(--border);color:var(--muted)}
+.nav-btn.outline:hover{border-color:var(--accent);color:var(--text)}
+.nav-btn.filled{background:var(--accent);color:#fff}
+.nav-btn.filled:hover{background:var(--accent2)}
+
+/* HERO */
+.hero{padding:7rem 5% 3rem;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(14,165,233,0.1) 0%,transparent 70%)}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(14,165,233,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(14,165,233,0.04) 1px,transparent 1px);background-size:48px 48px}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(14,165,233,0.08);border:1px solid rgba(14,165,233,0.25);color:var(--accent2);font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.4rem 1rem;border-radius:99px;margin-bottom:1.25rem;position:relative;z-index:1}
+.hero-badge::before{content:"";width:6px;height:6px;background:var(--success);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
+.hero h1{font-family:"Plus Jakarta Sans",sans-serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;line-height:1.12;letter-spacing:-.02em;margin-bottom:1rem;position:relative;z-index:1}
+.hero h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:1rem;color:var(--muted);max-width:520px;margin:0 auto 2rem;position:relative;z-index:1;line-height:1.7}
+
+/* STATS */
+.stats-bar{display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem;position:relative;z-index:1}
+.stat-item{text-align:center}
+.stat-num{font-family:"Plus Jakarta Sans",sans-serif;font-size:1.6rem;font-weight:700;color:var(--accent)}
+.stat-lbl{font-size:.78rem;color:var(--muted)}
+
+/* MAIN LAYOUT */
+.main-wrap{max-width:1100px;margin:0 auto;padding:0 5% 4rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+.left-col{}
+.right-col{}
+
+/* INPUT CARD */
+.input-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.5rem}
+.card-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1.25rem}
+.card-icon{width:36px;height:36px;border-radius:8px;background:rgba(14,165,233,0.1);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.card-title{font-family:"Plus Jakarta Sans",sans-serif;font-size:1rem;font-weight:700}
+.card-sub{font-size:.8rem;color:var(--muted);margin-top:.15rem}
+
+/* UPLOAD */
+.upload-zone{border:2px dashed var(--border);border-radius:12px;padding:2rem;text-align:center;cursor:pointer;transition:all .2s;position:relative}
+.upload-zone:hover,.upload-zone.dragover{border-color:var(--accent);background:rgba(14,165,233,0.04)}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.upload-icon-big{font-size:2.5rem;margin-bottom:.75rem}
+.upload-title{font-size:.95rem;font-weight:600;margin-bottom:.3rem}
+.upload-sub{font-size:.8rem;color:var(--muted)}
+.format-tags{display:flex;gap:.4rem;justify-content:center;margin-top:.875rem;flex-wrap:wrap}
+.ftag{font-size:.7rem;padding:.2rem .6rem;border-radius:4px;background:rgba(14,165,233,0.08);color:var(--accent);border:1px solid var(--border);font-weight:600}
+.file-preview{display:none;margin-top:1rem;padding:.875rem 1rem;background:rgba(14,165,233,0.05);border:1px solid rgba(14,165,233,0.2);border-radius:8px;display:none;align-items:center;gap:.75rem}
+.file-preview.show{display:flex}
+.fp-icon{font-size:1.4rem;flex-shrink:0}
+.fp-name{font-size:.875rem;font-weight:500;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fp-size{font-size:.75rem;color:var(--muted)}
+.fp-remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.9rem;transition:color .2s}
+.fp-remove:hover{color:var(--danger)}
+
+/* FORM */
+.form-group{margin-bottom:1rem}
+.form-label{font-size:.82rem;font-weight:500;color:var(--muted);margin-bottom:.4rem;display:block}
+.form-input{width:100%;padding:.75rem 1rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text);font-size:.9rem;outline:none;transition:border-color .2s;font-family:"DM Sans",sans-serif}
+.form-input:focus{border-color:var(--accent)}
+.form-input::placeholder{color:var(--muted)}
+.form-textarea{width:100%;padding:.875rem 1rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text);font-size:.875rem;outline:none;transition:border-color .2s;font-family:"DM Sans",sans-serif;resize:vertical;min-height:120px;line-height:1.6}
+.form-textarea:focus{border-color:var(--accent)}
+.form-textarea::placeholder{color:var(--muted)}
+
+/* CHECK BUTTON */
+.check-btn{width:100%;padding:.9rem;border-radius:8px;background:var(--accent);color:#fff;font-size:1rem;font-weight:600;border:none;cursor:pointer;transition:all .2s;font-family:"DM Sans",sans-serif;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.check-btn:hover{background:var(--accent2);transform:translateY(-1px)}
+.check-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* RESULTS */
+.results-col{display:none}
+.results-col.show{display:block}
+
+/* SCORE RING */
+.score-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;text-align:center;margin-bottom:1.25rem;position:relative;overflow:hidden}
+.score-card::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(14,165,233,0.07) 0%,transparent 70%)}
+.score-label{font-size:.75rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;position:relative;z-index:1}
+.score-ring-wrap{position:relative;width:140px;height:140px;margin:0 auto 1rem;z-index:1}
+.score-ring{transform:rotate(-90deg)}
+.score-ring-bg{fill:none;stroke:rgba(255,255,255,0.06);stroke-width:10}
+.score-ring-fill{fill:none;stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset 1.5s ease;stroke-dasharray:345;stroke-dashoffset:345}
+.score-number{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-num{font-family:"Plus Jakarta Sans",sans-serif;font-size:2.4rem;font-weight:800;line-height:1}
+.score-100{font-size:.8rem;color:var(--muted)}
+.score-grade{font-size:.9rem;font-weight:700;margin:.3rem 0;position:relative;z-index:1}
+.score-desc{font-size:.82rem;color:var(--muted);position:relative;z-index:1}
+
+/* METRIC BARS */
+.metrics-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.25rem}
+.metric-item{margin-bottom:1.1rem}
+.metric-item:last-child{margin-bottom:0}
+.metric-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem}
+.metric-name{font-size:.875rem;font-weight:500}
+.metric-score{font-size:.875rem;font-weight:700}
+.metric-bar-bg{height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden}
+.metric-bar{height:100%;border-radius:3px;transition:width 1.2s ease;width:0%}
+
+/* ISSUES */
+.issues-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.25rem}
+.issues-title{font-family:"Plus Jakarta Sans",sans-serif;font-size:.95rem;font-weight:700;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.issue-item{display:flex;gap:.75rem;padding:.75rem;border-radius:8px;margin-bottom:.6rem;font-size:.85rem;line-height:1.5}
+.issue-item:last-child{margin-bottom:0}
+.issue-item.error{background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15)}
+.issue-item.warning{background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15)}
+.issue-item.success{background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15)}
+.issue-icon{font-size:1rem;flex-shrink:0;margin-top:.05rem}
+.issue-text{flex:1}
+.issue-title{font-weight:600;margin-bottom:.15rem}
+.issue-desc{color:var(--muted);font-size:.8rem}
+
+/* KEYWORDS */
+.keywords-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem;margin-bottom:1.25rem}
+.kw-title{font-family:"Plus Jakarta Sans",sans-serif;font-size:.95rem;font-weight:700;margin-bottom:.875rem}
+.kw-grid{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.875rem}
+.kw-tag{font-size:.78rem;padding:.25rem .7rem;border-radius:20px;font-weight:500;display:flex;align-items:center;gap:.3rem}
+.kw-found{background:rgba(34,197,94,0.1);color:var(--success);border:1px solid rgba(34,197,94,0.2)}
+.kw-missing{background:rgba(239,68,68,0.08);color:#f87171;border:1px solid rgba(239,68,68,0.2)}
+
+/* SUGGESTIONS */
+.suggestions-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.75rem}
+.sug-title{font-family:"Plus Jakarta Sans",sans-serif;font-size:.95rem;font-weight:700;margin-bottom:.875rem}
+.sug-item{display:flex;gap:.75rem;padding:.75rem 0;border-bottom:1px solid var(--border);font-size:.875rem}
+.sug-item:last-child{border-bottom:none;padding-bottom:0}
+.sug-num{width:22px;height:22px;border-radius:50%;background:rgba(14,165,233,0.1);color:var(--accent);font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.1rem}
+.sug-text{color:var(--muted);line-height:1.6}
+
+/* PROCESSING */
+.processing-overlay{display:none;position:fixed;inset:0;background:rgba(4,13,26,0.85);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.processing-overlay.show{display:flex}
+.processing-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2.5rem;text-align:center;max-width:360px;width:90%}
+.proc-icon{font-size:3rem;margin-bottom:1rem;animation:spin 2s linear infinite;display:inline-block}
+.proc-title{font-family:"Plus Jakarta Sans",sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:.4rem}
+.proc-sub{font-size:.85rem;color:var(--muted);margin-bottom:1.25rem}
+.proc-bar-wrap{height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;margin-bottom:.5rem}
+.proc-bar{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:3px;transition:width .4s ease;width:0%}
+.proc-step-text{font-size:.78rem;color:var(--muted)}
+
+/* DOWNLOAD BTN */
+.dl-btn{width:100%;padding:.75rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text);font-size:.9rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:"DM Sans",sans-serif;margin-top:1rem;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.dl-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+@media(max-width:900px){.main-wrap{grid-template-columns:1fr}}
+@media(max-width:600px){.stats-bar{gap:1.25rem}.hero h1{font-size:1.8rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Hire<span>IQ</span></a>
+  <div class="nav-right">
+    <a href="dashboard.html" class="nav-btn outline">Dashboard</a>
+    <a href="early-access.html" class="nav-btn filled">Get Started</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="grid-bg"></div>
+  <div class="hero-badge">Free ATS Checker</div>
+  <h1>Is Your CV <span>ATS-Ready?</span></h1>
+  <p>Check if your CV passes Applicant Tracking Systems. Get a score, find issues, and get AI-powered suggestions to improve.</p>
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-num">75%</div><div class="stat-lbl">CVs rejected by ATS</div></div>
+    <div class="stat-item"><div class="stat-num">98%</div><div class="stat-lbl">Check accuracy</div></div>
+    <div class="stat-item"><div class="stat-num">30s</div><div class="stat-lbl">Analysis time</div></div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main-wrap">
+
+  <!-- LEFT: INPUT -->
+  <div class="left-col">
+
+    <!-- CV UPLOAD -->
+    <div class="input-card">
+      <div class="card-header">
+        <div class="card-icon">📄</div>
+        <div>
+          <div class="card-title">Upload Your CV</div>
+          <div class="card-sub">PDF or Word format supported</div>
+        </div>
+      </div>
+      <div class="upload-zone" id="uploadZone" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFile(event)">
+        <input type="file" id="cvFile" accept=".pdf,.doc,.docx" onchange="handleFile(this.files[0])">
+        <div class="upload-icon-big">📁</div>
+        <div class="upload-title">Click to upload or drag & drop</div>
+        <div class="upload-sub">PDF, DOC, DOCX supported</div>
+        <div class="format-tags">
+          <span class="ftag">PDF</span>
+          <span class="ftag">DOC</span>
+          <span class="ftag">DOCX</span>
+        </div>
+      </div>
+      <div class="file-preview" id="filePreview">
+        <span class="fp-icon">📄</span>
+        <span class="fp-name" id="fpName">file.pdf</span>
+        <span class="fp-size" id="fpSize">0 KB</span>
+        <button class="fp-remove" onclick="removeFile()">✕</button>
+      </div>
+    </div>
+
+    <!-- JOB DESCRIPTION (Optional) -->
+    <div class="input-card">
+      <div class="card-header">
+        <div class="card-icon">💼</div>
+        <div>
+          <div class="card-title">Job Description <span style="font-size:.75rem;color:var(--muted);font-weight:400">(Optional)</span></div>
+          <div class="card-sub">Add for keyword matching analysis</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <textarea class="form-textarea" id="jobDesc" placeholder="Paste the job description here for keyword matching analysis. If left empty, we'll do a general ATS check..."></textarea>
+      </div>
+    </div>
+
+    <!-- CHECK BUTTON -->
+    <button class="check-btn" id="checkBtn" onclick="startATSCheck()">
+      🔍 Check ATS Score
+    </button>
+
+    <!-- WHAT WE CHECK -->
+    <div class="input-card" style="margin-top:1.5rem">
+      <div class="card-header">
+        <div class="card-icon">✅</div>
+        <div><div class="card-title">What We Check</div></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.6rem">
+        <div style="display:flex;align-items:center;gap:.6rem;font-size:.85rem;color:var(--muted)"><span style="color:var(--accent)">✓</span> ATS compatibility & formatting</div>
+        <div style="display:flex;align-items:center;gap:.6rem;font-size:.85rem;color:var(--muted)"><span style="color:var(--accent)">✓</span> Contact information completeness</div>
+        <div style="display:flex;align-items:center;gap:.6rem;font-size:.85rem;color:var(--muted)"><span style="color:var(--accent)">✓</span> Required sections (Education, Experience)</div>
+        <div style="display:flex;align-items:center;gap:.6rem;font-size:.85rem;color:var(--muted)"><span style="color:var(--accent)">✓</span> Keyword density & relevance</div>
+        <div style="display:flex;align-items:center;gap:.6rem;font-size:.85rem;color:var(--muted)"><span style="color:var(--accent)">✓</span> File format & size validation</div>
+        <div style="display:flex;align-items:center;gap:.6rem;font-size:.85rem;color:var(--muted)"><span style="color:var(--accent)">✓</span> AI-powered improvement suggestions</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: RESULTS -->
+  <div class="right-col">
+    <div class="results-col" id="resultsCol">
+
+      <!-- SCORE -->
+      <div class="score-card">
+        <div class="score-label">ATS Compatibility Score</div>
+        <div class="score-ring-wrap">
+          <svg class="score-ring" viewBox="0 0 120 120" width="140" height="140">
+            <circle class="score-ring-bg" cx="60" cy="60" r="55"/>
+            <circle class="score-ring-fill" id="scoreRingFill" cx="60" cy="60" r="55"/>
+          </svg>
+          <div class="score-number">
+            <div class="score-num" id="scoreNum">0</div>
+            <div class="score-100">/100</div>
+          </div>
+        </div>
+        <div class="score-grade" id="scoreGrade">Analyzing...</div>
+        <div class="score-desc" id="scoreDesc"></div>
+        <button class="dl-btn" onclick="downloadReport()">📥 Download Report</button>
+      </div>
+
+      <!-- METRICS -->
+      <div class="metrics-card">
+        <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;font-weight:700;margin-bottom:1rem">Score Breakdown</div>
+        <div class="metric-item">
+          <div class="metric-header">
+            <span class="metric-name">📋 Formatting & Structure</span>
+            <span class="metric-score" id="ms1">—</span>
+          </div>
+          <div class="metric-bar-bg"><div class="metric-bar" id="mb1"></div></div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-header">
+            <span class="metric-name">📞 Contact Information</span>
+            <span class="metric-score" id="ms2">—</span>
+          </div>
+          <div class="metric-bar-bg"><div class="metric-bar" id="mb2"></div></div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-header">
+            <span class="metric-name">📚 Sections Completeness</span>
+            <span class="metric-score" id="ms3">—</span>
+          </div>
+          <div class="metric-bar-bg"><div class="metric-bar" id="mb3"></div></div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-header">
+            <span class="metric-name">🎯 Keyword Optimization</span>
+            <span class="metric-score" id="ms4">—</span>
+          </div>
+          <div class="metric-bar-bg"><div class="metric-bar" id="mb4"></div></div>
+        </div>
+        <div class="metric-item">
+          <div class="metric-header">
+            <span class="metric-name">✍️ Content Quality</span>
+            <span class="metric-score" id="ms5">—</span>
+          </div>
+          <div class="metric-bar-bg"><div class="metric-bar" id="mb5"></div></div>
+        </div>
+      </div>
+
+      <!-- ISSUES -->
+      <div class="issues-card" id="issuesCard">
+        <div class="issues-title">🔍 Issues Found</div>
+        <div id="issuesList"></div>
+      </div>
+
+      <!-- KEYWORDS -->
+      <div class="keywords-card" id="keywordsCard">
+        <div class="kw-title">🎯 Keyword Analysis</div>
+        <div style="font-size:.8rem;color:var(--muted);margin-bottom:.75rem" id="kwSummary"></div>
+        <div class="kw-grid" id="kwFound"></div>
+        <div style="font-size:.8rem;font-weight:600;color:var(--muted);margin:.75rem 0 .5rem">Missing Keywords:</div>
+        <div class="kw-grid" id="kwMissing"></div>
+      </div>
+
+      <!-- SUGGESTIONS -->
+      <div class="suggestions-card">
+        <div class="sug-title">💡 AI Suggestions to Improve</div>
+        <div id="suggestionsList"></div>
+      </div>
+
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div id="emptyState" style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:3rem;text-align:center">
+      <div style="font-size:3rem;margin-bottom:1rem">📊</div>
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:.5rem">Your ATS report will appear here</div>
+      <div style="font-size:.875rem;color:var(--muted);line-height:1.7">Upload your CV and click "Check ATS Score" to get a detailed analysis with score, issues, and improvement suggestions.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- PROCESSING OVERLAY -->
+<div class="processing-overlay" id="processingOverlay">
+  <div class="processing-box">
+    <div class="proc-icon">⚙️</div>
+    <div class="proc-title">Analyzing your CV...</div>
+    <div class="proc-sub">Gemini AI is checking ATS compatibility</div>
+    <div class="proc-bar-wrap"><div class="proc-bar" id="procBar"></div></div>
+    <div class="proc-step-text" id="procStep">Reading CV content...</div>
+  </div>
+</div>
+
+<script>
+const GEMINI_KEY = 'AIzaSyAQ5d3qpqU7U7YptlGM_rJvaD6kZV-bD1Y';
+
+let cvFile = null;
+let cvText = '';
+let lastReport = null;
+
+// FILE HANDLING
+function handleFile(file) {
+  if(!file) return;
+  cvFile = file;
+  document.getElementById('filePreview').classList.add('show');
+  document.getElementById('fpName').textContent = file.name;
+  document.getElementById('fpSize').textContent = (file.size/1024).toFixed(0) + ' KB';
+}
+function removeFile() {
+  cvFile = null;
+  cvText = '';
+  document.getElementById('filePreview').classList.remove('show');
+  document.getElementById('cvFile').value = '';
+}
+function dragOver(e) { e.preventDefault(); document.getElementById('uploadZone').classList.add('dragover'); }
+function dragLeave(e) { document.getElementById('uploadZone').classList.remove('dragover'); }
+function dropFile(e) { e.preventDefault(); dragLeave(e); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); }
+
+// READ PDF
+async function readCVText(file) {
+  if(typeof pdfjsLib !== 'undefined' && file.name.toLowerCase().endsWith('.pdf')) {
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      let text = '';
+      for(let i = 1; i <= Math.min(pdf.numPages, 8); i++) {
+        const page = await pdf.getPage(i);
+        const content = await page.getTextContent();
+        text += content.items.map(item => item.str).join(' ') + ' ';
+      }
+      return text.replace(/\s+/g, ' ').trim().slice(0, 5000);
+    } catch(e) { console.log('PDF.js error:', e); }
+  }
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const bytes = new Uint8Array(e.target.result);
+      let text = '';
+      for(let i = 0; i < bytes.length; i++) {
+        const c = bytes[i];
+        if(c >= 32 && c <= 126) text += String.fromCharCode(c);
+        else if(c === 10 || c === 13) text += ' ';
+      }
+      text = text.replace(/\s+/g, ' ').replace(/[^a-zA-Z0-9\s@.,:()\-+]/g, ' ').trim();
+      const words = text.split(' ').filter(w => w.length >= 2 && /[a-zA-Z]/.test(w));
+      resolve(words.slice(0, 800).join(' '));
+    };
+    reader.readAsArrayBuffer(file);
+  });
+}
+
+// ATS CHECK WITH GEMINI
+async function startATSCheck() {
+  if(!cvFile) { alert('Please upload your CV first!'); return; }
+
+  const btn = document.getElementById('checkBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div> Analyzing...';
+
+  // Show processing overlay
+  const overlay = document.getElementById('processingOverlay');
+  const bar = document.getElementById('procBar');
+  const step = document.getElementById('procStep');
+  overlay.classList.add('show');
+
+  // Progress animation
+  let prog = 0;
+  const steps = ['Reading CV content...', 'Checking ATS compatibility...', 'Analyzing keywords...', 'Generating suggestions...', 'Finalizing report...'];
+  let stepIdx = 0;
+  const interval = setInterval(() => {
+    prog += Math.random() * 12 + 3;
+    if(prog > 90) prog = 90;
+    bar.style.width = prog + '%';
+    const si = Math.floor(prog / 20);
+    if(si < steps.length && si !== stepIdx) { stepIdx = si; step.textContent = steps[si]; }
+  }, 300);
+
+  try {
+    // Read CV text
+    cvText = await readCVText(cvFile);
+    const jobDesc = document.getElementById('jobDesc').value.trim();
+
+    const prompt = `You are an expert ATS (Applicant Tracking System) analyst. Analyze this CV and provide a comprehensive ATS compatibility report.
+
+CV CONTENT:
+${cvText || 'CV text extraction failed - analyze based on filename: ' + cvFile.name}
+
+${jobDesc ? 'JOB DESCRIPTION:\n' + jobDesc : 'No specific job description provided - do a general ATS analysis.'}
+
+FILE INFO: ${cvFile.name} (${(cvFile.size/1024).toFixed(0)} KB)
+
+Respond with ONLY this exact JSON (no markdown):
+{
+  "overall_score": <number 0-100>,
+  "grade": "Excellent" or "Good" or "Average" or "Poor",
+  "summary": "<1-2 sentence overall assessment>",
+  "metrics": {
+    "formatting": <0-100>,
+    "contact_info": <0-100>,
+    "sections": <0-100>,
+    "keywords": <0-100>,
+    "content_quality": <0-100>
+  },
+  "issues": [
+    {"type": "error" or "warning" or "success", "title": "<issue title>", "desc": "<description>"}
+  ],
+  "keywords_found": ["keyword1", "keyword2"],
+  "keywords_missing": ["keyword1", "keyword2"],
+  "keyword_summary": "<brief keyword analysis>",
+  "suggestions": ["suggestion1", "suggestion2", "suggestion3", "suggestion4", "suggestion5"]
+}`;
+
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        contents: [{ parts: [{ text: prompt }] }],
+        generationConfig: { temperature: 0.2, maxOutputTokens: 1500 }
+      })
+    });
+
+    const data = await response.json();
+    if(data.error) throw new Error(data.error.message);
+
+    const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '{}';
+    const cleaned = raw.replace(/```json|```/g, '').trim();
+    const report = JSON.parse(cleaned);
+    lastReport = report;
+
+    clearInterval(interval);
+    bar.style.width = '100%';
+    step.textContent = 'Report ready!';
+    await new Promise(r => setTimeout(r, 500));
+
+    overlay.classList.remove('show');
+    displayResults(report);
+
+  } catch(e) {
+    clearInterval(interval);
+    overlay.classList.remove('show');
+    console.error('ATS check error:', e);
+    alert('Analysis failed: ' + e.message + '\n\nPlease check your Gemini API key.');
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '🔍 Check Again';
+}
+
+// DISPLAY RESULTS
+function displayResults(r) {
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('resultsCol').classList.add('show');
+
+  // Score ring
+  const score = r.overall_score || 0;
+  const ring = document.getElementById('scoreRingFill');
+  const circumference = 345;
+  const offset = circumference - (score / 100) * circumference;
+  const color = score >= 80 ? '#22c55e' : score >= 60 ? '#0ea5e9' : score >= 40 ? '#f59e0b' : '#ef4444';
+  ring.style.stroke = color;
+  setTimeout(() => { ring.style.strokeDashoffset = offset; }, 100);
+
+  // Score number animation
+  let current = 0;
+  const target = score;
+  const numEl = document.getElementById('scoreNum');
+  numEl.style.color = color;
+  const numInterval = setInterval(() => {
+    current += Math.ceil((target - current) / 8);
+    if(current >= target) { current = target; clearInterval(numInterval); }
+    numEl.textContent = current;
+  }, 40);
+
+  // Grade
+  const gradeEl = document.getElementById('scoreGrade');
+  gradeEl.textContent = r.grade || 'Unknown';
+  gradeEl.style.color = color;
+  document.getElementById('scoreDesc').textContent = r.summary || '';
+
+  // Metrics
+  const metrics = r.metrics || {};
+  const metricData = [
+    { score: metrics.formatting || 0, color: '#0ea5e9' },
+    { score: metrics.contact_info || 0, color: '#22c55e' },
+    { score: metrics.sections || 0, color: '#8b5cf6' },
+    { score: metrics.keywords || 0, color: '#f59e0b' },
+    { score: metrics.content_quality || 0, color: '#ec4899' },
+  ];
+  metricData.forEach((m, i) => {
+    const n = i + 1;
+    document.getElementById('ms' + n).textContent = m.score + '/100';
+    document.getElementById('ms' + n).style.color = m.score >= 70 ? '#22c55e' : m.score >= 40 ? '#f59e0b' : '#ef4444';
+    const bar = document.getElementById('mb' + n);
+    bar.style.background = m.color;
+    setTimeout(() => { bar.style.width = m.score + '%'; }, 200 + i * 100);
+  });
+
+  // Issues
+  const issuesList = document.getElementById('issuesList');
+  const issues = r.issues || [];
+  if(issues.length === 0) {
+    issuesList.innerHTML = '<div class="issue-item success"><span class="issue-icon">✅</span><div class="issue-text"><div class="issue-title">No major issues found!</div><div class="issue-desc">Your CV looks ATS-friendly.</div></div></div>';
+  } else {
+    issuesList.innerHTML = issues.map(issue => `
+      <div class="issue-item ${issue.type}">
+        <span class="issue-icon">${issue.type === 'error' ? '❌' : issue.type === 'warning' ? '⚠️' : '✅'}</span>
+        <div class="issue-text">
+          <div class="issue-title">${issue.title}</div>
+          <div class="issue-desc">${issue.desc}</div>
+        </div>
+      </div>`).join('');
+  }
+
+  // Keywords
+  const found = r.keywords_found || [];
+  const missing = r.keywords_missing || [];
+  document.getElementById('kwSummary').textContent = r.keyword_summary || '';
+  document.getElementById('kwFound').innerHTML = found.map(k => `<span class="kw-tag kw-found">✓ ${k}</span>`).join('');
+  document.getElementById('kwMissing').innerHTML = missing.length ? missing.map(k => `<span class="kw-tag kw-missing">✗ ${k}</span>`).join('') : '<span style="font-size:.82rem;color:var(--muted)">No missing keywords — great job!</span>';
+
+  // Suggestions
+  const sugs = r.suggestions || [];
+  document.getElementById('suggestionsList').innerHTML = sugs.map((s, i) => `
+    <div class="sug-item">
+      <div class="sug-num">${i + 1}</div>
+      <div class="sug-text">${s}</div>
+    </div>`).join('');
+
+  // Scroll to results on mobile
+  if(window.innerWidth < 900) {
+    document.getElementById('resultsCol').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function downloadReport() {
+  if(!lastReport) return;
+  const content = `HireIQ ATS Report
+==================
+File: ${cvFile?.name || 'Unknown'}
+Date: ${new Date().toLocaleDateString()}
+
+OVERALL SCORE: ${lastReport.overall_score}/100 (${lastReport.grade})
+${lastReport.summary}
+
+SCORE BREAKDOWN:
+- Formatting: ${lastReport.metrics?.formatting}/100
+- Contact Info: ${lastReport.metrics?.contact_info}/100
+- Sections: ${lastReport.metrics?.sections}/100
+- Keywords: ${lastReport.metrics?.keywords}/100
+- Content Quality: ${lastReport.metrics?.content_quality}/100
+
+ISSUES:
+${(lastReport.issues||[]).map(i => `[${i.type.toUpperCase()}] ${i.title}: ${i.desc}`).join('\n')}
+
+KEYWORDS FOUND: ${(lastReport.keywords_found||[]).join(', ')}
+KEYWORDS MISSING: ${(lastReport.keywords_missing||[]).join(', ')}
+
+SUGGESTIONS:
+${(lastReport.suggestions||[]).map((s,i) => `${i+1}. ${s}`).join('\n')}
+
+--
+Generated by HireIQ ATS Checker
+hireiq-tau.vercel.app/ats-checker.html`;
+
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'ATS-Report-HireIQ.txt';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
