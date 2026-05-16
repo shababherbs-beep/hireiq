@@ -215,17 +215,35 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
   <div class="pricing-grid">
 
     <div class="price-card">
-      <div class="plan-icon">🌱</div>
-      <div class="plan-name">Starter</div>
-      <div class="plan-price" id="starterPrice">$99<span>/month</span></div>
-      <div class="plan-desc">Perfect for small HR teams just getting started with AI screening.</div>
+      <div class="plan-icon">🌿</div>
+      <div class="plan-name">Free Trial</div>
+      <div class="plan-price">$0<span> / forever</span></div>
+      <div class="plan-desc">Try it out. No commitment.</div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
-        <li>Up to 50 CVs per screening</li>
-        <li>AI scoring & ranking</li>
-        <li>Reason summary per candidate</li>
-        <li>PDF export</li>
-        <li>1 active job posting</li>
+        <li>5 CVs per month</li>
+        <li>1 active job</li>
+        <li>Basic AI analysis</li>
+        <li>CSV export</li>
+        <li class="no">PDF reports</li>
+        <li class="no">Custom scoring criteria</li>
+        <li class="no">Team collaboration</li>
+        <li class="no">API access</li>
+      </ul>
+      <a href="early-access.html?plan=free" class="plan-btn">Get Started Free</a>
+    </div>
+
+    <div class="price-card">
+      <div class="plan-icon">🌱</div>
+      <div class="plan-name">Starter</div>
+      <div class="plan-price" id="starterPrice">$19<span>/month</span></div>
+      <div class="plan-desc">For small teams hiring regularly.</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>50 CVs per month</li>
+        <li>5 active jobs</li>
+        <li>Full AI analysis</li>
+        <li>PDF reports</li>
         <li>Email support</li>
         <li class="no">Custom scoring criteria</li>
         <li class="no">Team collaboration</li>
@@ -238,19 +256,18 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
       <div class="featured-badge">Most Popular</div>
       <div class="plan-icon">🚀</div>
       <div class="plan-name">Pro</div>
-      <div class="plan-price" id="proPrice">$249<span>/month</span></div>
-      <div class="plan-desc">For growing HR teams that need unlimited screening and advanced features.</div>
+      <div class="plan-price" id="proPrice">$49<span>/month</span></div>
+      <div class="plan-desc">For growing teams who hire fast.</div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
-        <li>Unlimited CVs per screening</li>
-        <li>AI scoring & ranking</li>
-        <li>Detailed reason per candidate</li>
-        <li>Custom scoring criteria</li>
-        <li>Branded PDF & email reports</li>
-        <li>Up to 10 active job postings</li>
-        <li>3 team member seats</li>
+        <li>500 CVs per month</li>
+        <li>Unlimited jobs</li>
+        <li>Full AI + custom criteria</li>
+        <li>PDF reports</li>
         <li>Priority support</li>
-        <li class="no">API access</li>
+        <li>Team access (3 seats)</li>
+        <li>API access</li>
+        <li class="no">SSO / SAML</li>
       </ul>
       <a href="early-access.html?plan=pro" class="plan-btn">Start Free Trial</a>
     </div>
@@ -258,19 +275,18 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
     <div class="price-card">
       <div class="plan-icon">🏢</div>
       <div class="plan-name">Enterprise</div>
-      <div class="plan-price" id="entPrice">$599<span>/month</span></div>
-      <div class="plan-desc">For large organizations that need full control, integrations, and dedicated support.</div>
+      <div class="plan-price" id="entPrice">Custom<span> / contact us</span></div>
+      <div class="plan-desc">For large orgs &amp; agencies.</div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
-        <li>Everything in Pro</li>
-        <li>Unlimited job postings</li>
-        <li>Unlimited team seats</li>
-        <li>Role-based access control</li>
-        <li>ATS & HR system integration</li>
-        <li>Full REST API access</li>
-        <li>Custom onboarding</li>
-        <li>Dedicated account manager</li>
+        <li>Unlimited CVs</li>
+        <li>Unlimited jobs</li>
+        <li>Custom AI prompts</li>
+        <li>SSO / SAML</li>
+        <li>Dedicated support</li>
         <li>SLA guarantee</li>
+        <li>On-prem option</li>
+        <li>Custom onboarding</li>
       </ul>
       <a href="contact.html" class="plan-btn">Contact Sales</a>
     </div>
@@ -416,9 +432,8 @@ function toggleFaq(el){el.parentElement.classList.toggle('open')}
 
 let isAnnual = false;
 const prices = {
-  starter:{monthly:99,annual:79},
-  pro:{monthly:249,annual:199},
-  ent:{monthly:599,annual:479}
+  starter:{monthly:19,annual:15},
+  pro:{monthly:49,annual:39}
 };
 function toggleBilling(){
   isAnnual = !isAnnual;
@@ -427,9 +442,8 @@ function toggleBilling(){
   document.getElementById('monthlyLabel').classList.toggle('active', !isAnnual);
   document.getElementById('annualLabel').classList.toggle('active', isAnnual);
   const s = isAnnual ? 'annual' : 'monthly';
-  document.getElementById('starterPrice').innerHTML = `${isAnnual?'<span class="original">$99</span>':''}$${prices.starter[s]}<span>/month</span>`;
-  document.getElementById('proPrice').innerHTML = `${isAnnual?'<span class="original">$249</span>':''}$${prices.pro[s]}<span>/month</span>`;
-  document.getElementById('entPrice').innerHTML = `${isAnnual?'<span class="original">$599</span>':''}$${prices.ent[s]}<span>/month</span>`;
+  document.getElementById('starterPrice').innerHTML = `${isAnnual?'<span class="original">$19</span>':''}$${prices.starter[s]}<span>/month</span>`;
+  document.getElementById('proPrice').innerHTML = `${isAnnual?'<span class="original">$49</span>':''}$${prices.pro[s]}<span>/month</span>`;
 }
 document.addEventListener('click',function(e){if(!e.target.closest('nav')&&!e.target.closest('#mobileMenu'))document.getElementById('mobileMenu').classList.remove('open')})
 </script>
