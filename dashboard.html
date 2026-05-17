@@ -399,6 +399,7 @@ select.form-input option{background:#071628;color:#f0f6ff}
           <div><div class="results-title" id="res-jobtitle">Results</div><div class="results-meta" id="res-meta"></div></div>
           <div class="results-actions">
             <button class="action-btn" id="btnExportPDF" onclick="exportPDF()">📄 Export PDF</button>
+            <!-- FIX #3: Button text changed to "Open in Email Client" — honest wording -->
             <button class="action-btn" id="btnEmailReport" onclick="showEmailModal()">📧 Open in Email Client</button>
             <button class="action-btn primary" onclick="resetWizard()">+ New Screening</button>
           </div>
@@ -444,6 +445,7 @@ select.form-input option{background:#071628;color:#f0f6ff}
   </div>
 </div>
 
+<!-- Upgrade Modal -->
 <div class="modal-overlay" id="upgradeModal">
   <div class="modal-box">
     <button class="modal-close" onclick="closeUpgradeModal()">✕</button>
@@ -460,6 +462,8 @@ select.form-input option{background:#071628;color:#f0f6ff}
   </div>
 </div>
 
+<!-- Email Modal -->
+<!-- FIX #3: Modal title updated to reflect that it opens the user's email client -->
 <div class="modal-overlay" id="emailModal">
   <div class="modal-box email-modal">
     <button class="modal-close" onclick="closeEmailModal()">✕</button>
@@ -467,23 +471,30 @@ select.form-input option{background:#071628;color:#f0f6ff}
     <div class="modal-sub">This will open your email client with the report pre-filled</div>
     <div class="form-group"><label class="form-label">Recipient Email</label><input type="email" class="form-input" id="emailRecipient" placeholder="hr@company.com"></div>
     <div class="form-group"><label class="form-label">Preview</label><div class="email-preview" id="emailPreview">Loading preview...</div></div>
-    <button class="modal-btn" onclick="sendEmailReport()">📨 Open in Email Client</button>
-    <p style="font-size:.75rem;color:var(--muted);text-align:center;margin-top:.75rem">Your default email app will open with the report pre-filled. You can edit before sending.</p>
+    <!-- FIX #3: Button text is now "Open in Email Client" — not misleading "Send" -->
+    <button class="modal-btn" onclick="sendEmailReport()">📧 Open in Email Client</button>
+    <p style="font-size:.72rem;color:var(--muted);text-align:center;margin-top:.75rem">Your default email app will open with the report — you'll need to click Send from there.</p>
   </div>
 </div>
 
 <script>
 // ============ CONFIG ============
-// ✅ SAFE: Supabase anon key is meant to be public
 const SUPABASE_URL = 'https://muvdkmfxytywsbzmjbbn.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11dmRrbWZ4eXR5d3Niem1qYmJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4NDEzNjAsImV4cCI6MjA5MzQxNzM2MH0.BLUowstvk8rQKBj6-3GXbzCn2hNTW0q7smIQCPS1ZeA';
-
-// ✅ SAFE: Railway backend URL - AI keys are on the server
 const BACKEND_URL = 'https://hireiq-production-fbaa.up.railway.app';
 
+// ============================================================
+// FIX #1: STRIPE PAYMENT LINKS
+// Steps to get these links:
+//   1. Go to https://dashboard.stripe.com/payment-links
+//   2. Click "New payment link"
+//   3. Add your product (Starter $19/mo or Pro $49/mo)
+//   4. Copy the generated link (looks like: https://buy.stripe.com/live_abc123...)
+//   5. Paste it below replacing the placeholder values
+// ============================================================
 const STRIPE_LINKS = {
-  starter: 'https://buy.stripe.com/REPLACE_STARTER_LINK',
-  pro:     'https://buy.stripe.com/REPLACE_PRO_LINK',
+  starter: 'https://buy.stripe.com/REPLACE_WITH_STARTER_LINK',   // ← Paste your Starter $19/mo link here
+  pro:     'https://buy.stripe.com/REPLACE_WITH_PRO_LINK',        // ← Paste your Pro $49/mo link here
   enterprise: null
 };
 
@@ -698,7 +709,6 @@ async function readPDFText(file) {
 }
 
 // ============ AI SCREENING — Via Railway Backend ============
-// ✅ Keys are safe on the server — not exposed in browser!
 async function screenCV(cvText, jobTitle, jobDesc, fileName) {
   const res = await fetch(`${BACKEND_URL}/screen`, {
     method: 'POST',
@@ -865,7 +875,8 @@ function showResults(results,timeTaken,jobTitle,jobDesc) {
         <div class="cc-actions" style="margin-top:.875rem">
           <button class="cc-btn approve" onclick="event.stopPropagation();shortlistCandidate(${i})">✓ Shortlist</button>
           <button class="cc-btn reject" onclick="event.stopPropagation();rejectCandidate(${i})">✗ Reject</button>
-          <button class="cc-btn" id="savebtn-${i}" onclick="event.stopPropagation();saveCandidateLocal(${i},this)">⭐ Save</button>
+          <!-- FIX #2: Save button now calls saveCandidate() which updates Supabase -->
+          <button class="cc-btn" id="savebtn-${i}" onclick="event.stopPropagation();saveCandidate(${i},this)">⭐ Save</button>
           <button class="cc-btn" onclick="event.stopPropagation();copyCandidate(${i})">📋 Copy</button>
         </div>
       </div>
@@ -884,31 +895,60 @@ function showResults(results,timeTaken,jobTitle,jobDesc) {
 function toggleCard(el){ el.classList.toggle('expanded'); }
 function shortlistCandidate(i){ showToast('✓ '+(lastScreeningResults[i]?.name||'Candidate')+' shortlisted!'); }
 function rejectCandidate(i){ const c=document.getElementById('ccard-'+i); if(c) c.style.opacity='.4'; showToast('Candidate rejected.','error'); }
-// ✅ Fix Issue 2: Actually save to Supabase
-async function saveCandidateLocal(i, btn) {
-  btn.textContent='Saving...'; btn.disabled=true;
+
+// ============================================================
+// FIX #2: saveCandidate — now updates Supabase saved=true
+// So "Saved Candidates" section actually shows the candidate
+// ============================================================
+async function saveCandidate(i, btn) {
+  if(!currentUser) {
+    showToast('Please log in to save candidates', 'error');
+    return;
+  }
+  btn.textContent = '⏳ Saving...';
+  btn.disabled = true;
+  const c = lastScreeningResults[i];
+  if(!c) { showToast('Candidate data not found', 'error'); return; }
   try {
-    const c = lastScreeningResults[i];
-    if(!c || !currentUser) throw new Error('No data');
-    await sb.from('candidates').insert({
-      user_id: currentUser.id,
-      name: c.name || 'Unknown',
-      score: c.score || 0,
-      skills: (c.matched_skills||[]).join(', '),
-      reason: c.reason || '',
-      ats_score: c.ats_score || 0,
-      status: 'shortlisted',
-      saved: true
-    });
-    btn.textContent='✅ Saved';
-    btn.style.color='var(--success)';
-    showToast('⭐ Candidate saved!');
+    // Try to find existing candidate record (created during saveScreeningToDB)
+    // and mark it as saved, or insert a fresh record if not found
+    const { data: existing } = await sb
+      .from('candidates')
+      .select('id')
+      .eq('user_id', currentUser.id)
+      .eq('name', c.name || 'Unknown')
+      .eq('score', c.score)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single();
+
+    if(existing) {
+      await sb.from('candidates').update({ saved: true }).eq('id', existing.id);
+    } else {
+      // Fallback: insert new record if original wasn't found (e.g. DB save failed earlier)
+      await sb.from('candidates').insert({
+        user_id: currentUser.id,
+        name: c.name || 'Unknown',
+        score: c.score,
+        skills: (c.matched_skills || []).join(', '),
+        reason: c.reason || '',
+        ats_score: c.ats_score || 0,
+        status: 'pending',
+        saved: true
+      });
+    }
+
+    btn.textContent = '✅ Saved';
+    btn.style.color = 'var(--success)';
+    showToast('⭐ ' + (c.name || 'Candidate') + ' saved!');
   } catch(e) {
-    btn.textContent='⭐ Save';
-    btn.disabled=false;
-    showToast('Save failed. Try again.','error');
+    console.error('Save candidate error:', e);
+    btn.textContent = '⭐ Save';
+    btn.disabled = false;
+    showToast('Could not save — try again', 'error');
   }
 }
+
 function copyCandidate(i){
   const c=lastScreeningResults[i];
   if(!c) return;
@@ -975,10 +1015,11 @@ async function exportPDF() {
   } catch(e) { console.error('PDF error:',e); showToast('PDF export failed.','error'); }
 }
 
-// ============ EMAIL REPORT ============
+// ============ EMAIL REPORT (FIX #3) ============
+// Opens user's email client with report pre-filled — no false "send" claim
 function showEmailModal() {
   const limits=PLAN_LIMITS[currentPlan]||PLAN_LIMITS.free;
-  if(!limits.emailReport){ showToast('Upgrade to email reports','error'); showUpgradeModal(); return; }
+  if(!limits.emailReport){ showToast('Upgrade to use email reports','error'); showUpgradeModal(); return; }
   if(lastScreeningResults.length===0){ showToast('No results to send','error'); return; }
   const jobTitle=document.getElementById('jobTitle').value||'Screening';
   const total=lastScreeningResults.length;
@@ -997,31 +1038,37 @@ function sendEmailReport() {
   const body=encodeURIComponent(`HireIQ AI Screening Report\nJob: ${jobTitle}\nDate: ${new Date().toLocaleDateString()}\n\n${lastScreeningResults.slice(0,5).map((c,i)=>`${i+1}. ${c.name||'Unknown'} — Score: ${c.score}/100 | ATS: ${c.ats_score||0}/100`).join('\n')}`);
   window.location.href=`mailto:${to}?subject=${subject}&body=${body}`;
   closeEmailModal();
-  showToast('Opening email client...');
+  showToast('Email client opened!');
 }
 
 function closeEmailModal(){ document.getElementById('emailModal').classList.remove('open'); }
 
-// ============ RESET ============
+// ============================================================
+// FIX #4: resetWizard — uploadedFiles properly cleared
+// Array set to [] AND cvInput.value reset so same files
+// can be re-selected in the next screening session
+// ============================================================
 function resetWizard() {
-  currentStep=1;
-  uploadedFiles=[];  // ✅ Fix Issue 4: properly clear uploaded files array
-  lastScreeningResults=[];
-  // Also reset file input element
-  const cvInput = document.getElementById('cvInput');
-  if(cvInput) cvInput.value='';
-  document.getElementById('jobTitle').value='';
-  document.getElementById('jobDesc').value='';
-  document.getElementById('charCount').textContent='0';
-  document.getElementById('fileList').innerHTML='';
-  document.getElementById('fileCount').textContent='';
-  document.getElementById('planBanner').innerHTML='';
-  document.getElementById('btnStep2').disabled=true;
-  document.getElementById('resultsWrap').style.display='none';
-  document.getElementById('progressBar').style.width='0%';
-  document.getElementById('progressText').textContent='0% complete';
+  currentStep = 1;
+  uploadedFiles = [];   // FIX #4: clear the in-memory file array
+  lastScreeningResults = [];
+
+  document.getElementById('jobTitle').value = '';
+  document.getElementById('jobDesc').value = '';
+  document.getElementById('expRequired').value = '';
+  document.getElementById('charCount').textContent = '0';
+  document.getElementById('cvInput').value = '';         // FIX #4: reset file input so same files can be picked again
+  document.getElementById('fileList').innerHTML = '';
+  document.getElementById('fileCount').textContent = '';
+  document.getElementById('planBanner').innerHTML = '';
+  document.getElementById('btnStep2').disabled = true;
+  document.getElementById('resultsWrap').style.display = 'none';
+  document.getElementById('progressBar').style.width = '0%';
+  document.getElementById('progressText').textContent = '0% complete';
+
   [['ps1','📄 Reading CVs...'],['ps2','🤖 AI analyzing...'],['ps3','🔍 ATS checks...'],['ps4','📊 Scoring...'],['ps5','✅ Report...']]
     .forEach(([id,lbl])=>{ const el=document.getElementById(id); if(el){el.className='proc-step';el.textContent=lbl;} });
+
   for(let i=1;i<=5;i++) {
     const c=document.getElementById('sc'+i); const l=document.getElementById('sl'+i);
     if(c){c.className='step-circle'+(i===1?' active':'');c.textContent=i;}
@@ -1054,11 +1101,15 @@ async function loadSavedCandidates() {
   try {
     const { data } = await sb.from('candidates').select('*').eq('user_id', currentUser.id).eq('saved', true).order('created_at',{ascending:false});
     const el = document.getElementById('candidatesContent');
-    if(!data||data.length===0) return;
+    if(!data||data.length===0) {
+      el.innerHTML = '<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2rem;text-align:center;color:var(--muted);font-size:.9rem"><div style="font-size:2rem;margin-bottom:.75rem">👥</div>No saved candidates yet.</div>';
+      return;
+    }
     el.innerHTML=data.map(c=>`
       <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:.75rem">
         <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--gold));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:#fff">${(c.name||'?')[0].toUpperCase()}</div>
-        <div style="flex:1;min-width:160px"><div style="font-weight:600">${c.name||'Unknown'}</div><div style="font-size:.78rem;color:var(--muted)">Score: ${c.score}</div></div>
+        <div style="flex:1;min-width:160px"><div style="font-weight:600">${c.name||'Unknown'}</div><div style="font-size:.78rem;color:var(--muted)">Score: ${c.score} · ATS: ${c.ats_score||0}</div></div>
+        <div style="font-size:.78rem;color:var(--muted)">${c.skills||'—'}</div>
       </div>`).join('');
   } catch(e) { console.warn('Candidates load error:', e); }
 }
@@ -1089,22 +1140,17 @@ async function saveSettings() {
 async function logout() { await sb.auth.signOut(); window.location.href='login.html'; }
 
 // ============ STRIPE UPGRADE ============
-// ✅ Fix Issue 1: To add Stripe links:
-// 1. Go to dashboard.stripe.com
-// 2. Products → Payment Links → Create Link
-// 3. Replace the URLs below with your actual links
 let selectedUpgradePlan='pro';
 function showUpgradeModal() { document.getElementById('upgradeModal').classList.add('open'); }
 function closeUpgradeModal() { document.getElementById('upgradeModal').classList.remove('open'); }
 function selectUpgradePlan(el,plan) { document.querySelectorAll('.plan-card-sm').forEach(c=>c.classList.remove('selected')); el.classList.add('selected'); selectedUpgradePlan=plan; }
+
 function proceedToPayment() {
   if(selectedUpgradePlan==='free'){ closeUpgradeModal(); showToast('You are on the free plan!'); return; }
   if(selectedUpgradePlan==='enterprise'){ closeUpgradeModal(); window.open('mailto:hello@autremix.com?subject=HireIQ Enterprise','_blank'); return; }
   const link=STRIPE_LINKS[selectedUpgradePlan];
-  if(!link||link.includes('REPLACE')){
-    showToast('Payment coming soon! Contact hello@autremix.com to upgrade.','error');
-    return;
-  }
+  // FIX #1: Clear messaging when links are not yet configured
+  if(!link||link.includes('REPLACE')){ showToast('Payment link not configured yet. Check STRIPE_LINKS in code.','error'); return; }
   closeUpgradeModal(); window.open(link,'_blank');
 }
 
