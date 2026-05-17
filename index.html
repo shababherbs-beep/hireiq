@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HireIQ — AI CV Screening by Autremix</title>
+<title>HireIQ — AI CV Screening by Snyapt Agency</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#040d1a;--bg2:#071628;--accent:#0ea5e9;--accent2:#38bdf8;--gold:#f59e0b;--text:#f0f6ff;--muted:#7aa0c0;--border:rgba(14,165,233,0.15);--card:rgba(7,22,40,0.85)}
@@ -16,6 +16,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-links{display:flex;gap:2rem;list-style:none}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500;transition:color .2s}
 .nav-links a:hover{color:var(--text)}
+/* ATS Badge in nav */
+.nav-ats{display:inline-flex;align-items:center;gap:.4rem;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:#f59e0b;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.3rem .75rem;border-radius:99px;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-ats:hover{background:rgba(245,158,11,0.18);border-color:#f59e0b}
+.nav-ats::before{content:'✦';font-size:.6rem}
 .nav-cta{background:var(--accent);color:#fff;padding:.5rem 1.25rem;border-radius:6px;font-size:.9rem;font-weight:600;text-decoration:none;transition:all .2s;white-space:nowrap}
 .nav-cta:hover{background:var(--accent2);transform:translateY(-1px)}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
@@ -92,35 +96,65 @@ section{padding:5rem 5%}
 .feature-icon{width:40px;height:40px;background:rgba(14,165,233,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:.875rem}
 .feature-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.95rem;font-weight:700;margin-bottom:.4rem}
 .feature-desc{font-size:.85rem;color:var(--muted);line-height:1.6}
-.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem;margin-top:2.5rem;max-width:960px}
-.price-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.75rem;transition:transform .2s;position:relative}
+
+/* ---- PRICING ---- */
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.25rem;margin-top:2.5rem}
+.price-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.6rem;transition:transform .2s;position:relative}
 .price-card:hover{transform:translateY(-3px)}
 .price-card.featured{border-color:var(--accent);box-shadow:0 0 40px rgba(14,165,233,0.12)}
 .featured-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .875rem;border-radius:99px;white-space:nowrap}
 .plan-icon{font-size:1.4rem;margin-bottom:.75rem}
-.plan-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:.85rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-.plan-price{font-family:'Plus Jakarta Sans',sans-serif;font-size:2.4rem;font-weight:700;color:var(--text);margin:.4rem 0 .2rem;line-height:1}
-.plan-price span{font-size:.95rem;color:var(--muted);font-weight:400}
-.plan-desc{font-size:.85rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.5}
-.plan-divider{height:1px;background:var(--border);margin:1.1rem 0}
-.plan-features{list-style:none;margin-bottom:1.5rem}
-.plan-features li{font-size:.85rem;color:var(--muted);padding:.35rem 0;display:flex;align-items:flex-start;gap:.5rem;border-bottom:1px solid rgba(255,255,255,0.03)}
+.plan-name{font-family:'Plus Jakarta Sans',sans-serif;font-size:.82rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.plan-price{font-family:'Plus Jakarta Sans',sans-serif;font-size:2.1rem;font-weight:700;color:var(--text);margin:.4rem 0 .2rem;line-height:1}
+.plan-price span{font-size:.88rem;color:var(--muted);font-weight:400}
+.plan-desc{font-size:.83rem;color:var(--muted);margin-bottom:1.1rem;line-height:1.5}
+.plan-divider{height:1px;background:var(--border);margin:1rem 0}
+.plan-features{list-style:none;margin-bottom:1.4rem}
+.plan-features li{font-size:.82rem;color:var(--muted);padding:.3rem 0;display:flex;align-items:flex-start;gap:.45rem;border-bottom:1px solid rgba(255,255,255,0.03)}
 .plan-features li:last-child{border-bottom:none}
 .plan-features li::before{content:'✓';color:var(--accent);font-weight:700;flex-shrink:0;margin-top:.1rem}
 .plan-features li.no{opacity:.45}
 .plan-features li.no::before{content:'—';color:var(--muted)}
-.plan-btn{width:100%;padding:.75rem;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text);transition:all .2s;text-align:center;display:block;text-decoration:none;font-family:'DM Sans',sans-serif}
+.plan-btn{width:100%;padding:.7rem;border-radius:8px;font-size:.88rem;font-weight:600;cursor:pointer;border:1px solid var(--border);background:transparent;color:var(--text);transition:all .2s;text-align:center;display:block;text-decoration:none;font-family:'DM Sans',sans-serif}
 .price-card.featured .plan-btn{background:var(--accent);border-color:var(--accent);color:#fff}
 .plan-btn:hover{border-color:var(--accent);color:var(--accent)}
 .price-card.featured .plan-btn:hover{background:var(--accent2);border-color:var(--accent2);color:#fff}
-.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin-top:2.5rem}
-.testi-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem}
-.testi-stars{color:var(--gold);font-size:.85rem;margin-bottom:.75rem}
-.testi-text{font-size:.875rem;color:var(--muted);line-height:1.75;margin-bottom:1rem;font-style:italic}
-.testi-author{display:flex;align-items:center;gap:.75rem}
-.testi-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--gold));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:#fff;flex-shrink:0}
-.testi-name{font-size:.85rem;font-weight:600}
-.testi-role{font-size:.75rem;color:var(--muted)}
+.plan-free-tag{display:inline-block;font-size:.68rem;padding:.15rem .5rem;border-radius:4px;background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.2);font-weight:700;margin-left:.4rem;vertical-align:middle}
+
+/* ---- TESTIMONIALS ---- */
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2.5rem}
+.testi-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:transform .2s,border-color .2s}
+.testi-card:hover{transform:translateY(-3px);border-color:rgba(14,165,233,0.25)}
+.testi-stars{color:var(--gold);font-size:.9rem;margin-bottom:.875rem;letter-spacing:.1em}
+.testi-text{font-size:.875rem;color:var(--muted);line-height:1.8;margin-bottom:1.25rem;font-style:italic;border-left:2px solid rgba(14,165,233,0.3);padding-left:.875rem}
+.testi-author{display:flex;align-items:center;gap:.875rem}
+.testi-img{width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid var(--border);flex-shrink:0}
+.testi-avatar-fallback{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;color:#fff;flex-shrink:0;border:2px solid var(--border)}
+.testi-name{font-size:.875rem;font-weight:700}
+.testi-role{font-size:.75rem;color:var(--muted);margin-top:.1rem}
+
+/* Submit Testimonial */
+.testi-submit-wrap{margin-top:2.5rem;text-align:center}
+.testi-submit-btn{background:rgba(14,165,233,0.08);border:1px dashed rgba(14,165,233,0.35);color:var(--accent2);padding:.8rem 1.75rem;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.testi-submit-btn:hover{background:rgba(14,165,233,0.14);border-color:var(--accent)}
+.testi-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.testi-modal-overlay.open{display:flex}
+.testi-modal{background:#071e35;border:1px solid var(--border);border-radius:16px;padding:2rem;width:90%;max-width:440px;position:relative}
+.testi-modal h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:700;margin-bottom:1.25rem}
+.testi-modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;line-height:1}
+.testi-modal-close:hover{color:var(--text)}
+.tform-group{margin-bottom:1rem}
+.tform-group label{font-size:.8rem;color:var(--muted);display:block;margin-bottom:.35rem;font-weight:600}
+.tform-group input,.tform-group textarea,.tform-group select{width:100%;padding:.7rem .9rem;border-radius:7px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text);font-size:.875rem;outline:none;transition:border-color .2s;font-family:'DM Sans',sans-serif;resize:vertical}
+.tform-group input::placeholder,.tform-group textarea::placeholder{color:var(--muted)}
+.tform-group input:focus,.tform-group textarea:focus,.tform-group select:focus{border-color:var(--accent)}
+.tform-row{display:grid;grid-template-columns:1fr 1fr;gap:.875rem}
+.tform-img-preview{width:56px;height:56px;border-radius:50%;object-fit:cover;border:2px solid var(--border);margin-top:.5rem;display:none}
+.tform-submit{width:100%;padding:.8rem;border-radius:8px;background:var(--accent);color:#fff;font-size:.9rem;font-weight:700;border:none;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;margin-top:.5rem}
+.tform-submit:hover{background:var(--accent2)}
+.testi-success{display:none;color:#4ade80;font-size:.88rem;text-align:center;margin-top:.75rem}
+
+/* CTA Section */
 .cta-section{text-align:center;padding:6rem 5%;position:relative;overflow:hidden}
 .cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%,rgba(14,165,233,0.07) 0%,transparent 70%)}
 .cta-section h2{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;letter-spacing:-.02em;position:relative;z-index:1}
@@ -132,6 +166,37 @@ section{padding:5rem 5%}
 .success-msg{display:none;color:var(--accent2);font-size:.9rem;margin-top:1rem;position:relative;z-index:1}
 .trust-row{display:flex;flex-wrap:wrap;gap:1.25rem;justify-content:center;margin-top:1.5rem;position:relative;z-index:1}
 .trust-item{font-size:.8rem;color:var(--muted);display:flex;align-items:center;gap:.4rem}
+
+/* Email collection info box */
+.email-info-box{background:rgba(14,165,233,0.06);border:1px solid rgba(14,165,233,0.18);border-radius:10px;padding:1rem 1.25rem;margin-top:1rem;font-size:.82rem;color:var(--muted);max-width:480px;margin-left:auto;margin-right:auto;line-height:1.65;position:relative;z-index:1}
+.email-info-box strong{color:var(--accent2)}
+
+/* ATS Checker Section */
+.ats-section{padding:5rem 5%;background:linear-gradient(135deg,rgba(14,165,233,0.04),rgba(56,189,248,0.02))}
+.ats-inner{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+.ats-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);color:#f59e0b;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.35rem .875rem;border-radius:99px;margin-bottom:.875rem}
+.ats-features{display:flex;flex-direction:column;gap:.75rem;margin-top:1.5rem}
+.ats-feature-row{display:flex;align-items:flex-start;gap:.75rem;padding:.875rem 1rem;background:var(--card);border:1px solid var(--border);border-radius:10px;transition:border-color .2s}
+.ats-feature-row:hover{border-color:rgba(245,158,11,0.3)}
+.ats-feature-icon{font-size:1.2rem;flex-shrink:0;margin-top:.1rem}
+.ats-feature-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:.875rem;font-weight:700;margin-bottom:.2rem}
+.ats-feature-desc{font-size:.8rem;color:var(--muted);line-height:1.55}
+.ats-mockup{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;backdrop-filter:blur(12px)}
+.ats-mockup-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;padding-bottom:.875rem;border-bottom:1px solid var(--border)}
+.ats-score-ring{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.ats-ring-svg{transform:rotate(-90deg)}
+.ats-ring-bg{fill:none;stroke:rgba(255,255,255,0.06);stroke-width:8}
+.ats-ring-fill{fill:none;stroke:url(#atsGrad);stroke-width:8;stroke-linecap:round;stroke-dasharray:220;stroke-dashoffset:55;transition:stroke-dashoffset 1.5s ease}
+.ats-ring-label{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.6rem;font-weight:800;color:var(--accent)}
+.ats-ring-sub{font-size:.72rem;color:var(--muted)}
+.ats-checks{display:flex;flex-direction:column;gap:.5rem;margin-top:1rem}
+.ats-check-row{display:flex;align-items:center;justify-content:space-between;padding:.5rem .75rem;border-radius:7px;background:rgba(255,255,255,0.03)}
+.ats-check-label{font-size:.8rem;color:var(--muted)}
+.ats-check-val{font-size:.78rem;font-weight:700;padding:.15rem .5rem;border-radius:4px}
+.ats-val-good{background:rgba(34,197,94,0.1);color:#4ade80}
+.ats-val-warn{background:rgba(245,158,11,0.1);color:#f59e0b}
+.ats-val-bad{background:rgba(239,68,68,0.1);color:#f87171}
+
 footer{border-top:1px solid var(--border);padding:3rem 5% 2rem}
 .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-bottom:2rem}
 .footer-brand p{font-size:.82rem;color:var(--muted);line-height:1.65;max-width:220px;margin-top:.75rem}
@@ -144,49 +209,89 @@ footer{border-top:1px solid var(--border);padding:3rem 5% 2rem}
 .footer-legal a{font-size:.78rem;color:var(--muted);text-decoration:none;transition:color .2s}
 .footer-legal a:hover{color:var(--accent)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* Signup Modal */
+.signup-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.signup-modal-overlay.open{display:flex}
+.signup-modal{background:#071e35;border:1px solid var(--border);border-radius:18px;padding:2.25rem;width:90%;max-width:400px;position:relative;animation:fadeUp .3s ease}
+.signup-modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--muted);font-size:1.4rem;cursor:pointer;line-height:1}
+.signup-modal-close:hover{color:var(--text)}
+.signup-modal h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.25rem;font-weight:700;margin-bottom:.35rem}
+.signup-modal p{font-size:.85rem;color:var(--muted);margin-bottom:1.5rem}
+.sform-group{margin-bottom:1rem}
+.sform-group label{font-size:.8rem;color:var(--muted);display:block;margin-bottom:.35rem;font-weight:600}
+.sform-group input,.sform-group select{width:100%;padding:.75rem 1rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text);font-size:.875rem;outline:none;transition:border-color .2s;font-family:'DM Sans',sans-serif}
+.sform-group input::placeholder{color:var(--muted)}
+.sform-group input:focus,.sform-group select:focus{border-color:var(--accent)}
+.sform-row{display:grid;grid-template-columns:1fr 1fr;gap:.875rem}
+.sform-submit{width:100%;padding:.875rem;border-radius:8px;background:var(--accent);color:#fff;font-size:.95rem;font-weight:700;border:none;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;margin-top:.5rem;box-shadow:0 0 24px rgba(14,165,233,0.25)}
+.sform-submit:hover{background:var(--accent2);transform:translateY(-1px)}
+.sform-success{display:none;text-align:center;padding:1rem 0}
+.sform-success-icon{font-size:2.5rem;margin-bottom:.75rem}
+.sform-success h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;margin-bottom:.5rem}
+.sform-success p{font-size:.85rem;color:var(--muted)}
+.sform-terms{font-size:.75rem;color:var(--muted);text-align:center;margin-top:.75rem}
+.plan-select-header{display:flex;align-items:center;gap:.5rem;padding:.6rem .875rem;border-radius:7px;margin-bottom:1rem;font-size:.82rem}
+.plan-select-header.free{background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.2);color:#4ade80}
+.plan-select-header.starter{background:rgba(14,165,233,0.07);border:1px solid rgba(14,165,233,0.2);color:var(--accent2)}
+.plan-select-header.pro{background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);color:#f59e0b}
+.plan-select-header.enterprise{background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.2);color:#a78bfa}
+
 @media(max-width:1024px){
   .hero{grid-template-columns:1fr;text-align:center;padding:6rem 5% 3rem}
   .hero-left{display:flex;flex-direction:column;align-items:center}
   .hero-desc{text-align:center}
   .hero-stats{justify-content:center}
   .hero-right{max-width:440px;margin:0 auto;width:100%}
+  .ats-inner{grid-template-columns:1fr}
 }
 @media(max-width:768px){
-  .nav-links,.nav-cta{display:none}
+  .nav-links,.nav-cta,.nav-ats{display:none}
   .hamburger{display:flex}
   .hero{padding:5rem 5% 3rem;gap:2rem}
   .float-card{display:none}
   .footer-top{grid-template-columns:1fr 1fr}
   .footer-bottom{flex-direction:column;text-align:center}
+  .tform-row,.sform-row{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:480px){
   .footer-top{grid-template-columns:1fr}
   .hero-stats{gap:1.5rem}
   .waitlist-input{width:100%;max-width:320px}
   .how-grid{grid-template-columns:1fr 1fr}
+  .pricing-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
+
+<!-- NAV -->
 <nav>
   <a href="index.html" class="logo">Hire<span>IQ</span></a>
   <ul class="nav-links">
-    <li><a href="how-it-works.html">How It Works</a></li>
-    <li><a href="features.html">Features</a></li>
-    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#ats-checker">ATS Checker</a></li>
+    <li><a href="#pricing">Pricing</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
-  <a href="signup.html" class="nav-cta">Get Early Access</a>
+  <div style="display:flex;align-items:center;gap:.875rem">
+    <a href="#ats-checker" class="nav-ats">✦ ATS Checker</a>
+    <a href="#" class="nav-cta" onclick="openSignup('pro');return false">Get Early Access</a>
+  </div>
   <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="how-it-works.html">How It Works</a>
-  <a href="features.html">Features</a>
-  <a href="pricing.html">Pricing</a>
+  <a href="#how-it-works">How It Works</a>
+  <a href="#features">Features</a>
+  <a href="#ats-checker">ATS Checker</a>
+  <a href="#pricing">Pricing</a>
   <a href="contact.html">Contact</a>
-  <a href="signup.html" style="color:var(--accent);font-weight:600">Get Early Access →</a>
+  <a href="#" onclick="openSignup('pro');return false" style="color:var(--accent);font-weight:600">Get Early Access →</a>
 </div>
 
+<!-- HERO -->
 <section class="hero" style="padding-top:7rem">
   <canvas id="particles"></canvas>
   <div class="hero-bg"></div>
@@ -195,13 +300,13 @@ footer{border-top:1px solid var(--border);padding:3rem 5% 2rem}
     <h1>Screen 100 CVs in<br><span class="hl">2 Minutes</span> with AI</h1>
     <p class="hero-desc">HireIQ reads every CV, scores each candidate against your job requirements, and delivers a ranked shortlist — automatically. No manual work needed.</p>
     <div class="hero-btns">
-      <a href="signup.html" class="btn-primary">Start Free Trial</a>
-      <a href="how-it-works.html" class="btn-secondary">See How It Works</a>
+      <a href="#" class="btn-primary" onclick="openSignup('free');return false">Start Free — $0 Forever</a>
+      <a href="#how-it-works" class="btn-secondary">See How It Works</a>
     </div>
     <div class="hero-stats">
       <div><div class="stat-num">98%</div><div class="stat-label">Screening accuracy</div></div>
       <div><div class="stat-num">10x</div><div class="stat-label">Faster than manual</div></div>
-      <div><div class="stat-num">$99</div><div class="stat-label">Starting per month</div></div>
+      <div><div class="stat-num">$0</div><div class="stat-label">To get started</div></div>
     </div>
   </div>
   <div class="hero-right">
@@ -227,7 +332,8 @@ footer{border-top:1px solid var(--border);padding:3rem 5% 2rem}
   </div>
 </section>
 
-<section class="bg2">
+<!-- HOW IT WORKS -->
+<section class="bg2" id="how-it-works">
   <div class="section-tag">How It Works</div>
   <div class="section-title">Four steps to your perfect shortlist</div>
   <div class="section-sub">No setup required. No IT team needed. Start in under 5 minutes.</div>
@@ -237,10 +343,10 @@ footer{border-top:1px solid var(--border);padding:3rem 5% 2rem}
     <div class="how-card"><div class="how-num">03</div><div class="how-icon">🏆</div><div class="how-title">Get ranked shortlist</div><div class="how-desc">Scored, ranked list with AI reasons for each candidate in under 2 minutes.</div></div>
     <div class="how-card"><div class="how-num">04</div><div class="how-icon">📧</div><div class="how-title">Share with your team</div><div class="how-desc">Export PDF or send a branded report to your hiring manager — one click.</div></div>
   </div>
-  <div style="margin-top:2rem;text-align:center"><a href="how-it-works.html" class="btn-secondary">Learn More →</a></div>
 </section>
 
-<section>
+<!-- FEATURES -->
+<section id="features">
   <div class="section-tag">Features</div>
   <div class="section-title">Everything your HR team needs</div>
   <div class="features-grid">
@@ -251,31 +357,185 @@ footer{border-top:1px solid var(--border);padding:3rem 5% 2rem}
     <div class="feature-card"><div class="feature-icon">📄</div><div class="feature-title">Branded Reports</div><div class="feature-desc">Professional PDF reports with your company branding, ready to share.</div></div>
     <div class="feature-card"><div class="feature-icon">🔒</div><div class="feature-title">Data Privacy</div><div class="feature-desc">Encrypted, GDPR compliant. Your CV data is never shared. Delete anytime.</div></div>
   </div>
-  <div style="margin-top:2rem;text-align:center"><a href="features.html" class="btn-secondary">All Features →</a></div>
 </section>
 
-<section class="bg2">
+<!-- ATS CHECKER -->
+<section class="ats-section" id="ats-checker">
+  <div class="ats-inner">
+    <div>
+      <div class="ats-badge">✦ New Feature</div>
+      <div class="section-tag">ATS Checker</div>
+      <div class="section-title">Is your CV ATS-ready?</div>
+      <div class="section-sub">Most CVs get rejected before a human ever reads them. Our ATS Checker instantly analyzes if a CV will pass Applicant Tracking Systems — and tells you exactly how to fix it.</div>
+      <div class="ats-features">
+        <div class="ats-feature-row"><div class="ats-feature-icon">🔍</div><div><div class="ats-feature-title">Keyword Gap Analysis</div><div class="ats-feature-desc">Detects missing keywords from the job description that ATS systems scan for.</div></div></div>
+        <div class="ats-feature-row"><div class="ats-feature-icon">📐</div><div><div class="ats-feature-title">Format & Structure Check</div><div class="ats-feature-desc">Flags tables, graphics, and formatting that confuse ATS parsers.</div></div></div>
+        <div class="ats-feature-row"><div class="ats-feature-icon">⚡</div><div><div class="ats-feature-title">Instant Fix Suggestions</div><div class="ats-feature-desc">AI generates specific improvements to boost the ATS compatibility score.</div></div></div>
+      </div>
+      <div style="margin-top:1.5rem">
+        <a href="#" class="btn-primary" onclick="openSignup('starter');return false">Try ATS Checker Free</a>
+      </div>
+    </div>
+    <div class="ats-mockup">
+      <div class="ats-mockup-header">
+        <span style="font-family:'Plus Jakarta Sans',sans-serif;font-size:.85rem;font-weight:700">ATS Compatibility Score</span>
+        <span style="font-size:.72rem;color:#f59e0b;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.2);padding:.2rem .6rem;border-radius:20px;font-weight:600">⚠ Needs Work</span>
+      </div>
+      <div class="ats-score-ring" style="margin:1rem 0">
+        <svg width="110" height="110" viewBox="0 0 110 110" class="ats-ring-svg">
+          <defs>
+            <linearGradient id="atsGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#f59e0b"/>
+              <stop offset="100%" stop-color="#0ea5e9"/>
+            </linearGradient>
+          </defs>
+          <circle cx="55" cy="55" r="35" class="ats-ring-bg"/>
+          <circle cx="55" cy="55" r="35" class="ats-ring-fill"/>
+        </svg>
+        <div style="margin-top:-.5rem">
+          <div class="ats-ring-label">72%</div>
+          <div class="ats-ring-sub">ATS Score</div>
+        </div>
+      </div>
+      <div class="ats-checks">
+        <div class="ats-check-row"><span class="ats-check-label">Keyword Match</span><span class="ats-check-val ats-val-warn">62%</span></div>
+        <div class="ats-check-row"><span class="ats-check-label">Format Compatibility</span><span class="ats-check-val ats-val-good">Pass</span></div>
+        <div class="ats-check-row"><span class="ats-check-label">Contact Info</span><span class="ats-check-val ats-val-good">Complete</span></div>
+        <div class="ats-check-row"><span class="ats-check-label">Tables / Graphics</span><span class="ats-check-val ats-val-bad">Found</span></div>
+        <div class="ats-check-row"><span class="ats-check-label">File Format</span><span class="ats-check-val ats-val-good">PDF ✓</span></div>
+        <div class="ats-check-row"><span class="ats-check-label">Section Headers</span><span class="ats-check-val ats-val-warn">Partial</span></div>
+      </div>
+      <div style="margin-top:1rem;padding:.75rem;background:rgba(14,165,233,0.05);border-radius:8px;border:1px solid rgba(14,165,233,0.12)">
+        <div style="font-size:.75rem;color:var(--accent2);font-weight:700;margin-bottom:.3rem">💡 AI Suggestion</div>
+        <div style="font-size:.78rem;color:var(--muted);line-height:1.55">Add missing keywords: "REST API", "CI/CD", "Agile". Remove the skills table — replace with a plain bulleted list.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="bg2" id="pricing">
   <div class="section-tag">Pricing</div>
   <div class="section-title">Simple, transparent pricing</div>
-  <div class="section-sub">No hidden fees. No per-CV charges. Cancel anytime.</div>
+  <div class="section-sub">Start free forever. No hidden fees. No per-CV charges. Upgrade only when you need to.</div>
   <div class="pricing-grid">
-    <div class="price-card"><div class="plan-icon">🌱</div><div class="plan-name">Starter</div><div class="plan-price">$99<span>/month</span></div><div class="plan-desc">Perfect for small HR teams</div><div class="plan-divider"></div><ul class="plan-features"><li>Up to 50 CVs per screening</li><li>AI scoring & ranking</li><li>Summary reasons per candidate</li><li>PDF export</li><li>Email support</li><li class="no">Custom scoring criteria</li></ul><a href="signup.html?plan=starter" class="plan-btn">Get Started</a></div>
-    <div class="price-card featured"><div class="featured-badge">Most Popular</div><div class="plan-icon">🚀</div><div class="plan-name">Pro</div><div class="plan-price">$249<span>/month</span></div><div class="plan-desc">For growing enterprise teams</div><div class="plan-divider"></div><ul class="plan-features"><li>Unlimited CVs per screening</li><li>Custom scoring criteria</li><li>Branded email reports</li><li>Multiple job postings</li><li>Priority support</li><li>3 team member seats</li></ul><a href="signup.html?plan=pro" class="plan-btn">Get Started</a></div>
-    <div class="price-card"><div class="plan-icon">🏢</div><div class="plan-name">Enterprise</div><div class="plan-price">$599<span>/month</span></div><div class="plan-desc">For large organizations</div><div class="plan-divider"></div><ul class="plan-features"><li>Everything in Pro</li><li>Unlimited team seats</li><li>ATS integration</li><li>API access</li><li>Dedicated account manager</li><li>SLA guarantee</li></ul><a href="contact.html" class="plan-btn">Contact Sales</a></div>
+    <!-- FREE -->
+    <div class="price-card">
+      <div class="plan-icon">🌱</div>
+      <div class="plan-name">Free Trial</div>
+      <div class="plan-price">$0<span> / forever</span></div>
+      <div class="plan-desc">Try it out. No commitment.</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>5 CVs per month</li>
+        <li>1 active job</li>
+        <li>Basic AI analysis</li>
+        <li>CSV export</li>
+        <li class="no">PDF reports</li>
+        <li class="no">Custom scoring</li>
+      </ul>
+      <a href="#" class="plan-btn" onclick="openSignup('free');return false">Start Free</a>
+    </div>
+    <!-- STARTER -->
+    <div class="price-card">
+      <div class="plan-icon">🚀</div>
+      <div class="plan-name">Starter</div>
+      <div class="plan-price">$19<span>/month</span></div>
+      <div class="plan-desc">For small teams hiring regularly.</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>50 CVs per month</li>
+        <li>5 active jobs</li>
+        <li>Full AI analysis</li>
+        <li>PDF reports</li>
+        <li>Email support</li>
+        <li class="no">Custom scoring</li>
+      </ul>
+      <a href="#" class="plan-btn" onclick="openSignup('starter');return false">Get Started</a>
+    </div>
+    <!-- PRO -->
+    <div class="price-card featured">
+      <div class="featured-badge">Most Popular</div>
+      <div class="plan-icon">⚡</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-price">$49<span>/month</span></div>
+      <div class="plan-desc">For growing teams who hire fast.</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>500 CVs per month</li>
+        <li>Unlimited jobs</li>
+        <li>Full AI + custom criteria</li>
+        <li>PDF reports</li>
+        <li>Priority support</li>
+        <li>Team access (3 seats)</li>
+        <li>API access</li>
+      </ul>
+      <a href="#" class="plan-btn" onclick="openSignup('pro');return false">Get Started</a>
+    </div>
+    <!-- ENTERPRISE -->
+    <div class="price-card">
+      <div class="plan-icon">🏢</div>
+      <div class="plan-name">Enterprise</div>
+      <div class="plan-price" style="font-size:1.5rem">Custom<span> / contact us</span></div>
+      <div class="plan-desc">For large orgs &amp; agencies.</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>Unlimited CVs</li>
+        <li>Unlimited jobs</li>
+        <li>Custom AI prompts</li>
+        <li>SSO / SAML</li>
+        <li>Dedicated support</li>
+        <li>SLA guarantee</li>
+        <li>On-prem option</li>
+      </ul>
+      <a href="contact.html" class="plan-btn">Contact Sales</a>
+    </div>
   </div>
-  <div style="margin-top:2rem;text-align:center"><a href="pricing.html" class="btn-secondary">View Full Pricing →</a></div>
 </section>
 
-<section>
+<!-- TESTIMONIALS -->
+<section id="testimonials">
   <div class="section-tag">Testimonials</div>
   <div class="section-title">HR teams love HireIQ</div>
-  <div class="testi-grid">
-    <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"We used to spend 2 days screening CVs. HireIQ does it in minutes. Our hiring speed improved dramatically."</div><div class="testi-author"><div class="testi-avatar">SA</div><div><div class="testi-name">Sara Ahmed</div><div class="testi-role">HR Director, TechCorp Pakistan</div></div></div></div>
-    <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"The AI scoring is incredibly accurate. We hired 3 people using HireIQ and all 3 turned out excellent."</div><div class="testi-author"><div class="testi-avatar">MK</div><div><div class="testi-name">Muhammad Khan</div><div class="testi-role">Talent Manager, Global Finance Ltd</div></div></div></div>
-    <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"Simple to use, powerful results. No IT setup needed. Up and running in 5 minutes. Worth every penny."</div><div class="testi-author"><div class="testi-avatar">FN</div><div><div class="testi-name">Fatima Noor</div><div class="testi-role">Head of HR, Nexus Solutions</div></div></div></div>
+  <div class="section-sub">Real feedback from real hiring teams.</div>
+  <div class="testi-grid" id="testiGrid">
+    <!-- Default testimonials -->
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"We used to spend 2 days screening CVs. HireIQ does it in minutes. Our hiring speed improved dramatically."</div>
+      <div class="testi-author">
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sara&backgroundColor=0ea5e9" class="testi-img" alt="Sara Ahmed" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="testi-avatar-fallback" style="display:none;background:linear-gradient(135deg,#0ea5e9,#38bdf8)">SA</div>
+        <div><div class="testi-name">Sara Ahmed</div><div class="testi-role">HR Director, TechCorp Pakistan</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"The AI scoring is incredibly accurate. We hired 3 people using HireIQ and all 3 turned out excellent."</div>
+      <div class="testi-author">
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Muhammad&backgroundColor=8b5cf6" class="testi-img" alt="Muhammad Khan" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="testi-avatar-fallback" style="display:none;background:linear-gradient(135deg,#8b5cf6,#a78bfa)">MK</div>
+        <div><div class="testi-name">Muhammad Khan</div><div class="testi-role">Talent Manager, Global Finance Ltd</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"Simple to use, powerful results. No IT setup needed. Up and running in 5 minutes. Worth every penny."</div>
+      <div class="testi-author">
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Fatima&backgroundColor=f59e0b" class="testi-img" alt="Fatima Noor" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="testi-avatar-fallback" style="display:none;background:linear-gradient(135deg,#f59e0b,#fbbf24)">FN</div>
+        <div><div class="testi-name">Fatima Noor</div><div class="testi-role">Head of HR, Nexus Solutions</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submit testimonial button -->
+  <div class="testi-submit-wrap">
+    <button class="testi-submit-btn" onclick="openTestiModal()">+ Share Your Experience</button>
   </div>
 </section>
 
+<!-- CTA SECTION -->
 <section class="cta-section">
   <h2>Ready to hire smarter?</h2>
   <p>Join 500+ HR teams already using HireIQ to find the best candidates faster.</p>
@@ -284,42 +544,209 @@ footer{border-top:1px solid var(--border);padding:3rem 5% 2rem}
     <button class="btn-primary" onclick="submitEmail()">Get Early Access</button>
   </div>
   <p class="success-msg" id="successMsg">🎉 Thank you! We'll be in touch shortly.</p>
-  <div class="trust-row">
-    <span class="trust-item">✅ 14-day free trial</span>
+  <div class="email-info-box">
+    <strong>📬 What happens with your email?</strong><br>
+    When you submit your email, it goes directly to the Snyapt Agency team. We'll send you a personal onboarding link within 24 hours. No spam — only product updates and your account details. You can unsubscribe anytime.
+  </div>
+  <div class="trust-row" style="margin-top:1.5rem">
+    <span class="trust-item">🆓 Free plan — no credit card</span>
     <span class="trust-item">🔒 No credit card required</span>
     <span class="trust-item">↩️ Cancel anytime</span>
     <span class="trust-item">⚡ Setup in 5 minutes</span>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
       <a href="index.html" class="logo">Hire<span>IQ</span></a>
       <p>AI-powered CV screening for enterprise HR teams. Screen smarter. Hire faster.</p>
-      <p style="margin-top:.5rem;font-size:.75rem;color:var(--muted)">by <strong style="color:var(--accent)">Autremix</strong> — Mohsin Munir</p>
+      <p style="margin-top:.5rem;font-size:.75rem;color:var(--muted)">by <strong style="color:var(--accent)">Snyapt Agency</strong></p>
     </div>
-    <div class="footer-col"><h4>Product</h4><a href="how-it-works.html">How It Works</a><a href="features.html">Features</a><a href="pricing.html">Pricing</a><a href="signup.html">Early Access</a></div>
+    <div class="footer-col"><h4>Product</h4><a href="#how-it-works">How It Works</a><a href="#features">Features</a><a href="#ats-checker">ATS Checker</a><a href="#pricing">Pricing</a><a href="#" onclick="openSignup('free');return false">Start Free</a></div>
     <div class="footer-col"><h4>Company</h4><a href="contact.html">Contact Us</a><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
-    <div class="footer-col"><h4>Contact</h4><a href="mailto:hello@autremix.com">hello@autremix.com</a><a href="https://linkedin.com" target="_blank">LinkedIn</a><a href="contact.html">Get in Touch</a></div>
+    <div class="footer-col"><h4>Contact</h4><a href="mailto:hello@snyaptagency.com">hello@snyaptagency.com</a><a href="https://linkedin.com" target="_blank">LinkedIn</a><a href="contact.html">Get in Touch</a></div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2025 Autremix. All rights reserved.</div>
+    <div class="footer-copy">© 2025 Snyapt Agency. All rights reserved.</div>
     <div class="footer-legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="contact.html">Contact</a></div>
   </div>
 </footer>
 
+<!-- SIGNUP MODAL -->
+<div class="signup-modal-overlay" id="signupModal">
+  <div class="signup-modal">
+    <button class="signup-modal-close" onclick="closeSignup()">×</button>
+    <div id="signupForm">
+      <div id="planHeader" class="plan-select-header free">🌱 Free Plan — $0/forever</div>
+      <h3>Create your account</h3>
+      <p>Get started with HireIQ in seconds. No credit card needed.</p>
+      <div class="sform-row">
+        <div class="sform-group"><label>First Name</label><input type="text" id="sfFirstName" placeholder="Ahmed"></div>
+        <div class="sform-group"><label>Last Name</label><input type="text" id="sfLastName" placeholder="Khan"></div>
+      </div>
+      <div class="sform-group"><label>Work Email</label><input type="email" id="sfEmail" placeholder="ahmed@company.com"></div>
+      <div class="sform-group"><label>Company Name</label><input type="text" id="sfCompany" placeholder="Your Company"></div>
+      <div class="sform-group"><label>Phone (optional)</label><input type="tel" id="sfPhone" placeholder="+92 300 0000000"></div>
+      <button class="sform-submit" onclick="submitSignup()">Create Free Account →</button>
+      <div class="sform-terms">By signing up you agree to our <a href="terms.html" style="color:var(--accent)">Terms</a> and <a href="privacy.html" style="color:var(--accent)">Privacy Policy</a></div>
+    </div>
+    <div class="sform-success" id="signupSuccess">
+      <div class="sform-success-icon">🎉</div>
+      <h4>You're on the list!</h4>
+      <p>Thanks for signing up. The Snyapt Agency team will email you within 24 hours with your account access.</p>
+      <p style="margin-top:.5rem;font-size:.8rem;color:var(--accent2)">Check your inbox at <span id="successEmail"></span></p>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIAL MODAL -->
+<div class="testi-modal-overlay" id="testiModal">
+  <div class="testi-modal">
+    <button class="testi-modal-close" onclick="closeTestiModal()">×</button>
+    <h3>Share your experience ⭐</h3>
+    <div class="tform-row">
+      <div class="tform-group"><label>Your Name</label><input type="text" id="tName" placeholder="Your Name"></div>
+      <div class="tform-group"><label>Your Role</label><input type="text" id="tRole" placeholder="HR Manager, XYZ Corp"></div>
+    </div>
+    <div class="tform-group">
+      <label>Rating</label>
+      <select id="tRating">
+        <option value="5">★★★★★ — Excellent</option>
+        <option value="4">★★★★☆ — Very Good</option>
+        <option value="3">★★★☆☆ — Good</option>
+      </select>
+    </div>
+    <div class="tform-group"><label>Your Testimonial</label><textarea id="tText" rows="3" placeholder="Tell us how HireIQ helped your hiring process..."></textarea></div>
+    <div class="tform-group">
+      <label>Profile Photo (optional)</label>
+      <input type="file" id="tPhoto" accept="image/*" onchange="previewPhoto(event)">
+      <img id="tPhotoPreview" class="tform-img-preview" alt="Preview">
+    </div>
+    <button class="tform-submit" onclick="submitTestimonial()">Submit Testimonial</button>
+    <div class="testi-success" id="testiSuccess">✅ Thank you! Your testimonial has been added.</div>
+  </div>
+</div>
+
 <script>
+// ---- MENU ----
 function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
 document.addEventListener('click',function(e){if(!e.target.closest('nav')&&!e.target.closest('#mobileMenu'))document.getElementById('mobileMenu').classList.remove('open')})
+
+// ---- EMAIL SUBMISSION ----
 function submitEmail(){
   const email=document.getElementById('heroEmail').value;
   if(!email||!email.includes('@')){alert('Please enter a valid email address.');return;}
+  // Store email in localStorage for reference
+  const submissions=JSON.parse(localStorage.getItem('hireiq_emails')||'[]');
+  submissions.push({email,date:new Date().toISOString()});
+  localStorage.setItem('hireiq_emails',JSON.stringify(submissions));
   document.getElementById('heroEmail').value='';
   document.getElementById('successMsg').style.display='block';
-  setTimeout(()=>{document.getElementById('successMsg').style.display='none'},5000);
+  setTimeout(()=>{document.getElementById('successMsg').style.display='none'},6000);
 }
-// PARTICLES
+
+// ---- SIGNUP MODAL ----
+const planConfig={
+  free:{label:'🌱 Free Plan — $0/forever',cls:'free'},
+  starter:{label:'🚀 Starter Plan — $19/month',cls:'starter'},
+  pro:{label:'⚡ Pro Plan — $49/month',cls:'pro'},
+  enterprise:{label:'🏢 Enterprise — Custom',cls:'enterprise'}
+};
+let currentPlan='free';
+function openSignup(plan){
+  currentPlan=plan||'free';
+  const cfg=planConfig[currentPlan]||planConfig.free;
+  const header=document.getElementById('planHeader');
+  header.textContent=cfg.label;
+  header.className='plan-select-header '+cfg.cls;
+  document.getElementById('signupForm').style.display='block';
+  document.getElementById('signupSuccess').style.display='none';
+  document.getElementById('signupModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeSignup(){
+  document.getElementById('signupModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.getElementById('signupModal').addEventListener('click',function(e){if(e.target===this)closeSignup()})
+function submitSignup(){
+  const first=document.getElementById('sfFirstName').value.trim();
+  const last=document.getElementById('sfLastName').value.trim();
+  const email=document.getElementById('sfEmail').value.trim();
+  const company=document.getElementById('sfCompany').value.trim();
+  const phone=document.getElementById('sfPhone').value.trim();
+  if(!first||!email||!email.includes('@')){alert('Please fill in your name and a valid email.');return;}
+  // Save signup
+  const signups=JSON.parse(localStorage.getItem('hireiq_signups')||'[]');
+  signups.push({first,last,email,company,phone,plan:currentPlan,date:new Date().toISOString()});
+  localStorage.setItem('hireiq_signups',JSON.stringify(signups));
+  document.getElementById('successEmail').textContent=email;
+  document.getElementById('signupForm').style.display='none';
+  document.getElementById('signupSuccess').style.display='block';
+}
+
+// ---- TESTIMONIAL MODAL ----
+function openTestiModal(){document.getElementById('testiModal').classList.add('open');document.body.style.overflow='hidden'}
+function closeTestiModal(){document.getElementById('testiModal').classList.remove('open');document.body.style.overflow=''}
+document.getElementById('testiModal').addEventListener('click',function(e){if(e.target===this)closeTestiModal()})
+let photoDataUrl='';
+function previewPhoto(e){
+  const f=e.target.files[0];
+  if(!f)return;
+  const r=new FileReader();
+  r.onload=function(ev){
+    photoDataUrl=ev.target.result;
+    const prev=document.getElementById('tPhotoPreview');
+    prev.src=photoDataUrl;
+    prev.style.display='block';
+  };
+  r.readAsDataURL(f);
+}
+function submitTestimonial(){
+  const name=document.getElementById('tName').value.trim();
+  const role=document.getElementById('tRole').value.trim();
+  const rating=document.getElementById('tRating').value;
+  const text=document.getElementById('tText').value.trim();
+  if(!name||!text){alert('Please enter your name and testimonial.');return;}
+  const stars='★'.repeat(Number(rating))+'☆'.repeat(5-Number(rating));
+  const initials=name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  const colors=['linear-gradient(135deg,#0ea5e9,#38bdf8)','linear-gradient(135deg,#8b5cf6,#a78bfa)','linear-gradient(135deg,#f59e0b,#fbbf24)','linear-gradient(135deg,#10b981,#34d399)','linear-gradient(135deg,#ef4444,#f87171)'];
+  const color=colors[Math.floor(Math.random()*colors.length)];
+  const imgHtml=photoDataUrl
+    ?`<img src="${photoDataUrl}" class="testi-img" alt="${name}">`
+    :`<div class="testi-avatar-fallback" style="background:${color}">${initials}</div>`;
+  const card=document.createElement('div');
+  card.className='testi-card';
+  card.style.animation='fadeUp .5s ease both';
+  card.innerHTML=`<div class="testi-stars">${stars}</div><div class="testi-text">"${text}"</div><div class="testi-author">${imgHtml}<div><div class="testi-name">${name}</div><div class="testi-role">${role||'HireIQ User'}</div></div></div>`;
+  document.getElementById('testiGrid').appendChild(card);
+  // Save to localStorage
+  const testis=JSON.parse(localStorage.getItem('hireiq_testimonials')||'[]');
+  testis.push({name,role,rating,text,photo:photoDataUrl,date:new Date().toISOString()});
+  localStorage.setItem('hireiq_testimonials',JSON.stringify(testis));
+  document.getElementById('testiSuccess').style.display='block';
+  setTimeout(()=>{closeTestiModal();document.getElementById('testiSuccess').style.display='none';photoDataUrl='';document.getElementById('tPhotoPreview').style.display='none';document.getElementById('tName').value='';document.getElementById('tRole').value='';document.getElementById('tText').value='';document.getElementById('tPhoto').value='';},1800);
+}
+
+// Load saved testimonials on page load
+window.addEventListener('DOMContentLoaded',function(){
+  const saved=JSON.parse(localStorage.getItem('hireiq_testimonials')||'[]');
+  saved.forEach(t=>{
+    const stars='★'.repeat(Number(t.rating))+'☆'.repeat(5-Number(t.rating));
+    const initials=t.name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    const colors=['linear-gradient(135deg,#0ea5e9,#38bdf8)','linear-gradient(135deg,#8b5cf6,#a78bfa)','linear-gradient(135deg,#f59e0b,#fbbf24)'];
+    const color=colors[Math.floor(Math.random()*colors.length)];
+    const imgHtml=t.photo?`<img src="${t.photo}" class="testi-img" alt="${t.name}">`:`<div class="testi-avatar-fallback" style="background:${color}">${initials}</div>`;
+    const card=document.createElement('div');
+    card.className='testi-card';
+    card.innerHTML=`<div class="testi-stars">${stars}</div><div class="testi-text">"${t.text}"</div><div class="testi-author">${imgHtml}<div><div class="testi-name">${t.name}</div><div class="testi-role">${t.role||'HireIQ User'}</div></div></div>`;
+    document.getElementById('testiGrid').appendChild(card);
+  });
+});
+
+// ---- PARTICLES ----
 const canvas=document.getElementById('particles');
 const ctx=canvas.getContext('2d');
 let W,H;
@@ -338,7 +765,6 @@ function draw(){
   requestAnimationFrame(draw);
 }
 draw();
-// Score bar animation
 window.addEventListener('load',()=>{
   setTimeout(()=>{document.querySelectorAll('.c-bar-fill').forEach(b=>{const w=b.style.width;b.style.width='0';setTimeout(()=>{b.style.width=w},100)})},600);
 });
