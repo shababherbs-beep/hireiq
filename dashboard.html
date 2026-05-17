@@ -14,16 +14,12 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;line-height:1.6;min-height:100vh}
-
-/* PAGE LOADER */
 .page-loader{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;transition:opacity .5s}
 .page-loader.hide{opacity:0;pointer-events:none}
 .loader-spinner{width:48px;height:48px;border:3px solid rgba(14,165,233,0.15);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}
 .loader-logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.8rem;font-weight:800}
 .loader-logo span{color:var(--accent)}
 .loader-text{font-size:.85rem;color:var(--muted)}
-
-/* SIDEBAR */
 .sidebar{position:fixed;top:0;left:0;bottom:0;width:240px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:50;transition:transform .3s}
 .sidebar-logo{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border)}
 .logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.3rem;font-weight:800;color:var(--text);text-decoration:none}
@@ -40,8 +36,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 .user-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--gold));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:#fff;flex-shrink:0}
 .user-name{font-size:.85rem;font-weight:600}
 .user-plan{font-size:.72rem;color:var(--muted)}
-
-/* MAIN */
 .main{margin-left:240px;min-height:100vh;display:flex;flex-direction:column}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:.875rem 2rem;border-bottom:1px solid var(--border);background:rgba(4,13,26,0.8);backdrop-filter:blur(12px);position:sticky;top:0;z-index:40}
 .topbar-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700}
@@ -50,14 +44,10 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 .upgrade-btn{font-size:.8rem;padding:.4rem 1rem;border-radius:6px;background:var(--accent);color:#fff;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif}
 .hamburger-btn{display:none;background:none;border:none;color:var(--text);font-size:1.2rem;cursor:pointer;padding:.25rem}
 .content{flex:1;padding:2rem}
-
-/* WIZARD */
 .wizard-wrap{max-width:720px;margin:0 auto}
 .wizard-header{text-align:center;margin-bottom:2.5rem}
 .wizard-header h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.6rem;font-weight:700;margin-bottom:.4rem}
 .wizard-header p{font-size:.9rem;color:var(--muted)}
-
-/* PROGRESS */
 .progress-steps{display:flex;align-items:center;justify-content:center;margin-bottom:2.5rem;gap:0}
 .step-item{display:flex;flex-direction:column;align-items:center;gap:.4rem;position:relative;flex:1;max-width:120px}
 .step-circle{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;border:2px solid var(--border);background:var(--bg2);color:var(--muted);transition:all .3s;z-index:1}
@@ -68,8 +58,6 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 .step-label.done{color:var(--success)}
 .step-line{flex:1;height:2px;background:var(--border);transition:background .3s;margin-top:-18px;position:relative;z-index:0}
 .step-line.done{background:var(--success)}
-
-/* WIZARD CARDS */
 .wizard-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:2rem;display:none;animation:fadeUp .4s ease}
 .wizard-card.active{display:block}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
@@ -77,22 +65,17 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 .card-icon{font-size:2.5rem;margin-bottom:1rem;text-align:center}
 .card-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:.4rem;text-align:center}
 .card-sub{font-size:.875rem;color:var(--muted);text-align:center;margin-bottom:1.75rem;line-height:1.6}
-
-/* FORM ELEMENTS */
 .form-group{margin-bottom:1.1rem}
 .form-label{font-size:.82rem;font-weight:500;color:var(--muted);margin-bottom:.4rem;display:block}
 .form-input{width:100%;padding:.75rem 1rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text);font-size:.9rem;outline:none;transition:border-color .2s;font-family:'DM Sans',sans-serif}
 .form-input:focus{border-color:var(--accent)}
 .form-input::placeholder{color:var(--muted)}
-/* FIX: Select dropdown white issue */
 select.form-input{cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237aa0c0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem}
 select.form-input option{background:#071628;color:#f0f6ff}
 .form-textarea{width:100%;padding:.875rem 1rem;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text);font-size:.9rem;outline:none;transition:border-color .2s;font-family:'DM Sans',sans-serif;resize:vertical;min-height:140px;line-height:1.6}
 .form-textarea:focus{border-color:var(--accent)}
 .form-textarea::placeholder{color:var(--muted)}
 .char-count{font-size:.72rem;color:var(--muted);text-align:right;margin-top:.3rem}
-
-/* UPLOAD AREA */
 .upload-area{border:2px dashed var(--border);border-radius:12px;padding:2rem;text-align:center;transition:all .2s;position:relative}
 .upload-area:hover,.upload-area.dragover{border-color:var(--accent);background:rgba(14,165,233,0.04)}
 .upload-icon{font-size:2.5rem;margin-bottom:.75rem}
@@ -110,30 +93,22 @@ select.form-input option{background:#071628;color:#f0f6ff}
 .file-remove{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.9rem;padding:.1rem .3rem;transition:color .2s}
 .file-remove:hover{color:var(--danger)}
 .file-count{font-size:.82rem;color:var(--muted);margin-top:.5rem;text-align:center}
-
-/* PLAN LIMIT BANNER */
 .plan-banner{padding:.75rem 1rem;border-radius:8px;font-size:.82rem;display:flex;align-items:center;gap:.6rem;margin-top:.75rem}
 .plan-banner.warn{background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);color:var(--gold)}
 .plan-banner.error{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);color:#f87171}
 .plan-banner.ok{background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);color:var(--success)}
-
-/* CRITERIA */
 .criteria-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:1rem}
 .criteria-item{display:flex;align-items:center;gap:.75rem;padding:.75rem 1rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .2s}
 .criteria-item:hover,.criteria-item.selected{border-color:var(--accent);background:rgba(14,165,233,0.05)}
 .criteria-check{width:18px;height:18px;border-radius:4px;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.7rem;transition:all .2s;flex-shrink:0}
 .criteria-item.selected .criteria-check{background:var(--accent);border-color:var(--accent);color:#fff}
 .criteria-label{font-size:.85rem;font-weight:500}
-
-/* WEIGHT SLIDERS */
 .weight-item{margin-bottom:1rem}
 .weight-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem}
 .weight-label{font-size:.85rem;font-weight:500}
 .weight-val{font-size:.85rem;font-weight:700;color:var(--accent)}
 .weight-slider{width:100%;height:6px;border-radius:3px;background:rgba(255,255,255,0.08);outline:none;cursor:pointer;-webkit-appearance:none;appearance:none}
 .weight-slider::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid var(--bg)}
-
-/* BUTTONS */
 .wizard-btns{display:flex;justify-content:space-between;align-items:center;margin-top:2rem;gap:1rem}
 .btn-back{background:transparent;color:var(--muted);border:1px solid var(--border);padding:.75rem 1.5rem;border-radius:8px;font-size:.9rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
 .btn-back:hover{border-color:var(--accent);color:var(--text)}
@@ -142,8 +117,6 @@ select.form-input option{background:#071628;color:#f0f6ff}
 .btn-next:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .btn-start{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:.875rem 2.5rem;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;box-shadow:0 0 28px rgba(14,165,233,0.3)}
 .btn-start:hover{transform:translateY(-2px);box-shadow:0 0 40px rgba(14,165,233,0.4)}
-
-/* RESULTS */
 .results-wrap{display:none}
 .results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
 .results-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700}
@@ -153,10 +126,6 @@ select.form-input option{background:#071628;color:#f0f6ff}
 .action-btn:hover{border-color:var(--accent);color:var(--accent)}
 .action-btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
 .action-btn.primary:hover{background:var(--accent2)}
-.action-btn:disabled{opacity:.4;cursor:not-allowed}
-.action-btn:disabled:hover{border-color:var(--border);color:var(--text)}
-
-/* CANDIDATE CARDS */
 .candidate-cards{display:flex;flex-direction:column;gap:.75rem}
 .candidate-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;transition:border-color .2s;cursor:pointer}
 .candidate-card:hover{border-color:rgba(14,165,233,0.3)}
@@ -189,8 +158,6 @@ select.form-input option{background:#071628;color:#f0f6ff}
 .cc-btn:hover{border-color:var(--accent);color:var(--accent)}
 .cc-btn.approve{background:rgba(34,197,94,0.1);border-color:rgba(34,197,94,0.3);color:var(--success)}
 .cc-btn.reject{background:rgba(239,68,68,0.08);border-color:rgba(239,68,68,0.2);color:#f87171}
-
-/* ATS SECTION */
 .ats-section{margin-top:1rem;padding:.875rem;background:rgba(14,165,233,0.04);border:1px solid var(--border);border-radius:8px}
 .ats-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
 .ats-title{font-size:.82rem;font-weight:700;color:var(--accent)}
@@ -203,8 +170,6 @@ select.form-input option{background:#071628;color:#f0f6ff}
 .ats-row-label{color:var(--muted)}
 .ats-row-val{font-weight:600}
 .ats-issues{margin-top:.6rem;font-size:.75rem;color:#fbbf24;line-height:1.6}
-
-/* PROCESSING */
 .processing-wrap{text-align:center;padding:3rem 1rem}
 .processing-icon{font-size:3rem;margin-bottom:1rem;animation:spin 2s linear infinite;display:inline-block}
 .processing-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:.5rem}
@@ -215,26 +180,18 @@ select.form-input option{background:#071628;color:#f0f6ff}
 .proc-step{font-size:.82rem;color:var(--muted);display:flex;align-items:center;gap:.5rem;justify-content:center}
 .proc-step.done{color:var(--success)}
 .proc-step.active{color:var(--accent)}
-
-/* STATS ROW */
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
 .stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.25rem}
 .stat-val{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.6rem;font-weight:700;color:var(--text)}
 .stat-lbl{font-size:.75rem;color:var(--muted);margin-top:.2rem}
-
-/* NEW SCREENING BTN */
 .new-screening{display:flex;align-items:center;justify-content:center;gap:.5rem;padding:1.25rem;border:2px dashed var(--border);border-radius:12px;cursor:pointer;color:var(--muted);font-size:.9rem;font-weight:500;transition:all .2s;background:none;width:100%;font-family:'DM Sans',sans-serif;margin-top:.75rem}
 .new-screening:hover{border-color:var(--accent);color:var(--accent);background:rgba(14,165,233,0.04)}
-
-/* API KEY SECTION */
 .api-key-row{display:flex;gap:.75rem;align-items:flex-end;margin-bottom:1rem}
 .api-key-row .form-group{flex:1;margin-bottom:0}
 .api-key-toggle{padding:.75rem 1rem;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:.82rem;cursor:pointer;white-space:nowrap;font-family:'DM Sans',sans-serif;transition:all .2s}
 .api-key-toggle:hover{border-color:var(--accent);color:var(--accent)}
 .api-active-badge{display:inline-flex;align-items:center;gap:.35rem;font-size:.72rem;padding:.2rem .6rem;border-radius:20px;background:rgba(34,197,94,0.1);color:var(--success);border:1px solid rgba(34,197,94,0.2);font-weight:600;margin-left:.5rem}
 .api-section-title{font-size:.82rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.75rem;margin-top:1.25rem;display:flex;align-items:center;gap:.5rem}
-
-/* MOBILE */
 @media(max-width:768px){
   .sidebar{transform:translateX(-100%)}
   .sidebar.open{transform:translateX(0)}
@@ -255,16 +212,12 @@ select.form-input option{background:#071628;color:#f0f6ff}
   .progress-steps{gap:0}
   .step-label{font-size:.62rem}
 }
-
-/* UPGRADE MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;display:none;align-items:flex-start;justify-content:center;padding:2rem 1rem;backdrop-filter:blur(4px);overflow-y:auto}
 .modal-overlay.open{display:flex}
 .modal-box{background:#071628;border:1px solid rgba(14,165,233,0.3);border-radius:16px;padding:2rem;max-width:860px;width:100%;position:relative;box-shadow:0 0 60px rgba(14,165,233,0.15);margin:auto}
 .modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.2rem;padding:.25rem}
 .modal-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:.4rem;text-align:center}
 .modal-sub{font-size:.875rem;color:var(--muted);text-align:center;margin-bottom:1.75rem}
-
-/* PLAN CARDS IN MODAL */
 .plan-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;margin-bottom:1.5rem}
 .plan-card-sm{border:1px solid var(--border);border-radius:10px;padding:1rem;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;position:relative}
 .plan-card-sm:hover,.plan-card-sm.selected{border-color:var(--accent);background:rgba(14,165,233,0.06)}
@@ -279,54 +232,35 @@ select.form-input option{background:#071628;color:#f0f6ff}
 .modal-btn{width:100%;padding:.875rem;border-radius:8px;background:var(--accent);color:#fff;font-size:.95rem;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
 .modal-btn:hover{background:var(--accent2);transform:translateY(-1px)}
 .stripe-note{display:flex;align-items:center;justify-content:center;gap:.5rem;font-size:.75rem;color:var(--muted);margin-top:.75rem}
-
-/* EMAIL REPORT MODAL */
 .email-modal{max-width:480px}
 .email-preview{background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;padding:1rem;font-size:.78rem;color:var(--muted);line-height:1.7;max-height:180px;overflow-y:auto;margin-bottom:1rem;font-family:monospace}
-
-/* TOAST */
 .toast-el{position:fixed;bottom:1.5rem;right:1.5rem;z-index:999;padding:.75rem 1.25rem;border-radius:8px;font-size:.875rem;font-weight:500;transition:all .3s;opacity:0;transform:translateY(8px);pointer-events:none;max-width:320px}
-
 @media(max-width:768px){.plan-cards{grid-template-columns:1fr 1fr}}
 @media(max-width:480px){.plan-cards{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<!-- PAGE LOADER -->
 <div class="page-loader" id="pageLoader">
   <div class="loader-logo">Hire<span>IQ</span></div>
   <div class="loader-spinner"></div>
   <div class="loader-text">Loading your dashboard...</div>
 </div>
 
-<!-- TOAST -->
 <div class="toast-el" id="toast"></div>
 
-<!-- SIDEBAR -->
 <aside class="sidebar" id="sidebar">
   <div class="sidebar-logo">
     <a href="index.html" class="logo">Hire<span>IQ</span></a>
   </div>
   <nav class="sidebar-nav">
     <div class="nav-section">Main</div>
-    <button class="nav-item active" onclick="showSection('wizard',this)">
-      <span class="nav-icon">🎯</span> New Screening
-    </button>
-    <button class="nav-item" onclick="showSection('history',this)">
-      <span class="nav-icon">📋</span> History
-      <span class="nav-badge" id="historyBadge">0</span>
-    </button>
-    <button class="nav-item" onclick="showSection('candidates',this)">
-      <span class="nav-icon">👥</span> Saved Candidates
-    </button>
+    <button class="nav-item active" onclick="showSection('wizard',this)"><span class="nav-icon">🎯</span> New Screening</button>
+    <button class="nav-item" onclick="showSection('history',this)"><span class="nav-icon">📋</span> History<span class="nav-badge" id="historyBadge">0</span></button>
+    <button class="nav-item" onclick="showSection('candidates',this)"><span class="nav-icon">👥</span> Saved Candidates</button>
     <div class="nav-section" style="margin-top:.5rem">Account</div>
-    <button class="nav-item" onclick="showSection('settings',this)">
-      <span class="nav-icon">⚙️</span> Settings
-    </button>
-    <button class="nav-item" onclick="showSection('billing',this)">
-      <span class="nav-icon">💳</span> Billing
-    </button>
+    <button class="nav-item" onclick="showSection('settings',this)"><span class="nav-icon">⚙️</span> Settings</button>
+    <button class="nav-item" onclick="showSection('billing',this)"><span class="nav-icon">💳</span> Billing</button>
   </nav>
   <div class="sidebar-footer">
     <div class="user-info">
@@ -339,7 +273,6 @@ select.form-input option{background:#071628;color:#f0f6ff}
   </div>
 </aside>
 
-<!-- MAIN -->
 <div class="main">
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:.875rem">
@@ -353,107 +286,52 @@ select.form-input option{background:#071628;color:#f0f6ff}
   </div>
 
   <div class="content">
-
-    <!-- WIZARD SECTION -->
     <div id="section-wizard">
       <div class="wizard-wrap">
         <div class="wizard-header">
           <h1>Screen CVs with AI</h1>
           <p>Follow the steps below — takes less than 2 minutes to set up</p>
         </div>
-
-        <!-- PROGRESS STEPS -->
         <div class="progress-steps">
-          <div class="step-item">
-            <div class="step-circle active" id="sc1">1</div>
-            <div class="step-label active" id="sl1">Job Details</div>
-          </div>
+          <div class="step-item"><div class="step-circle active" id="sc1">1</div><div class="step-label active" id="sl1">Job Details</div></div>
           <div class="step-line" id="line1"></div>
-          <div class="step-item">
-            <div class="step-circle" id="sc2">2</div>
-            <div class="step-label" id="sl2">Upload CVs</div>
-          </div>
+          <div class="step-item"><div class="step-circle" id="sc2">2</div><div class="step-label" id="sl2">Upload CVs</div></div>
           <div class="step-line" id="line2"></div>
-          <div class="step-item">
-            <div class="step-circle" id="sc3">3</div>
-            <div class="step-label" id="sl3">Criteria</div>
-          </div>
+          <div class="step-item"><div class="step-circle" id="sc3">3</div><div class="step-label" id="sl3">Criteria</div></div>
           <div class="step-line" id="line3"></div>
-          <div class="step-item">
-            <div class="step-circle" id="sc4">4</div>
-            <div class="step-label" id="sl4">Review</div>
-          </div>
+          <div class="step-item"><div class="step-circle" id="sc4">4</div><div class="step-label" id="sl4">Review</div></div>
           <div class="step-line" id="line4"></div>
-          <div class="step-item">
-            <div class="step-circle" id="sc5">5</div>
-            <div class="step-label" id="sl5">Results</div>
-          </div>
+          <div class="step-item"><div class="step-circle" id="sc5">5</div><div class="step-label" id="sl5">Results</div></div>
         </div>
 
-        <!-- STEP 1: JOB DETAILS -->
         <div class="wizard-card active" id="step1">
           <div class="card-icon">📋</div>
           <div class="card-title">Tell us about the job</div>
           <div class="card-sub">Paste your job description — the more detail, the better the AI screening</div>
-          <div class="form-group">
-            <label class="form-label">Job Title *</label>
-            <input type="text" class="form-input" id="jobTitle" placeholder="e.g. Senior Python Developer">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Job Description *</label>
-            <textarea class="form-textarea" id="jobDesc" placeholder="Paste the full job description here..." oninput="updateCharCount()"></textarea>
-            <div class="char-count"><span id="charCount">0</span> characters — more detail = better results</div>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Experience Required</label>
-            <select class="form-input" id="expRequired">
-              <option value="" style="background:#071628;color:#7aa0c0">Select experience level</option>
-              <option value="entry">Entry level (0–2 years)</option>
-              <option value="mid">Mid level (2–5 years)</option>
-              <option value="senior">Senior level (5–8 years)</option>
-              <option value="expert">Expert level (8+ years)</option>
-            </select>
-          </div>
-          <div class="wizard-btns">
-            <div></div>
-            <button class="btn-next" onclick="goStep(2)">Next: Upload CVs →</button>
-          </div>
+          <div class="form-group"><label class="form-label">Job Title *</label><input type="text" class="form-input" id="jobTitle" placeholder="e.g. Senior Python Developer"></div>
+          <div class="form-group"><label class="form-label">Job Description *</label><textarea class="form-textarea" id="jobDesc" placeholder="Paste the full job description here..." oninput="updateCharCount()"></textarea><div class="char-count"><span id="charCount">0</span> characters — more detail = better results</div></div>
+          <div class="form-group"><label class="form-label">Experience Required</label><select class="form-input" id="expRequired"><option value="">Select experience level</option><option value="entry">Entry level (0–2 years)</option><option value="mid">Mid level (2–5 years)</option><option value="senior">Senior level (5–8 years)</option><option value="expert">Expert level (8+ years)</option></select></div>
+          <div class="wizard-btns"><div></div><button class="btn-next" onclick="goStep(2)">Next: Upload CVs →</button></div>
         </div>
 
-        <!-- STEP 2: UPLOAD CVs -->
         <div class="wizard-card" id="step2">
           <div class="card-icon">📤</div>
           <div class="card-title">Upload your CVs</div>
           <div class="card-sub">Upload multiple CVs at once — PDF or Word format only</div>
-
-          <!-- Hidden file input -->
           <input type="file" id="cvInput" style="display:none" multiple accept=".pdf,.doc,.docx" onchange="handleFiles(this.files)">
-
           <div class="upload-area" id="uploadArea" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFiles(event)">
             <div class="upload-icon">📁</div>
             <div class="upload-title">Drag & drop CVs here</div>
-            <div class="upload-sub">PDF, DOC, and DOCX files only. Other formats will be ignored.</div>
-            <div class="upload-formats">
-              <span class="format-badge">PDF</span>
-              <span class="format-badge">DOC</span>
-              <span class="format-badge">DOCX</span>
-            </div>
-            <button type="button" class="upload-btn" onclick="document.getElementById('cvInput').click()">
-              📂 Browse Files
-            </button>
+            <div class="upload-sub">PDF, DOC, and DOCX files only.</div>
+            <div class="upload-formats"><span class="format-badge">PDF</span><span class="format-badge">DOC</span><span class="format-badge">DOCX</span></div>
+            <button type="button" class="upload-btn" onclick="document.getElementById('cvInput').click()">📂 Browse Files</button>
           </div>
-
           <div id="planBanner"></div>
           <div class="file-list" id="fileList"></div>
           <div class="file-count" id="fileCount"></div>
-
-          <div class="wizard-btns">
-            <button class="btn-back" onclick="goStep(1)">← Back</button>
-            <button class="btn-next" id="btnStep2" onclick="goStep(3)" disabled>Next: Set Criteria →</button>
-          </div>
+          <div class="wizard-btns"><button class="btn-back" onclick="goStep(1)">← Back</button><button class="btn-next" id="btnStep2" onclick="goStep(3)" disabled>Next: Set Criteria →</button></div>
         </div>
 
-        <!-- STEP 3: CRITERIA -->
         <div class="wizard-card" id="step3">
           <div class="card-icon">🎯</div>
           <div class="card-title">Set screening criteria</div>
@@ -474,49 +352,24 @@ select.form-input option{background:#071628;color:#f0f6ff}
           <div class="weight-item"><div class="weight-header"><span class="weight-label">Work Experience</span><span class="weight-val" id="w2val">70%</span></div><input type="range" class="weight-slider" min="0" max="100" value="70" oninput="document.getElementById('w2val').textContent=this.value+'%'"></div>
           <div class="weight-item"><div class="weight-header"><span class="weight-label">Education</span><span class="weight-val" id="w3val">50%</span></div><input type="range" class="weight-slider" min="0" max="100" value="50" oninput="document.getElementById('w3val').textContent=this.value+'%'"></div>
           <div class="weight-item"><div class="weight-header"><span class="weight-label">ATS Compatibility</span><span class="weight-val" id="w4val">60%</span></div><input type="range" class="weight-slider" min="0" max="100" value="60" oninput="document.getElementById('w4val').textContent=this.value+'%'"></div>
-          <div class="wizard-btns">
-            <button class="btn-back" onclick="goStep(2)">← Back</button>
-            <button class="btn-next" onclick="goStep(4)">Next: Review →</button>
-          </div>
+          <div class="wizard-btns"><button class="btn-back" onclick="goStep(2)">← Back</button><button class="btn-next" onclick="goStep(4)">Next: Review →</button></div>
         </div>
 
-        <!-- STEP 4: REVIEW -->
         <div class="wizard-card" id="step4">
           <div class="card-icon">✅</div>
           <div class="card-title">Review & Start Screening</div>
           <div class="card-sub">Everything looks good? Hit the button to start AI screening!</div>
           <div style="display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.75rem">
-            <div style="display:flex;justify-content:space-between;padding:.875rem 1rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px">
-              <span style="font-size:.85rem;color:var(--muted)">Job Title</span>
-              <span style="font-size:.85rem;font-weight:600" id="review-title">—</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;padding:.875rem 1rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px">
-              <span style="font-size:.85rem;color:var(--muted)">CVs to screen</span>
-              <span style="font-size:.85rem;font-weight:600" id="review-cvs">0 CVs</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;padding:.875rem 1rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px">
-              <span style="font-size:.85rem;color:var(--muted)">Criteria active</span>
-              <span style="font-size:.85rem;font-weight:600" id="review-criteria">—</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;padding:.875rem 1rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px">
-              <span style="font-size:.85rem;color:var(--muted)">AI Engine</span>
-              <span style="font-size:.85rem;font-weight:600;color:var(--accent)" id="review-engine">Gemini AI</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;padding:.875rem 1rem;background:rgba(14,165,233,0.06);border:1px solid rgba(14,165,233,0.2);border-radius:8px">
-              <span style="font-size:.85rem;color:var(--muted)">Estimated time</span>
-              <span style="font-size:.85rem;font-weight:600;color:var(--accent)" id="review-time">~2 minutes</span>
-            </div>
+            <div style="display:flex;justify-content:space-between;padding:.875rem 1rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px"><span style="font-size:.85rem;color:var(--muted)">Job Title</span><span style="font-size:.85rem;font-weight:600" id="review-title">—</span></div>
+            <div style="display:flex;justify-content:space-between;padding:.875rem 1rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px"><span style="font-size:.85rem;color:var(--muted)">CVs to screen</span><span style="font-size:.85rem;font-weight:600" id="review-cvs">0 CVs</span></div>
+            <div style="display:flex;justify-content:space-between;padding:.875rem 1rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px"><span style="font-size:.85rem;color:var(--muted)">Criteria active</span><span style="font-size:.85rem;font-weight:600" id="review-criteria">—</span></div>
+            <div style="display:flex;justify-content:space-between;padding:.875rem 1rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px"><span style="font-size:.85rem;color:var(--muted)">AI Engine</span><span style="font-size:.85rem;font-weight:600;color:var(--accent)" id="review-engine">Gemini AI</span></div>
+            <div style="display:flex;justify-content:space-between;padding:.875rem 1rem;background:rgba(14,165,233,0.06);border:1px solid rgba(14,165,233,0.2);border-radius:8px"><span style="font-size:.85rem;color:var(--muted)">Estimated time</span><span style="font-size:.85rem;font-weight:600;color:var(--accent)" id="review-time">~2 minutes</span></div>
           </div>
-          <div style="text-align:center">
-            <button class="btn-start" onclick="startScreening()">🚀 Start AI Screening</button>
-          </div>
-          <div class="wizard-btns" style="margin-top:1.25rem">
-            <button class="btn-back" onclick="goStep(3)">← Back</button>
-            <div></div>
-          </div>
+          <div style="text-align:center"><button class="btn-start" onclick="startScreening()">🚀 Start AI Screening</button></div>
+          <div class="wizard-btns" style="margin-top:1.25rem"><button class="btn-back" onclick="goStep(3)">← Back</button><div></div></div>
         </div>
 
-        <!-- STEP 5: PROCESSING -->
         <div class="wizard-card" id="step5">
           <div class="processing-wrap">
             <div class="processing-icon">⚙️</div>
@@ -533,10 +386,8 @@ select.form-input option{background:#071628;color:#f0f6ff}
             </div>
           </div>
         </div>
+      </div>
 
-      </div><!-- /wizard-wrap -->
-
-      <!-- RESULTS -->
       <div class="results-wrap" id="resultsWrap">
         <div class="stats-row">
           <div class="stat-card"><div class="stat-val" id="res-total">0</div><div class="stat-lbl">CVs Screened</div></div>
@@ -545,83 +396,35 @@ select.form-input option{background:#071628;color:#f0f6ff}
           <div class="stat-card"><div class="stat-val" style="color:var(--gold)" id="res-time">0s</div><div class="stat-lbl">Time Taken</div></div>
         </div>
         <div class="results-header">
-          <div>
-            <div class="results-title" id="res-jobtitle">Results</div>
-            <div class="results-meta" id="res-meta"></div>
-          </div>
+          <div><div class="results-title" id="res-jobtitle">Results</div><div class="results-meta" id="res-meta"></div></div>
           <div class="results-actions">
             <button class="action-btn" id="btnExportPDF" onclick="exportPDF()">📄 Export PDF</button>
-            <button class="action-btn" id="btnEmailReport" onclick="showEmailModal()">📧 Email Report</button>
+            <button class="action-btn" id="btnEmailReport" onclick="showEmailModal()">📧 Open in Email Client</button>
             <button class="action-btn primary" onclick="resetWizard()">+ New Screening</button>
           </div>
         </div>
         <div class="candidate-cards" id="candidateCards"></div>
         <button class="new-screening" onclick="resetWizard()">+ Start Another Screening</button>
       </div>
-    </div><!-- /section-wizard -->
+    </div>
 
-    <!-- HISTORY SECTION -->
     <div id="section-history" style="display:none">
       <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:1.5rem">Screening History</div>
-      <div id="historyContent">
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2rem;text-align:center;color:var(--muted);font-size:.9rem">
-          <div style="font-size:2rem;margin-bottom:.75rem">📋</div>
-          No screenings yet. Start your first screening!
-        </div>
-      </div>
+      <div id="historyContent"><div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2rem;text-align:center;color:var(--muted);font-size:.9rem"><div style="font-size:2rem;margin-bottom:.75rem">📋</div>No screenings yet. Start your first screening!</div></div>
     </div>
 
-    <!-- CANDIDATES SECTION -->
     <div id="section-candidates" style="display:none">
       <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:1rem">Saved Candidates</div>
-      <div id="candidatesContent">
-        <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2rem;text-align:center;color:var(--muted);font-size:.9rem">
-          <div style="font-size:2rem;margin-bottom:.75rem">👥</div>
-          No saved candidates yet. Screen some CVs and save the best ones!
-        </div>
-      </div>
+      <div id="candidatesContent"><div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2rem;text-align:center;color:var(--muted);font-size:.9rem"><div style="font-size:2rem;margin-bottom:.75rem">👥</div>No saved candidates yet.</div></div>
     </div>
 
-    <!-- SETTINGS SECTION -->
     <div id="section-settings" style="display:none">
       <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:1rem">Settings</div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;max-width:600px">
-
         <div class="form-group"><label class="form-label">Full Name</label><input type="text" class="form-input" id="settingsName" placeholder="Your name"></div>
         <div class="form-group"><label class="form-label">Email</label><input type="email" class="form-input" id="settingsEmail" placeholder="your@email.com" readonly style="opacity:.6"></div>
         <div class="form-group"><label class="form-label">Company</label><input type="text" class="form-input" id="settingsCompany" placeholder="Your company"></div>
-        <div class="form-group"><label class="form-label">New Password <span style="font-size:.75rem;color:var(--muted)">(leave blank to keep current)</span></label><input type="password" class="form-input" id="settingsPassword" placeholder="New password (min 8 chars)"></div>
-
-        <!-- API KEYS -->
-        <div style="border-top:1px solid var(--border);margin-top:1.25rem;padding-top:1.25rem">
-          <div class="api-section-title">🤖 AI API Keys <span style="font-size:.72rem;color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">— stored locally, never shared</span></div>
-          <p style="font-size:.78rem;color:var(--muted);margin-bottom:1rem;line-height:1.6">Set your preferred AI provider. Claude or OpenAI will be used if key is set; otherwise Gemini (default).</p>
-
-          <div class="api-key-row">
-            <div class="form-group">
-              <label class="form-label">Claude (Anthropic) API Key
-                <span class="api-active-badge" id="claudeBadge" style="display:none">✓ Active</span>
-              </label>
-              <input type="password" class="form-input" id="claudeKey" placeholder="sk-ant-...">
-            </div>
-            <button type="button" class="api-key-toggle" onclick="toggleKeyVisibility('claudeKey',this)">Show</button>
-          </div>
-
-          <div class="api-key-row">
-            <div class="form-group">
-              <label class="form-label">OpenAI API Key
-                <span class="api-active-badge" id="openaiKey_badge" style="display:none">✓ Active</span>
-              </label>
-              <input type="password" class="form-input" id="openaiKey" placeholder="sk-...">
-            </div>
-            <button type="button" class="api-key-toggle" onclick="toggleKeyVisibility('openaiKey',this)">Show</button>
-          </div>
-
-          <div style="font-size:.75rem;color:var(--muted);padding:.6rem .875rem;background:rgba(14,165,233,0.04);border:1px solid var(--border);border-radius:6px">
-            ℹ️ Priority: <strong style="color:var(--accent)">Claude</strong> → <strong style="color:var(--accent)">OpenAI</strong> → Gemini (built-in). Keys are stored in your browser only.
-          </div>
-        </div>
-
+        <div class="form-group"><label class="form-label">New Password</label><input type="password" class="form-input" id="settingsPassword" placeholder="New password (min 8 chars)"></div>
         <div style="display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1.5rem">
           <button class="btn-next" style="width:auto" onclick="saveSettings()">Save Changes</button>
           <button class="btn-back" style="color:#f87171;border-color:rgba(239,68,68,0.3)" onclick="logout()">🚪 Logout</button>
@@ -629,7 +432,6 @@ select.form-input option{background:#071628;color:#f0f6ff}
       </div>
     </div>
 
-    <!-- BILLING SECTION -->
     <div id="section-billing" style="display:none">
       <div style="font-size:1.2rem;font-weight:700;margin-bottom:1.25rem">Billing</div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;max-width:500px">
@@ -639,103 +441,52 @@ select.form-input option{background:#071628;color:#f0f6ff}
         <button class="btn-start" onclick="showUpgradeModal()" style="width:100%">⚡ Upgrade Plan</button>
       </div>
     </div>
+  </div>
+</div>
 
-  </div><!-- /content -->
-</div><!-- /main -->
-
-<!-- UPGRADE MODAL -->
 <div class="modal-overlay" id="upgradeModal">
   <div class="modal-box">
     <button class="modal-close" onclick="closeUpgradeModal()">✕</button>
     <div class="modal-title">⚡ Upgrade HireIQ</div>
     <div class="modal-sub">Choose a plan to unlock full AI screening power</div>
     <div class="plan-cards">
-      <div class="plan-card-sm" onclick="selectUpgradePlan(this,'free')">
-        <div class="pcn">Free</div>
-        <div class="pcp">$0<small style="font-size:.65rem;color:var(--muted)">/forever</small></div>
-        <div class="pcd">Try it out</div>
-        <div class="pc-features">
-          <div>5 CVs/month</div>
-          <div>1 active job</div>
-          <div>Basic AI analysis</div>
-          <div>CSV export</div>
-        </div>
-      </div>
-      <div class="plan-card-sm" onclick="selectUpgradePlan(this,'starter')">
-        <div class="pcn">Starter</div>
-        <div class="pcp">$19<small style="font-size:.65rem;color:var(--muted)">/mo</small></div>
-        <div class="pcd">Small teams</div>
-        <div class="pc-features">
-          <div>50 CVs/month</div>
-          <div>5 active jobs</div>
-          <div>Full AI analysis</div>
-          <div>PDF reports</div>
-        </div>
-      </div>
-      <div class="plan-card-sm featured selected" onclick="selectUpgradePlan(this,'pro')">
-        <div class="popular-tag">⭐ Popular</div>
-        <div class="pcn">Pro</div>
-        <div class="pcp">$49<small style="font-size:.65rem;color:var(--muted)">/mo</small></div>
-        <div class="pcd">Growing teams</div>
-        <div class="pc-features">
-          <div>500 CVs/month</div>
-          <div>Unlimited jobs</div>
-          <div>Custom criteria</div>
-          <div>API access</div>
-        </div>
-      </div>
-      <div class="plan-card-sm" onclick="selectUpgradePlan(this,'enterprise')">
-        <div class="pcn">Enterprise</div>
-        <div class="pcp" style="font-size:1rem">Custom</div>
-        <div class="pcd">Large orgs</div>
-        <div class="pc-features">
-          <div>Unlimited CVs</div>
-          <div>SSO / SAML</div>
-          <div>Custom AI</div>
-          <div>SLA + On-prem</div>
-        </div>
-      </div>
+      <div class="plan-card-sm" onclick="selectUpgradePlan(this,'free')"><div class="pcn">Free</div><div class="pcp">$0<small style="font-size:.65rem;color:var(--muted)">/forever</small></div><div class="pcd">Try it out</div><div class="pc-features"><div>5 CVs/month</div><div>1 active job</div><div>Basic AI analysis</div><div>CSV export</div></div></div>
+      <div class="plan-card-sm" onclick="selectUpgradePlan(this,'starter')"><div class="pcn">Starter</div><div class="pcp">$19<small style="font-size:.65rem;color:var(--muted)">/mo</small></div><div class="pcd">Small teams</div><div class="pc-features"><div>50 CVs/month</div><div>5 active jobs</div><div>Full AI analysis</div><div>PDF reports</div></div></div>
+      <div class="plan-card-sm featured selected" onclick="selectUpgradePlan(this,'pro')"><div class="popular-tag">⭐ Popular</div><div class="pcn">Pro</div><div class="pcp">$49<small style="font-size:.65rem;color:var(--muted)">/mo</small></div><div class="pcd">Growing teams</div><div class="pc-features"><div>500 CVs/month</div><div>Unlimited jobs</div><div>Custom criteria</div><div>API access</div></div></div>
+      <div class="plan-card-sm" onclick="selectUpgradePlan(this,'enterprise')"><div class="pcn">Enterprise</div><div class="pcp" style="font-size:1rem">Custom</div><div class="pcd">Large orgs</div><div class="pc-features"><div>Unlimited CVs</div><div>SSO / SAML</div><div>Custom AI</div><div>SLA + On-prem</div></div></div>
     </div>
     <button class="modal-btn" onclick="proceedToPayment()">Continue to Payment →</button>
-    <div class="stripe-note">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="#7aa0c0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      Secure payment via Stripe · Cancel anytime · 14-day money back
-    </div>
+    <div class="stripe-note"><svg width="14" height="14" viewBox="0 0 24 24" fill="#7aa0c0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Secure payment via Stripe · Cancel anytime · 14-day money back</div>
   </div>
 </div>
 
-<!-- EMAIL REPORT MODAL -->
 <div class="modal-overlay" id="emailModal">
   <div class="modal-box email-modal">
     <button class="modal-close" onclick="closeEmailModal()">✕</button>
     <div class="modal-title">📧 Email Report</div>
-    <div class="modal-sub">Send screening results to your inbox</div>
-    <div class="form-group">
-      <label class="form-label">Recipient Email</label>
-      <input type="email" class="form-input" id="emailRecipient" placeholder="hr@company.com">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Preview</label>
-      <div class="email-preview" id="emailPreview">Loading preview...</div>
-    </div>
-    <button class="modal-btn" onclick="sendEmailReport()">Send via Email Client</button>
+    <div class="modal-sub">This will open your email client with the report pre-filled</div>
+    <div class="form-group"><label class="form-label">Recipient Email</label><input type="email" class="form-input" id="emailRecipient" placeholder="hr@company.com"></div>
+    <div class="form-group"><label class="form-label">Preview</label><div class="email-preview" id="emailPreview">Loading preview...</div></div>
+    <button class="modal-btn" onclick="sendEmailReport()">📨 Open in Email Client</button>
+    <p style="font-size:.75rem;color:var(--muted);text-align:center;margin-top:.75rem">Your default email app will open with the report pre-filled. You can edit before sending.</p>
   </div>
 </div>
 
 <script>
 // ============ CONFIG ============
-const GEMINI_KEY = 'AIzaSyAQ5d3qpqU7U7YptlGM_rJvaD6kZV-bD1Y';
+// ✅ SAFE: Supabase anon key is meant to be public
 const SUPABASE_URL = 'https://muvdkmfxytywsbzmjbbn.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11dmRrbWZ4eXR5d3Niem1qYmJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4NDEzNjAsImV4cCI6MjA5MzQxNzM2MH0.BLUowstvk8rQKBj6-3GXbzCn2hNTW0q7smIQCPS1ZeA';
 
-// Stripe Payment Links — replace with your actual Stripe Payment Link URLs
+// ✅ SAFE: Railway backend URL - AI keys are on the server
+const BACKEND_URL = 'https://hireiq-production-fbaa.up.railway.app';
+
 const STRIPE_LINKS = {
   starter: 'https://buy.stripe.com/REPLACE_STARTER_LINK',
   pro:     'https://buy.stripe.com/REPLACE_PRO_LINK',
   enterprise: null
 };
 
-// Plan limits
 const PLAN_LIMITS = {
   free:       { cvLimit: 5,   jobLimit: 1,  pdf: false, emailReport: false, label: 'Free' },
   starter:    { cvLimit: 50,  jobLimit: 5,  pdf: true,  emailReport: true,  label: 'Starter $19/mo' },
@@ -753,7 +504,6 @@ let currentPlan = 'free';
 let uploadedFiles = [];
 let lastScreeningResults = [];
 
-// PDF.js worker
 if(typeof pdfjsLib !== 'undefined') {
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 }
@@ -764,7 +514,6 @@ async function init() {
     const { data: { session } } = await sb.auth.getSession();
     if(!session) { window.location.href = 'login.html'; return; }
     currentUser = session.user;
-    loadAPIKeysFromStorage();
     await loadProfile();
     await loadHistory();
     updatePlanUI();
@@ -785,48 +534,26 @@ async function loadProfile() {
     const name = data.full_name || currentUser.email.split('@')[0];
     const initials = name.split(' ').map(n=>n[0]||'').join('').toUpperCase().slice(0,2) || '?';
     const trialDays = data.trial_start ? Math.max(0, 14 - Math.floor((Date.now() - new Date(data.trial_start)) / 86400000)) : 14;
-
     document.getElementById('sidebarAvatar').textContent = initials;
     document.getElementById('sidebarName').textContent = name;
     document.getElementById('sidebarPlan').textContent = PLAN_LIMITS[currentPlan]?.label || 'Free';
     document.getElementById('trialBadge').textContent = currentPlan === 'trial' ? `⏰ ${trialDays} days left` : `📦 ${PLAN_LIMITS[currentPlan]?.label || 'Free'}`;
-
     document.getElementById('settingsName').value = data.full_name || '';
     document.getElementById('settingsEmail').value = currentUser.email || '';
     document.getElementById('settingsCompany').value = data.company || '';
-
     const limits = PLAN_LIMITS[currentPlan] || PLAN_LIMITS.free;
     document.getElementById('billingPlan').textContent = 'Current Plan: ' + (limits.label || 'Free');
     document.getElementById('billingDays').textContent = currentPlan === 'trial' ? `${trialDays} days remaining in your free trial` : 'Active plan';
-    document.getElementById('billingLimits').innerHTML = `
-      CVs per month: <strong style="color:var(--text)">${limits.cvLimit === -1 ? 'Unlimited' : limits.cvLimit}</strong> &nbsp;|&nbsp;
-      PDF export: <strong style="color:${limits.pdf ? 'var(--success)' : '#f87171'}">${limits.pdf ? 'Yes' : 'No'}</strong> &nbsp;|&nbsp;
-      Email reports: <strong style="color:${limits.emailReport ? 'var(--success)' : '#f87171'}">${limits.emailReport ? 'Yes' : 'No'}</strong>
-    `;
+    document.getElementById('billingLimits').innerHTML = `CVs per month: <strong style="color:var(--text)">${limits.cvLimit === -1 ? 'Unlimited' : limits.cvLimit}</strong> &nbsp;|&nbsp; PDF export: <strong style="color:${limits.pdf ? 'var(--success)' : '#f87171'}">${limits.pdf ? 'Yes' : 'No'}</strong> &nbsp;|&nbsp; Email reports: <strong style="color:${limits.emailReport ? 'var(--success)' : '#f87171'}">${limits.emailReport ? 'Yes' : 'No'}</strong>`;
   }
 }
 
 function updatePlanUI() {
   const limits = PLAN_LIMITS[currentPlan] || PLAN_LIMITS.free;
-  // PDF and Email buttons
   const pdfBtn = document.getElementById('btnExportPDF');
   const emailBtn = document.getElementById('btnEmailReport');
-  if(pdfBtn) {
-    if(!limits.pdf) {
-      pdfBtn.title = 'Upgrade to Starter or higher to export PDF';
-      pdfBtn.setAttribute('data-locked','true');
-    } else {
-      pdfBtn.removeAttribute('data-locked');
-    }
-  }
-  if(emailBtn) {
-    if(!limits.emailReport) {
-      emailBtn.title = 'Upgrade to Starter or higher to email reports';
-      emailBtn.setAttribute('data-locked','true');
-    } else {
-      emailBtn.removeAttribute('data-locked');
-    }
-  }
+  if(pdfBtn && !limits.pdf) pdfBtn.title = 'Upgrade to export PDF';
+  if(emailBtn && !limits.emailReport) emailBtn.title = 'Upgrade to email reports';
 }
 
 // ============ NAVIGATION ============
@@ -842,9 +569,7 @@ function showSection(name, btn) {
   if(window.innerWidth <= 768) document.getElementById('sidebar').classList.remove('open');
 }
 
-function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('open');
-}
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
 
 document.addEventListener('click', e => {
   if(window.innerWidth <= 768 && !e.target.closest('.sidebar') && !e.target.closest('.hamburger-btn')) {
@@ -853,12 +578,14 @@ document.addEventListener('click', e => {
 });
 
 // ============ WIZARD ============
+let currentStep = 1;
+
 function goStep(n) {
   if(n === 2) {
     const title = document.getElementById('jobTitle').value.trim();
     const desc = document.getElementById('jobDesc').value.trim();
     if(!title) { showToast('Please enter a job title', 'error'); return; }
-    if(desc.length < 30) { showToast('Please add more detail to the job description (30+ chars)', 'error'); return; }
+    if(desc.length < 30) { showToast('Please add more detail to the job description', 'error'); return; }
   }
   if(n === 4) {
     document.getElementById('review-title').textContent = document.getElementById('jobTitle').value || '—';
@@ -867,11 +594,7 @@ function goStep(n) {
     document.getElementById('review-criteria').textContent = selected + ' criteria';
     const t = Math.max(1, Math.ceil(uploadedFiles.length / 20));
     document.getElementById('review-time').textContent = '~' + t + '-' + (t+2) + ' minutes';
-    // Show active AI engine
-    const claudeKey = localStorage.getItem('hireiq_claude_key');
-    const openaiKeyVal = localStorage.getItem('hireiq_openai_key');
-    const engine = claudeKey ? 'Claude (Anthropic)' : openaiKeyVal ? 'OpenAI GPT-4' : 'Gemini AI';
-    document.getElementById('review-engine').textContent = engine;
+    document.getElementById('review-engine').textContent = 'HireIQ AI (Secured Backend)';
   }
   markStep(currentStep, 'done');
   currentStep = n;
@@ -880,20 +603,15 @@ function goStep(n) {
   markStep(n, 'active');
 }
 
-let currentStep = 1;
-
 function markStep(n, state) {
   const circle = document.getElementById('sc'+n);
   const label = document.getElementById('sl'+n);
   circle.className = 'step-circle ' + state;
   label.className = 'step-label ' + state;
-  if(state === 'done') {
-    circle.textContent = '✓';
-    if(n < 5) document.getElementById('line'+n)?.classList.add('done');
-  }
+  if(state === 'done') { circle.textContent = '✓'; if(n < 5) document.getElementById('line'+n)?.classList.add('done'); }
 }
 
-// ============ FILE UPLOAD — FIXED ============
+// ============ FILE UPLOAD ============
 const ALLOWED_TYPES = ['.pdf','.doc','.docx'];
 const ALLOWED_MIME = ['application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
 
@@ -906,20 +624,16 @@ function handleFiles(files) {
   let skipped = 0;
   Array.from(files).forEach(f => {
     if(!isValidFile(f)) { skipped++; return; }
-    if(!uploadedFiles.find(x => x.name === f.name && x.size === f.size)) {
-      uploadedFiles.push(f);
-    }
+    if(!uploadedFiles.find(x => x.name === f.name && x.size === f.size)) uploadedFiles.push(f);
   });
   if(skipped > 0) showToast(`${skipped} file(s) skipped — only PDF/DOC/DOCX allowed`, 'error');
   renderFiles();
-  // Reset input so same file can be re-added if removed
   document.getElementById('cvInput').value = '';
 }
 
 function renderFiles() {
   const limits = PLAN_LIMITS[currentPlan] || PLAN_LIMITS.free;
   const cvLimit = limits.cvLimit;
-
   const list = document.getElementById('fileList');
   list.innerHTML = uploadedFiles.map((f,i) => `
     <div class="file-item">
@@ -928,20 +642,14 @@ function renderFiles() {
       <span class="file-size">${(f.size/1024).toFixed(0)} KB</span>
       <button class="file-remove" onclick="removeFile(${i})">✕</button>
     </div>`).join('');
-
   const count = uploadedFiles.length;
   document.getElementById('fileCount').textContent = count > 0 ? `${count} CV${count>1?'s':''} selected` : '';
   document.getElementById('btnStep2').disabled = count === 0;
-
-  // Plan limit banner
   const banner = document.getElementById('planBanner');
   if(count === 0) { banner.innerHTML = ''; return; }
   if(cvLimit !== -1 && count > cvLimit) {
-    banner.innerHTML = `<div class="plan-banner error">⚠️ Your plan allows ${cvLimit} CVs. You've selected ${count}. <a href="#" onclick="showUpgradeModal();return false" style="color:var(--accent);font-weight:600">Upgrade</a> or remove ${count - cvLimit} file(s).</div>`;
+    banner.innerHTML = `<div class="plan-banner error">⚠️ Your plan allows ${cvLimit} CVs. <a href="#" onclick="showUpgradeModal();return false" style="color:var(--accent);font-weight:600">Upgrade</a></div>`;
     document.getElementById('btnStep2').disabled = true;
-  } else if(cvLimit !== -1 && count >= cvLimit * 0.8) {
-    banner.innerHTML = `<div class="plan-banner warn">⚠️ ${count}/${cvLimit} CVs — approaching your plan limit</div>`;
-    document.getElementById('btnStep2').disabled = false;
   } else {
     banner.innerHTML = `<div class="plan-banner ok">✓ ${count} CV${count>1?'s':''} ready to screen</div>`;
   }
@@ -989,91 +697,21 @@ async function readPDFText(file) {
   });
 }
 
-// ============ AI SCREENING — Multi-provider ============
-function getAPIKeys() {
-  return {
-    claude: localStorage.getItem('hireiq_claude_key') || '',
-    openai: localStorage.getItem('hireiq_openai_key') || ''
-  };
-}
-
+// ============ AI SCREENING — Via Railway Backend ============
+// ✅ Keys are safe on the server — not exposed in browser!
 async function screenCV(cvText, jobTitle, jobDesc, fileName) {
-  const keys = getAPIKeys();
-  const prompt = buildPrompt(cvText, jobTitle, jobDesc, fileName);
-
-  // Try Claude first
-  if(keys.claude) {
-    try { return await callClaude(prompt, keys.claude); } catch(e) { console.warn('Claude failed, trying next:', e.message); }
-  }
-  // Try OpenAI
-  if(keys.openai) {
-    try { return await callOpenAI(prompt, keys.openai); } catch(e) { console.warn('OpenAI failed, trying Gemini:', e.message); }
-  }
-  // Default: Gemini
-  return callGemini(prompt);
-}
-
-function buildPrompt(cvText, jobTitle, jobDesc, fileName) {
-  return `You are an expert HR recruiter and ATS specialist. Analyze this CV for the job and respond with ONLY valid JSON.
-
-JOB TITLE: ${jobTitle}
-JOB DESCRIPTION: ${jobDesc.slice(0,800)}
-
-CV FILE: "${fileName}"
-CV CONTENT:
-${cvText || 'CV text could not be extracted - provide general evaluation based on filename'}
-
-Respond with ONLY this exact JSON (no markdown, no extra text):
-{
-  "name": "candidate full name from CV, or filename without extension",
-  "score": <integer 0-100, overall match score>,
-  "experience": "<X yrs · Key Role · Key Skill>",
-  "reason": "<2-3 sentence evaluation explaining the score and fit>",
-  "matched_skills": ["skill1","skill2","skill3"],
-  "missing_skills": ["skill1","skill2"],
-  "recommendation": "shortlist" or "consider" or "reject",
-  "ats_score": <integer 0-100, how ATS-friendly the CV is>,
-  "ats_issues": ["issue1 if any","issue2 if any"],
-  "ats_keywords_found": ["keyword1","keyword2"],
-  "ats_formatting": "good" or "fair" or "poor"
-}`;
-}
-
-async function callGemini(prompt) {
-  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`,{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.2,maxOutputTokens:600}})
+  const res = await fetch(`${BACKEND_URL}/screen`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      cv_text: cvText,
+      job_title: jobTitle,
+      job_desc: jobDesc,
+      file_name: fileName
+    })
   });
-  const data = await res.json();
-  if(data.error) throw new Error(data.error.message);
-  const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '{}';
-  return JSON.parse(raw.replace(/```json|```/g,'').trim());
-}
-
-async function callClaude(prompt, apiKey) {
-  // Note: Direct browser calls to Anthropic API require CORS allowance.
-  // This will work if your deployment has a CORS proxy or Supabase Edge Function.
-  const res = await fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',
-    headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:prompt}]})
-  });
-  const data = await res.json();
-  if(data.error) throw new Error(data.error.message);
-  const raw = data.content?.[0]?.text || '{}';
-  return JSON.parse(raw.replace(/```json|```/g,'').trim());
-}
-
-async function callOpenAI(prompt, apiKey) {
-  const res = await fetch('https://api.openai.com/v1/chat/completions',{
-    method:'POST',
-    headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
-    body:JSON.stringify({model:'gpt-4o-mini',messages:[{role:'user',content:prompt}],max_tokens:600,temperature:0.2})
-  });
-  const data = await res.json();
-  if(data.error) throw new Error(data.error.message);
-  const raw = data.choices?.[0]?.message?.content || '{}';
-  return JSON.parse(raw.replace(/```json|```/g,'').trim());
+  if(!res.ok) throw new Error(`Backend error: ${res.status}`);
+  return await res.json();
 }
 
 // ============ SCREENING FLOW ============
@@ -1162,18 +800,17 @@ function showResults(results,timeTaken,jobTitle,jobDesc) {
   const avg=total>0?Math.round(results.reduce((a,c)=>a+c.score,0)/total):0;
 
   document.getElementById('res-jobtitle').textContent='Results: '+jobTitle;
-  document.getElementById('res-meta').textContent=`${total} CVs screened · Completed just now · Powered by AI`;
+  document.getElementById('res-meta').textContent=`${total} CVs screened · Powered by HireIQ AI`;
   document.getElementById('res-total').textContent=total;
   document.getElementById('res-strong').textContent=strong;
   document.getElementById('res-avg').textContent=avg+'%';
   document.getElementById('res-time').textContent=timeTaken+'s';
 
-  // Lock PDF/Email based on plan
   const limits=PLAN_LIMITS[currentPlan]||PLAN_LIMITS.free;
   const pdfBtn=document.getElementById('btnExportPDF');
   const emailBtn=document.getElementById('btnEmailReport');
-  if(!limits.pdf){ pdfBtn.title='Upgrade to export PDF'; pdfBtn.style.opacity='.4'; }
-  if(!limits.emailReport){ emailBtn.title='Upgrade to email reports'; emailBtn.style.opacity='.4'; }
+  if(!limits.pdf){ pdfBtn.style.opacity='.4'; }
+  if(!limits.emailReport){ emailBtn.style.opacity='.4'; }
 
   const rankClasses=['rank-1','rank-2','rank-3','rank-other'];
   const scoreClass=s=>s>=75?'score-high':s>=50?'score-mid':'score-low';
@@ -1193,16 +830,12 @@ function showResults(results,timeTaken,jobTitle,jobDesc) {
     const atsKeywords=c.ats_keywords_found||[];
     const recColor=c.recommendation==='shortlist'?'var(--success)':c.recommendation==='reject'?'#f87171':'var(--accent)';
     const atsFormatColor=c.ats_formatting==='good'?'var(--success)':c.ats_formatting==='fair'?'var(--gold)':'#f87171';
-
     return `
     <div class="candidate-card" id="ccard-${i}" onclick="toggleCard(this)">
       <div class="cc-top">
         <div class="cc-rank ${rc}">${i+1}</div>
         <div class="cc-avatar" style="background:${color}">${initials}</div>
-        <div class="cc-info">
-          <div class="cc-name">${name}</div>
-          <div class="cc-file">${c.experience||'See details below'}</div>
-        </div>
+        <div class="cc-info"><div class="cc-name">${name}</div><div class="cc-file">${c.experience||'See details below'}</div></div>
         <div class="cc-right">
           <div class="cc-score ${scoreClass(c.score)}">${c.score}</div>
           <div class="cc-bar-wrap"><div class="cc-bar" style="width:0%" data-width="${c.score}%"></div></div>
@@ -1218,13 +851,8 @@ function showResults(results,timeTaken,jobTitle,jobDesc) {
           ${matched.map(t=>`<span class="skill-tag">✓ ${t}</span>`).join('')}
           ${missing.map(t=>`<span class="skill-tag missing">✗ ${t}</span>`).join('')}
         </div>
-
-        <!-- ATS SECTION -->
         <div class="ats-section">
-          <div class="ats-header">
-            <div class="ats-title">🔍 ATS Compatibility Score</div>
-            <span class="ats-score-badge ${atsScoreClass(atsScore)}">${atsScore}/100</span>
-          </div>
+          <div class="ats-header"><div class="ats-title">🔍 ATS Compatibility Score</div><span class="ats-score-badge ${atsScoreClass(atsScore)}">${atsScore}/100</span></div>
           <div class="ats-breakdown">
             <div class="ats-row"><span class="ats-row-label">Keywords Found</span><span class="ats-row-val" style="color:var(--success)">${atsKeywords.length}</span></div>
             <div class="ats-row"><span class="ats-row-label">Formatting</span><span class="ats-row-val" style="color:${atsFormatColor}">${c.ats_formatting||'—'}</span></div>
@@ -1234,7 +862,6 @@ function showResults(results,timeTaken,jobTitle,jobDesc) {
           ${atsKeywords.length>0?`<div style="margin-top:.5rem;display:flex;flex-wrap:wrap;gap:.3rem">${atsKeywords.map(k=>`<span style="font-size:.68rem;padding:.15rem .45rem;border-radius:3px;background:rgba(34,197,94,0.08);color:var(--success);border:1px solid rgba(34,197,94,0.2)">${k}</span>`).join('')}</div>`:''}
           ${atsIssues.length>0?`<div class="ats-issues">⚠ ${atsIssues.join(' · ')}</div>`:''}
         </div>
-
         <div class="cc-actions" style="margin-top:.875rem">
           <button class="cc-btn approve" onclick="event.stopPropagation();shortlistCandidate(${i})">✓ Shortlist</button>
           <button class="cc-btn reject" onclick="event.stopPropagation();rejectCandidate(${i})">✗ Reject</button>
@@ -1247,7 +874,6 @@ function showResults(results,timeTaken,jobTitle,jobDesc) {
 
   setTimeout(()=>{ document.querySelectorAll('.cc-bar').forEach(b=>{b.style.width=b.dataset.width;}); },300);
 
-  // Save to DB
   if(currentUser) {
     saveScreeningToDB(jobTitle,jobDesc,total,strong,avg,timeTaken,
       results.map(c=>({n:c.name,score:c.score,tags:c.matched_skills||[],reason:c.reason||'',ats:c.ats_score||0}))
@@ -1256,10 +882,33 @@ function showResults(results,timeTaken,jobTitle,jobDesc) {
 }
 
 function toggleCard(el){ el.classList.toggle('expanded'); }
-
-function shortlistCandidate(i){ showToast('✓ '+( lastScreeningResults[i]?.name||'Candidate')+' shortlisted!'); }
+function shortlistCandidate(i){ showToast('✓ '+(lastScreeningResults[i]?.name||'Candidate')+' shortlisted!'); }
 function rejectCandidate(i){ const c=document.getElementById('ccard-'+i); if(c) c.style.opacity='.4'; showToast('Candidate rejected.','error'); }
-function saveCandidateLocal(i,btn){ btn.textContent='✅ Saved'; btn.disabled=true; btn.style.color='var(--success)'; showToast('⭐ Saved!'); }
+// ✅ Fix Issue 2: Actually save to Supabase
+async function saveCandidateLocal(i, btn) {
+  btn.textContent='Saving...'; btn.disabled=true;
+  try {
+    const c = lastScreeningResults[i];
+    if(!c || !currentUser) throw new Error('No data');
+    await sb.from('candidates').insert({
+      user_id: currentUser.id,
+      name: c.name || 'Unknown',
+      score: c.score || 0,
+      skills: (c.matched_skills||[]).join(', '),
+      reason: c.reason || '',
+      ats_score: c.ats_score || 0,
+      status: 'shortlisted',
+      saved: true
+    });
+    btn.textContent='✅ Saved';
+    btn.style.color='var(--success)';
+    showToast('⭐ Candidate saved!');
+  } catch(e) {
+    btn.textContent='⭐ Save';
+    btn.disabled=false;
+    showToast('Save failed. Try again.','error');
+  }
+}
 function copyCandidate(i){
   const c=lastScreeningResults[i];
   if(!c) return;
@@ -1272,165 +921,70 @@ async function exportPDF() {
   const limits = PLAN_LIMITS[currentPlan]||PLAN_LIMITS.free;
   if(!limits.pdf) { showToast('Upgrade to Starter or higher to export PDF','error'); showUpgradeModal(); return; }
   if(lastScreeningResults.length===0) { showToast('No results to export','error'); return; }
-
   try {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation:'portrait', unit:'mm', format:'a4' });
-
     const jobTitle = document.getElementById('jobTitle').value || 'Screening';
     const primaryColor = [14,165,233];
     const darkBg = [4,13,26];
     const textColor = [200,220,245];
     const mutedColor = [122,160,192];
-
-    // Background
-    doc.setFillColor(...darkBg);
-    doc.rect(0,0,210,297,'F');
-
-    // Header bar
-    doc.setFillColor(...primaryColor);
-    doc.rect(0,0,210,22,'F');
-
-    doc.setTextColor(255,255,255);
-    doc.setFont('helvetica','bold');
-    doc.setFontSize(14);
+    doc.setFillColor(...darkBg); doc.rect(0,0,210,297,'F');
+    doc.setFillColor(...primaryColor); doc.rect(0,0,210,22,'F');
+    doc.setTextColor(255,255,255); doc.setFont('helvetica','bold'); doc.setFontSize(14);
     doc.text('HireIQ — AI Screening Report',15,14);
-
-    doc.setFontSize(9);
-    doc.setFont('helvetica','normal');
+    doc.setFontSize(9); doc.setFont('helvetica','normal');
     doc.text(new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}),165,14);
-
-    // Job title
-    doc.setTextColor(...textColor);
-    doc.setFont('helvetica','bold');
-    doc.setFontSize(12);
+    doc.setTextColor(...textColor); doc.setFont('helvetica','bold'); doc.setFontSize(12);
     doc.text(jobTitle,15,32);
-
-    // Stats bar
     const total=lastScreeningResults.length;
     const strong=lastScreeningResults.filter(c=>c.score>=75).length;
     const avg=Math.round(lastScreeningResults.reduce((a,c)=>a+c.score,0)/total);
     const avgATS=Math.round(lastScreeningResults.reduce((a,c)=>a+(c.ats_score||0),0)/total);
-
-    doc.setFillColor(7,22,40);
-    doc.roundedRect(12,36,186,18,2,2,'F');
-    doc.setFontSize(8);
-    doc.setFont('helvetica','normal');
-    doc.setTextColor(...mutedColor);
-    doc.text(`Total CVs: ${total}`,18,47);
-    doc.text(`Strong Matches: ${strong}`,65,47);
-    doc.text(`Avg Score: ${avg}%`,120,47);
-    doc.text(`Avg ATS: ${avgATS}/100`,165,47);
-
-    // Candidates table
+    doc.setFillColor(7,22,40); doc.roundedRect(12,36,186,18,2,2,'F');
+    doc.setFontSize(8); doc.setFont('helvetica','normal'); doc.setTextColor(...mutedColor);
+    doc.text(`Total CVs: ${total}`,18,47); doc.text(`Strong Matches: ${strong}`,65,47);
+    doc.text(`Avg Score: ${avg}%`,120,47); doc.text(`Avg ATS: ${avgATS}/100`,165,47);
     let y=62;
-    doc.setFontSize(9);
-    doc.setFont('helvetica','bold');
-    doc.setTextColor(...primaryColor);
-    doc.text('# Candidate',15,y);
-    doc.text('Score',100,y);
-    doc.text('ATS',120,y);
-    doc.text('Rec.',145,y);
-    doc.text('Skills Match',165,y);
-
-    doc.setFillColor(...primaryColor);
-    doc.rect(12,y+2,186,0.5,'F');
-    y+=8;
-
+    doc.setFontSize(9); doc.setFont('helvetica','bold'); doc.setTextColor(...primaryColor);
+    doc.text('# Candidate',15,y); doc.text('Score',100,y); doc.text('ATS',120,y);
+    doc.text('Rec.',145,y); doc.text('Skills Match',165,y);
+    doc.setFillColor(...primaryColor); doc.rect(12,y+2,186,0.5,'F'); y+=8;
     lastScreeningResults.forEach((c,i)=>{
-      if(y>268) { doc.addPage(); doc.setFillColor(...darkBg); doc.rect(0,0,210,297,'F'); y=20; }
+      if(y>268){ doc.addPage(); doc.setFillColor(...darkBg); doc.rect(0,0,210,297,'F'); y=20; }
       const isEven=i%2===0;
       if(isEven){ doc.setFillColor(7,22,40); doc.rect(12,y-4,186,11,'F'); }
-      doc.setFont('helvetica','bold');
-      doc.setFontSize(8);
+      doc.setFont('helvetica','bold'); doc.setFontSize(8);
       const scoreC=c.score>=75?[34,197,94]:c.score>=50?[14,165,233]:[122,160,192];
-      doc.setTextColor(...scoreC);
-      doc.text(String(i+1).padStart(2,'0'),15,y+3);
-      doc.setTextColor(...textColor);
-      const name=(c.name||'Unknown').slice(0,28);
-      doc.text(name,22,y+3);
-      doc.setTextColor(...scoreC);
-      doc.text(String(c.score),100,y+3);
+      doc.setTextColor(...scoreC); doc.text(String(i+1).padStart(2,'0'),15,y+3);
+      doc.setTextColor(...textColor); doc.text((c.name||'Unknown').slice(0,28),22,y+3);
+      doc.setTextColor(...scoreC); doc.text(String(c.score),100,y+3);
       const atsC=(c.ats_score||0)>=75?[34,197,94]:(c.ats_score||0)>=50?[14,165,233]:[239,68,68];
-      doc.setTextColor(...atsC);
-      doc.text(String(c.ats_score||0),120,y+3);
+      doc.setTextColor(...atsC); doc.text(String(c.ats_score||0),120,y+3);
       const recC=c.recommendation==='shortlist'?[34,197,94]:c.recommendation==='reject'?[239,68,68]:[14,165,233];
-      doc.setTextColor(...recC);
-      doc.text((c.recommendation||'').toUpperCase().slice(0,10),145,y+3);
-      doc.setTextColor(...mutedColor);
-      doc.setFont('helvetica','normal');
-      const skills=((c.matched_skills||[]).slice(0,3).join(', ')||'—').slice(0,30);
-      doc.text(skills,165,y+3);
+      doc.setTextColor(...recC); doc.text((c.recommendation||'').toUpperCase().slice(0,10),145,y+3);
+      doc.setTextColor(...mutedColor); doc.setFont('helvetica','normal');
+      doc.text(((c.matched_skills||[]).slice(0,3).join(', ')||'—').slice(0,30),165,y+3);
       y+=12;
     });
-
-    // Detailed section
-    y+=6;
-    if(y>250){ doc.addPage(); doc.setFillColor(...darkBg); doc.rect(0,0,210,297,'F'); y=20; }
-    doc.setFontSize(10);
-    doc.setFont('helvetica','bold');
-    doc.setTextColor(...primaryColor);
-    doc.text('Detailed Analysis',15,y);
-    doc.setFillColor(...primaryColor);
-    doc.rect(12,y+2,186,0.5,'F');
-    y+=10;
-
-    lastScreeningResults.slice(0,8).forEach((c,i)=>{
-      if(y>260){ doc.addPage(); doc.setFillColor(...darkBg); doc.rect(0,0,210,297,'F'); y=20; }
-      doc.setFillColor(7,22,40);
-      doc.roundedRect(12,y,186,Math.min(38,22+(c.reason||'').length/6),2,2,'F');
-      doc.setFont('helvetica','bold');
-      doc.setFontSize(9);
-      doc.setTextColor(...textColor);
-      doc.text(`${i+1}. ${(c.name||'Unknown').slice(0,40)}`,17,y+8);
-      doc.setFont('helvetica','normal');
-      doc.setFontSize(7.5);
-      doc.setTextColor(...mutedColor);
-      const reason=doc.splitTextToSize(c.reason||'No analysis.',172);
-      doc.text(reason.slice(0,4),17,y+15);
-      const missing=(c.missing_skills||[]).slice(0,3).join(', ');
-      if(missing){ doc.setTextColor(239,68,68); doc.text('Missing: '+missing,17,y+32); }
-      y+=40;
-    });
-
-    // Footer
-    doc.setFillColor(...primaryColor);
-    doc.rect(0,285,210,12,'F');
-    doc.setFont('helvetica','normal');
-    doc.setFontSize(7);
-    doc.setTextColor(255,255,255);
-    doc.text('Generated by HireIQ · AI-Powered CV Screening · hireiq.autremix.com',15,292);
-    doc.text(`Page 1 of ${doc.internal.getNumberOfPages()}`,190,292,'right');
-
+    doc.setFillColor(...primaryColor); doc.rect(0,285,210,12,'F');
+    doc.setFont('helvetica','normal'); doc.setFontSize(7); doc.setTextColor(255,255,255);
+    doc.text('Generated by HireIQ · AI-Powered CV Screening',15,292);
     doc.save(`HireIQ-Report-${jobTitle.replace(/\s+/g,'-')}.pdf`);
     showToast('PDF exported successfully!');
-  } catch(e) {
-    console.error('PDF error:',e);
-    showToast('PDF export failed. Try again.','error');
-  }
+  } catch(e) { console.error('PDF error:',e); showToast('PDF export failed.','error'); }
 }
 
 // ============ EMAIL REPORT ============
 function showEmailModal() {
   const limits=PLAN_LIMITS[currentPlan]||PLAN_LIMITS.free;
-  if(!limits.emailReport){ showToast('Upgrade to Starter or higher to email reports','error'); showUpgradeModal(); return; }
+  if(!limits.emailReport){ showToast('Upgrade to email reports','error'); showUpgradeModal(); return; }
   if(lastScreeningResults.length===0){ showToast('No results to send','error'); return; }
-
   const jobTitle=document.getElementById('jobTitle').value||'Screening';
   const total=lastScreeningResults.length;
   const strong=lastScreeningResults.filter(c=>c.score>=75).length;
   const top5=lastScreeningResults.slice(0,5);
-
-  const preview=`HireIQ Screening Report — ${jobTitle}
-Date: ${new Date().toLocaleDateString()}
-Total CVs: ${total} | Strong Matches: ${strong}
-
-TOP CANDIDATES:
-${top5.map((c,i)=>`${i+1}. ${c.name||'Unknown'} — Score: ${c.score}/100 (ATS: ${c.ats_score||0}) [${(c.recommendation||'').toUpperCase()}]`).join('\n')}
-
-Powered by HireIQ · AI CV Screening`;
-
-  document.getElementById('emailPreview').textContent=preview;
+  document.getElementById('emailPreview').textContent=`HireIQ Report — ${jobTitle}\nDate: ${new Date().toLocaleDateString()}\nTotal: ${total} | Strong: ${strong}\n\nTOP CANDIDATES:\n${top5.map((c,i)=>`${i+1}. ${c.name||'Unknown'} — ${c.score}/100`).join('\n')}`;
   document.getElementById('emailRecipient').value='';
   document.getElementById('emailModal').classList.add('open');
 }
@@ -1439,13 +993,8 @@ function sendEmailReport() {
   const to=document.getElementById('emailRecipient').value.trim();
   if(!to){ showToast('Please enter an email address','error'); return; }
   const jobTitle=document.getElementById('jobTitle').value||'Screening';
-  const total=lastScreeningResults.length;
-  const strong=lastScreeningResults.filter(c=>c.score>=75).length;
-  const top5=lastScreeningResults.slice(0,5);
-
   const subject=encodeURIComponent(`HireIQ Report: ${jobTitle}`);
-  const body=encodeURIComponent(`HireIQ AI Screening Report\n===========================\nJob: ${jobTitle}\nDate: ${new Date().toLocaleDateString()}\nTotal CVs Screened: ${total}\nStrong Matches: ${strong}\n\nTOP CANDIDATES:\n${top5.map((c,i)=>`${i+1}. ${c.name||'Unknown'} — Score: ${c.score}/100 | ATS: ${c.ats_score||0}/100 | ${(c.recommendation||'').toUpperCase()}\n   ${c.reason||''}\n   Matched Skills: ${(c.matched_skills||[]).join(', ')}`).join('\n\n')}\n\n---\nGenerated by HireIQ · hireiq.autremix.com`);
-
+  const body=encodeURIComponent(`HireIQ AI Screening Report\nJob: ${jobTitle}\nDate: ${new Date().toLocaleDateString()}\n\n${lastScreeningResults.slice(0,5).map((c,i)=>`${i+1}. ${c.name||'Unknown'} — Score: ${c.score}/100 | ATS: ${c.ats_score||0}/100`).join('\n')}`);
   window.location.href=`mailto:${to}?subject=${subject}&body=${body}`;
   closeEmailModal();
   showToast('Opening email client...');
@@ -1456,7 +1005,11 @@ function closeEmailModal(){ document.getElementById('emailModal').classList.remo
 // ============ RESET ============
 function resetWizard() {
   currentStep=1;
-  uploadedFiles=[];
+  uploadedFiles=[];  // ✅ Fix Issue 4: properly clear uploaded files array
+  lastScreeningResults=[];
+  // Also reset file input element
+  const cvInput = document.getElementById('cvInput');
+  if(cvInput) cvInput.value='';
   document.getElementById('jobTitle').value='';
   document.getElementById('jobDesc').value='';
   document.getElementById('charCount').textContent='0';
@@ -1486,21 +1039,12 @@ async function loadHistory() {
     const { data } = await sb.from('screenings').select('*').eq('user_id', currentUser.id).order('created_at',{ascending:false});
     const badge = document.getElementById('historyBadge');
     const content = document.getElementById('historyContent');
-
-    if(!data||data.length===0) {
-      if(badge) badge.textContent='0';
-      content.innerHTML=`<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2rem;text-align:center;color:var(--muted);font-size:.9rem"><div style="font-size:2rem;margin-bottom:.75rem">📋</div>No screenings yet. Start your first screening!</div>`;
-      return;
-    }
+    if(!data||data.length===0) { if(badge) badge.textContent='0'; return; }
     if(badge) badge.textContent=data.length;
     content.innerHTML=data.map(s=>`
       <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:.75rem">
-        <div style="flex:1;min-width:200px">
-          <div style="font-weight:600;margin-bottom:.2rem">${s.job_title}</div>
-          <div style="font-size:.78rem;color:var(--muted)">${s.cv_count} CVs · ${getTimeAgo(new Date(s.created_at))}</div>
-        </div>
+        <div style="flex:1;min-width:200px"><div style="font-weight:600;margin-bottom:.2rem">${s.job_title}</div><div style="font-size:.78rem;color:var(--muted)">${s.cv_count} CVs · ${getTimeAgo(new Date(s.created_at))}</div></div>
         <div style="font-size:.82rem;color:var(--success);font-weight:600">${s.strong_matches} strong matches</div>
-        <button class="action-btn" onclick="showToast('Full results view coming soon!')">View</button>
       </div>`).join('');
   } catch(e) { console.warn('History load error:', e); }
 }
@@ -1510,23 +1054,13 @@ async function loadSavedCandidates() {
   try {
     const { data } = await sb.from('candidates').select('*').eq('user_id', currentUser.id).eq('saved', true).order('created_at',{ascending:false});
     const el = document.getElementById('candidatesContent');
-    if(!data||data.length===0) {
-      el.innerHTML=`<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2rem;text-align:center;color:var(--muted);font-size:.9rem"><div style="font-size:2rem;margin-bottom:.75rem">👥</div>No saved candidates yet. Screen some CVs and save the best ones!</div>`;
-      return;
-    }
+    if(!data||data.length===0) return;
     el.innerHTML=data.map(c=>`
       <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:.75rem">
         <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--gold));display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:#fff">${(c.name||'?')[0].toUpperCase()}</div>
         <div style="flex:1;min-width:160px"><div style="font-weight:600">${c.name||'Unknown'}</div><div style="font-size:.78rem;color:var(--muted)">Score: ${c.score}</div></div>
-        <button class="action-btn" style="color:#f87171;border-color:rgba(239,68,68,0.2)" onclick="unsaveCandidate('${c.id}')">Remove</button>
       </div>`).join('');
   } catch(e) { console.warn('Candidates load error:', e); }
-}
-
-async function unsaveCandidate(id) {
-  await sb.from('candidates').update({saved:false}).eq('id',id);
-  loadSavedCandidates();
-  showToast('Candidate removed.');
 }
 
 // ============ SUPABASE SAVE ============
@@ -1545,73 +1079,33 @@ async function saveSettings() {
   const name=document.getElementById('settingsName').value.trim();
   const company=document.getElementById('settingsCompany').value.trim();
   const password=document.getElementById('settingsPassword').value;
-  const claudeKey=document.getElementById('claudeKey').value.trim();
-  const openaiKeyVal=document.getElementById('openaiKey').value.trim();
-
   if(!name){ showToast('Please enter your name','error'); return; }
-
-  // Save API keys to localStorage
-  if(claudeKey){ localStorage.setItem('hireiq_claude_key',claudeKey); }
-  else { localStorage.removeItem('hireiq_claude_key'); }
-  if(openaiKeyVal){ localStorage.setItem('hireiq_openai_key',openaiKeyVal); }
-  else { localStorage.removeItem('hireiq_openai_key'); }
-  updateAPIKeyBadges();
-
   await sb.from('profiles').update({full_name:name,company}).eq('id',currentUser.id);
   if(password&&password.length>=8){ await sb.auth.updateUser({password}); }
   await loadProfile();
   showToast('Settings saved!');
 }
 
-function loadAPIKeysFromStorage() {
-  const ck=localStorage.getItem('hireiq_claude_key')||'';
-  const ok=localStorage.getItem('hireiq_openai_key')||'';
-  if(document.getElementById('claudeKey')) document.getElementById('claudeKey').value=ck;
-  if(document.getElementById('openaiKey')) document.getElementById('openaiKey').value=ok;
-  updateAPIKeyBadges();
-}
-
-function updateAPIKeyBadges() {
-  const ck=localStorage.getItem('hireiq_claude_key');
-  const ok=localStorage.getItem('hireiq_openai_key');
-  const cb=document.getElementById('claudeBadge');
-  const ob=document.getElementById('openaiKey_badge');
-  if(cb) cb.style.display=ck?'inline-flex':'none';
-  if(ob) ob.style.display=ok?'inline-flex':'none';
-}
-
-function toggleKeyVisibility(inputId, btn) {
-  const input=document.getElementById(inputId);
-  if(input.type==='password'){ input.type='text'; btn.textContent='Hide'; }
-  else { input.type='password'; btn.textContent='Show'; }
-}
-
-async function logout() {
-  await sb.auth.signOut();
-  window.location.href='login.html';
-}
+async function logout() { await sb.auth.signOut(); window.location.href='login.html'; }
 
 // ============ STRIPE UPGRADE ============
+// ✅ Fix Issue 1: To add Stripe links:
+// 1. Go to dashboard.stripe.com
+// 2. Products → Payment Links → Create Link
+// 3. Replace the URLs below with your actual links
 let selectedUpgradePlan='pro';
-
-function showUpgradeModal() {
-  document.getElementById('upgradeModal').classList.add('open');
-}
-function closeUpgradeModal() {
-  document.getElementById('upgradeModal').classList.remove('open');
-}
-function selectUpgradePlan(el,plan) {
-  document.querySelectorAll('.plan-card-sm').forEach(c=>c.classList.remove('selected'));
-  el.classList.add('selected');
-  selectedUpgradePlan=plan;
-}
+function showUpgradeModal() { document.getElementById('upgradeModal').classList.add('open'); }
+function closeUpgradeModal() { document.getElementById('upgradeModal').classList.remove('open'); }
+function selectUpgradePlan(el,plan) { document.querySelectorAll('.plan-card-sm').forEach(c=>c.classList.remove('selected')); el.classList.add('selected'); selectedUpgradePlan=plan; }
 function proceedToPayment() {
   if(selectedUpgradePlan==='free'){ closeUpgradeModal(); showToast('You are on the free plan!'); return; }
-  if(selectedUpgradePlan==='enterprise'){ closeUpgradeModal(); window.open('mailto:hello@autremix.com?subject=HireIQ Enterprise Inquiry','_blank'); return; }
+  if(selectedUpgradePlan==='enterprise'){ closeUpgradeModal(); window.open('mailto:hello@autremix.com?subject=HireIQ Enterprise','_blank'); return; }
   const link=STRIPE_LINKS[selectedUpgradePlan];
-  if(!link||link.includes('REPLACE')){ showToast('Payment link not yet configured. Please contact hello@autremix.com','error'); return; }
-  closeUpgradeModal();
-  window.open(link,'_blank');
+  if(!link||link.includes('REPLACE')){
+    showToast('Payment coming soon! Contact hello@autremix.com to upgrade.','error');
+    return;
+  }
+  closeUpgradeModal(); window.open(link,'_blank');
 }
 
 document.getElementById('upgradeModal').addEventListener('click',e=>{ if(e.target===document.getElementById('upgradeModal')) closeUpgradeModal(); });
@@ -1622,9 +1116,7 @@ function showToast(msg,type='success') {
   const toast=document.getElementById('toast');
   toast.textContent=msg;
   toast.style.background=type==='error'?'rgba(239,68,68,0.92)':'rgba(34,197,94,0.92)';
-  toast.style.color='#fff';
-  toast.style.opacity='1';
-  toast.style.transform='translateY(0)';
+  toast.style.color='#fff'; toast.style.opacity='1'; toast.style.transform='translateY(0)';
   clearTimeout(toast._timer);
   toast._timer=setTimeout(()=>{ toast.style.opacity='0'; toast.style.transform='translateY(8px)'; },3000);
 }
@@ -1639,7 +1131,6 @@ function getTimeAgo(date) {
   return date.toLocaleDateString();
 }
 
-// ============ START ============
 init();
 </script>
 </body>
