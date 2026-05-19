@@ -1949,23 +1949,29 @@ async function uploadPaymentProof(file){
   try{
     // Ensure we have a current user
     if(!currentUser){
-      try{ const { data } = await sb.auth.getUser(); currentUser = data?.user || null; }catch(e){ currentUser = null; }
+      try {
+        const response = await sb.auth.getUser();
+        const userData = response && response.data ? response.data.user : null;
+        currentUser = userData || null;
+      } catch(e) {
+        currentUser = null;
+      }
     }
-    const uid = currentUser?.id || 'anon';
-    const ext = (file.name.split('.').pop()||'png').toLowerCase();
+    const uid = currentUser && currentUser.id ? currentUser.id : 'anon';
+    const ext = (file.name.split('.').pop() || 'png').toLowerCase();
     const key = `payment-proofs/${uid}/${Date.now()}_${Math.random().toString(36).slice(2,8)}.${ext}`;
     const storage = sb.storage.from('payment-proofs');
     console.log('Uploading proof to storage:', key);
     const { data, error } = await storage.upload(key, file, { upsert: true });
     if(error){
       console.error('Storage Upload Error:', error);
-      const errMsg = error?.message || JSON.stringify(error);
+      const errMsg = error && error.message ? error.message : JSON.stringify(error);
       throw new Error(`Storage upload failed: ${errMsg}`);
     }
     console.log('Storage upload successful:', data);
-    const path = data?.path || key;
+    const path = data && data.path ? data.path : key;
     const { data: publicData } = storage.getPublicUrl(path);
-    const publicUrl = publicData?.publicUrl || publicData?.public_url || publicData?.url || null;
+    const publicUrl = publicData && (publicData.publicUrl || publicData.public_url || publicData.url) ? (publicData.publicUrl || publicData.public_url || publicData.url) : null;
     console.log('Public URL generated:', publicUrl);
     return publicUrl;
   } catch(e){ 
@@ -1977,18 +1983,32 @@ async function uploadPaymentProof(file){
 async function submitLocalPaymentRequest(){
   // Async session double-check with fallback
   if(!currentUser){
-    try{ const { data } = await sb.auth.getUser(); currentUser = data?.user || null; }catch(e){ currentUser = null; }
+    try {
+      const response = await sb.auth.getUser();
+      const userData = response && response.data ? response.data.user : null;
+      currentUser = userData || null;
+    } catch(e) {
+      console.error('Session fetch error:', e);
+      currentUser = null;
+    }
   }
   // Final session validation
   if(!currentUser){
-    const sessionUser = (await sb.auth.getUser()).data?.user;
-    if(!sessionUser){
-      const errMsg = 'Error: No active authenticated user session found. Please re-login.';
-      console.error(errMsg);
-      alert(errMsg);
+    try {
+      const response = await sb.auth.getUser();
+      const userData = response && response.data ? response.data.user : null;
+      if(!userData){
+        const errMsg = 'Error: No active authenticated user session found. Please re-login.';
+        console.error(errMsg);
+        alert(errMsg);
+        return;
+      }
+      currentUser = userData;
+    } catch(e) {
+      console.error('Final session check failed:', e);
+      alert('Error: No active authenticated user session found. Please re-login.');
       return;
     }
-    currentUser = sessionUser;
   }
   const payerName = document.getElementById('localPayerName')?.value?.trim() || '';
   const txRef = document.getElementById('localTransactionRef')?.value?.trim() || '';
