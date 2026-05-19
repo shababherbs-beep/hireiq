@@ -1955,20 +1955,41 @@ async function uploadPaymentProof(file){
     const ext = (file.name.split('.').pop()||'png').toLowerCase();
     const key = `payment-proofs/${uid}/${Date.now()}_${Math.random().toString(36).slice(2,8)}.${ext}`;
     const storage = sb.storage.from('payment-proofs');
+    console.log('Uploading proof to storage:', key);
     const { data, error } = await storage.upload(key, file, { upsert: true });
-    if(error) throw error;
+    if(error){
+      console.error('Storage Upload Error:', error);
+      const errMsg = error?.message || JSON.stringify(error);
+      throw new Error(`Storage upload failed: ${errMsg}`);
+    }
+    console.log('Storage upload successful:', data);
     const path = data?.path || key;
     const { data: publicData } = storage.getPublicUrl(path);
-    return publicData?.publicUrl || publicData?.public_url || publicData?.url || null;
-  } catch(e){ console.error('Payment proof upload failed',e); return null; }
+    const publicUrl = publicData?.publicUrl || publicData?.public_url || publicData?.url || null;
+    console.log('Public URL generated:', publicUrl);
+    return publicUrl;
+  } catch(e){ 
+    console.error('Payment proof upload failed:', e);
+    return null;
+  }
 }
 
 async function submitLocalPaymentRequest(){
-  // Ensure active user/session
+  // Async session double-check with fallback
   if(!currentUser){
     try{ const { data } = await sb.auth.getUser(); currentUser = data?.user || null; }catch(e){ currentUser = null; }
   }
-  if(!currentUser){ showToast('Please sign in to submit payment proof','error'); return; }
+  // Final session validation
+  if(!currentUser){
+    const sessionUser = (await sb.auth.getUser()).data?.user;
+    if(!sessionUser){
+      const errMsg = 'Error: No active authenticated user session found. Please re-login.';
+      console.error(errMsg);
+      alert(errMsg);
+      return;
+    }
+    currentUser = sessionUser;
+  }
   const payerName = document.getElementById('localPayerName')?.value?.trim() || '';
   const txRef = document.getElementById('localTransactionRef')?.value?.trim() || '';
   const method = selectedUpgradePlan === 'enterprise' ? 'bank_transfer' : (selectedUpgradePlan === 'pro' ? 'jazzcash' : 'easypaisa');
@@ -1977,10 +1998,22 @@ async function submitLocalPaymentRequest(){
   showToast('Submitting payment request...');
   try{
     let proofUrl = null;
-    if(paymentProofFile) proofUrl = await uploadPaymentProof(paymentProofFile);
+    if(paymentProofFile){
+      proofUrl = await uploadPaymentProof(paymentProofFile);
+      if(!proofUrl){
+        throw new Error('Storage upload failed: file could not be uploaded to proof bucket');
+      }
+    }
     const payload = { user_id: currentUser.id, plan: selectedUpgradePlan, method, payer_name: payerName, transaction_ref: txRef, proof_url: proofUrl, status: 'pending', created_at: new Date().toISOString() };
-    const { data, error } = await sb.from('payment_requests').insert(payload).select().single();
-    if(error) throw error;
+    console.log('Payload to insert:', payload);
+    const { data, error } = await sb.from('payment_requests').insert([payload]).select().single();
+    if(error){
+      console.error('Database Insert Error:', error);
+      const errMsg = error?.message || JSON.stringify(error);
+      showToast(`Database Error: ${errMsg}`,'error');
+      throw error;
+    }
+    console.log('Insert successful:', data);
     showToast('Payment request submitted. We will review and activate your plan.','success');
     // Force-close the upgrade modal immediately (safe, guarded)
     try{ if(typeof closeUpgradeModal === 'function') closeUpgradeModal(); } catch(e){ console.error('Error closing upgrade modal', e); }
@@ -1990,8 +2023,9 @@ async function submitLocalPaymentRequest(){
     const proofInput = document.getElementById('paymentProofInput'); if(proofInput) proofInput.value = '';
     handlePaymentProofFile(null);
   } catch(e){
-    console.error('Payment request failed',e);
-    showToast('Failed to submit payment request','error');
+    console.error('Payment request failed:', e);
+    const errMsg = e?.message || String(e);
+    showToast(`Submission error: ${errMsg}`,'error');
   } finally{
     if(submitBtn) submitBtn.disabled = false;
   }
