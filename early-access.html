@@ -72,6 +72,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .form-select:focus{border-color:var(--accent)}
 .submit-btn{width:100%;padding:.9rem;border-radius:8px;background:var(--accent);color:#fff;font-size:1rem;font-weight:600;border:none;cursor:pointer;transition:background .2s,transform .15s;font-family:'DM Sans',sans-serif;margin-top:.5rem}
 .submit-btn:hover{background:var(--accent2);transform:translateY(-1px)}
+.google-btn{width:100%;padding:.9rem;border-radius:8px;background:rgba(255,255,255,0.05);color:var(--text);font-size:1rem;font-weight:600;border:1px solid var(--border);cursor:pointer;margin:1.25rem 0;transition:background .2s;font-family:'DM Sans',sans-serif}
+.google-btn:hover{background:rgba(14,165,233,0.1)}
 .form-note{font-size:.78rem;color:var(--muted);text-align:center;margin-top:.75rem}
 
 /* SUCCESS STATE */
@@ -189,7 +191,7 @@ footer{border-top:1px solid var(--border);padding:2rem 6%;display:flex;align-ite
     <div class="left-content">
       <div class="left-tag">Free Trial</div>
       <h1 class="left-title">Start screening<br><span>smarter today</span></h1>
-      <p class="left-sub">Join 500+ HR teams who use HireIQ to cut screening time by 90%. Free Trial includes 3 free ATS CV scans total and 1-time Premium CV Fix access via WhatsApp.</p>
+      <p class="left-sub">Start screening smarter today. Join forward-thinking HR leaders using HireIQ to slash shortlisting time by 90%. Create your free workspace today and experience automated, AI-driven candidate ranking instantly.</p>
 
       <ul class="benefit-list">
         <li class="benefit-item"><div class="benefit-icon">⚡</div><span>Screen 100 CVs in under 2 minutes — instead of 8 hours</span></li>
@@ -226,6 +228,7 @@ footer{border-top:1px solid var(--border);padding:2rem 6%;display:flex;align-ite
       <div id="formState">
         <div class="form-title">Create your free account</div>
       <div class="form-sub">Free Trial · 3 free ATS CV scans total · 1-time Premium CV Fix access via WhatsApp</div>
+      <button class="google-btn" type="button" onclick="startGoogleSignup()">Continue with Google</button>
 
       <div class="plan-selector" id="planSelector">
         <div class="plan-opt selected" onclick="selectPlan(this,'free')">
@@ -260,6 +263,11 @@ footer{border-top:1px solid var(--border);padding:2rem 6%;display:flex;align-ite
         <div class="form-group">
           <label class="form-label">Work email</label>
           <input type="email" class="form-input" id="email" placeholder="you@company.com">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Create a password</label>
+          <input type="password" class="form-input" id="password" placeholder="Create a secure password">
         </div>
 
         <div class="form-group">
@@ -365,6 +373,7 @@ async function submitForm(){
   const firstName = document.getElementById('firstName').value.trim();
   const lastName = document.getElementById('lastName').value.trim();
   const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
   const company = document.getElementById('company').value.trim();
   const companySize = document.getElementById('companySize').value;
   const role = document.getElementById('role').value;
@@ -375,30 +384,45 @@ async function submitForm(){
   if(!firstName){alert('Please enter your first name.');return;}
   if(!lastName){alert('Please enter your last name.');return;}
   if(!email||!email.includes('@')){alert('Please enter a valid work email.');return;}
+  if(!password||password.length < 6){alert('Please create a password with at least 6 characters.');return;}
   if(!company){alert('Please enter your company name.');return;}
 
-  const userId = await getCurrentUserId();
+  const signUpPayload = { email, password, options: { data: { first_name: firstName, last_name: lastName, company, company_size: companySize || null, role: role || null, phone: phone || null, selected_plan: plan } } };
 
   try {
-    const { error } = await sb.from('leads').insert([{
-      user_id: userId,
-      email,
-      first_name: firstName,
-      last_name: lastName,
-      company: company || null,
-      role: role || null,
-      subject: 'Early access request',
-      message: `Company size: ${companySize || 'unspecified'}${phone ? ` · Phone: ${phone}` : ''}`,
-      source: 'early_access'
-    }]);
+    const { data: authData, error: authError } = await sb.auth.signUp(signUpPayload);
+    if(authError){
+      if(authError.message?.toLowerCase().includes('already registered')){
+        const { data: signInData, error: signInError } = await sb.auth.signInWithPassword({ email, password });
+        if(signInError) throw signInError;
+        if(signInData?.session){ window.location.href = 'dashboard.html'; return; }
+      }
+      throw authError;
+    }
 
-    if(error) throw error;
+    const userId = authData?.user?.id || await getCurrentUserId();
+    const { error: leadError } = await sb.from('leads').insert([{ user_id: userId, email, first_name: firstName, last_name: lastName, company: company || null, role: role || null, subject: 'Early access request', message: `Company size: ${companySize || 'unspecified'}${phone ? ` · Phone: ${phone}` : ''}`, source: 'early_access' }]);
+    if(leadError) console.warn('Lead insert warning:', leadError);
+
+    if(authData?.session){
+      window.location.href = 'dashboard.html';
+      return;
+    }
 
     document.getElementById('formState').style.display='none';
     document.getElementById('successState').style.display='block';
   } catch (err) {
     console.error('Early access submit failed:', err);
-    alert('Unable to submit your early access request at this time. Please try again later.');
+    alert(err.message || 'Unable to sign you up right now. Please try again later.');
+  }
+}
+
+async function startGoogleSignup(){
+  try {
+    await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin + '/dashboard.html' } });
+  } catch (err) {
+    console.error('Google signup failed:', err);
+    alert('Unable to sign in with Google right now. Please try again later.');
   }
 }
 

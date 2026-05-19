@@ -144,7 +144,12 @@ async function login() {
 }
 
 async function loginGoogle() {
-  await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin + '/dashboard.html' } });
+  try {
+    await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: 'https://iq-tau.vercel.app/dashboard.html' } });
+  } catch (err) {
+    console.error('Google login failed:', err);
+    showAlert('Unable to sign in with Google right now. Please try again later.', 'error');
+  }
 }
 
 // PARTICLES

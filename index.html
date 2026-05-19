@@ -25,8 +25,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .nav-cta:hover{background:var(--accent2);transform:translateY(-1px)}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
 .hamburger span{width:22px;height:2px;background:var(--text);border-radius:2px;display:block}
-.mobile-menu{display:none;position:fixed;top:62px;left:0;right:0;background:rgba(4,13,26,0.98);border-bottom:1px solid var(--border);padding:1.5rem 5%;z-index:99;flex-direction:column;gap:1rem}
-.mobile-menu a{color:var(--muted);text-decoration:none;font-size:1rem;padding:.6rem 0;border-bottom:1px solid var(--border)}
+.mobile-menu{display:none;position:fixed;top:62px;left:0;right:0;background:#020617;border-bottom:1px solid rgba(148,163,184,0.16);padding:1.5rem 5%;z-index:50;flex-direction:column;gap:1rem;backdrop-filter:blur(16px)}
+.mobile-menu a{color:var(--text);text-decoration:none;font-size:1rem;padding:.75rem 0;border-bottom:1px solid rgba(148,163,184,0.16);font-weight:500}
 .mobile-menu.open{display:flex}
 .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:7rem 5% 4rem;position:relative;overflow:hidden;gap:3rem}
 canvas#particles{position:absolute;inset:0;z-index:0;pointer-events:none}
@@ -248,7 +248,6 @@ footer{border-top:1px solid var(--border);padding:3rem 5% 2rem}
 <div class="mobile-menu" id="mobileMenu">
   <a href="how-it-works.html">How It Works</a>
   <a href="features.html">Features</a>
-  <a href="ats-checker.html">✦ ATS Checker</a>
   <a href="pricing.html">Pricing</a>
   <a href="login.html">Sign In</a>
   <a href="early-access.html" style="color:var(--accent);font-weight:600">Get Early Access →</a>
@@ -326,7 +325,6 @@ footer{border-top:1px solid var(--border);padding:3rem 5% 2rem}
 <div class="ats-section" id="ats-checker">
   <div class="ats-inner">
     <div>
-      <div class="ats-badge">✦ Free Tool</div>
       <div class="section-tag">ATS Checker</div>
       <div class="section-title">Is your CV ATS-ready?</div>
       <div class="section-sub">Most CVs get rejected before a human reads them. Our ATS Checker instantly analyzes if a CV passes Applicant Tracking Systems — and our experts can fix it for you.</div>
@@ -335,9 +333,7 @@ footer{border-top:1px solid var(--border);padding:3rem 5% 2rem}
         <div class="ats-feature-row"><div class="ats-feature-icon">📐</div><div><div class="ats-feature-title">Format & Structure Check</div><div class="ats-feature-desc">Flags tables, graphics, and formatting that confuse ATS parsers.</div></div></div>
         <div class="ats-feature-row"><div class="ats-feature-icon">🛠️</div><div><div class="ats-feature-title">Expert Fix by HireIQ</div><div class="ats-feature-desc">Our team will professionally fix all CV issues — usually within 24 hours.</div></div></div>
       </div>
-      <div style="margin-top:1.5rem">
-        <a href="ats-checker.html" class="btn-primary">Try ATS Checker Free →</a>
-      </div>
+
     </div>
     <div class="ats-mockup">
       <div class="ats-mockup-header">
@@ -370,7 +366,6 @@ footer{border-top:1px solid var(--border);padding:3rem 5% 2rem}
         <div class="ats-check-row"><span class="ats-check-label">File Format</span><span class="ats-check-val ats-val-good">PDF ✓</span></div>
         <div class="ats-check-row"><span class="ats-check-label">Section Headers</span><span class="ats-check-val ats-val-warn">Partial</span></div>
       </div>
-      <a href="ats-checker.html" style="display:flex;align-items:center;justify-content:center;gap:.4rem;margin-top:1rem;padding:.65rem;border-radius:8px;background:linear-gradient(135deg,var(--gold),#fbbf24);color:#1a0a00;font-size:.85rem;font-weight:700;text-decoration:none;transition:transform .2s" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform=''">🛠️ Fix My CV Issues →</a>
     </div>
   </div>
 </div>
@@ -530,7 +525,6 @@ footer{border-top:1px solid var(--border);padding:3rem 5% 2rem}
       <h4>Product</h4>
       <a href="#how-it-works">How It Works</a>
       <a href="#features">Features</a>
-      <a href="ats-checker.html">ATS Checker</a>
       <a href="#pricing">Pricing</a>
       <a href="early-access.html?plan=free">Start Free</a>
     </div>
