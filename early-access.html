@@ -5,23 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Early Access — HireIQ</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--bg:#040d1a;--bg2:#071628;--accent:#0ea5e9;--accent2:#38bdf8;--gold:#f59e0b;--text:#f0f6ff;--muted:#7aa0c0;--border:rgba(14,165,233,0.15);--card:rgba(7,22,40,0.8)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;line-height:1.6}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 6%;background:rgba(4,13,26,0.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
-.logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.4rem;font-weight:700;color:var(--text);text-decoration:none}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;background:rgba(4,13,26,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.35rem;font-weight:800;color:var(--text);text-decoration:none;letter-spacing:-.02em}
 .logo span{color:var(--accent)}
-.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500;transition:color .2s}
 .nav-links a:hover{color:var(--text)}
 .nav-links a.active{color:var(--accent)}
-.nav-cta{background:var(--accent);color:#fff;padding:.5rem 1.25rem;border-radius:6px;font-size:.9rem;font-weight:500;text-decoration:none}
+.nav-ats{display:inline-flex;align-items:center;gap:.4rem;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:#f59e0b;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.3rem .75rem;border-radius:99px;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-ats:hover{background:rgba(245,158,11,0.18)}
+.nav-right{display:flex;align-items:center;gap:.75rem}
+.nav-signin{color:var(--muted);text-decoration:none;font-size:.88rem;font-weight:500;transition:color .2s}
+.nav-signin:hover{color:var(--text)}
+.nav-cta{background:var(--accent);color:#fff;padding:.5rem 1.25rem;border-radius:6px;font-size:.9rem;font-weight:600;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-cta:hover{background:var(--accent2);transform:translateY(-1px)}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
 .hamburger span{width:22px;height:2px;background:var(--text);border-radius:2px;display:block}
-.mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(4,13,26,0.98);border-bottom:1px solid var(--border);padding:1.5rem 6%;z-index:99;flex-direction:column;gap:1rem}
-.mobile-menu a{color:var(--muted);text-decoration:none;font-size:1rem;padding:.5rem 0;border-bottom:1px solid var(--border)}
+.mobile-menu{display:none;position:fixed;top:62px;left:0;right:0;background:rgba(4,13,26,0.98);border-bottom:1px solid var(--border);padding:1.5rem 5%;z-index:99;flex-direction:column;gap:1rem}
+.mobile-menu a{color:var(--muted);text-decoration:none;font-size:1rem;padding:.6rem 0;border-bottom:1px solid var(--border)}
 .mobile-menu.open{display:flex}
 
 /* MAIN LAYOUT */
@@ -150,21 +157,27 @@ footer{border-top:1px solid var(--border);padding:2rem 6%;display:flex;align-ite
 <nav>
   <a href="index.html" class="logo">Hire<span>IQ</span></a>
   <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
     <li><a href="how-it-works.html">How It Works</a></li>
     <li><a href="features.html">Features</a></li>
     <li><a href="pricing.html">Pricing</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
-  <a href="early-access.html" class="nav-cta active">Get Early Access</a>
+  <div class="nav-right">
+    <a href="login.html" class="nav-signin">Sign In</a>
+    <a href="early-access.html" class="nav-cta active">Get Early Access</a>
+  </div>
   <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
   <a href="how-it-works.html">How It Works</a>
   <a href="features.html">Features</a>
   <a href="pricing.html">Pricing</a>
   <a href="contact.html">Contact</a>
+  <a href="login.html">Sign In</a>
   <a href="early-access.html" style="color:var(--accent);font-weight:600">Get Early Access →</a>
 </div>
 
@@ -174,9 +187,9 @@ footer{border-top:1px solid var(--border);padding:2rem 6%;display:flex;align-ite
   <div class="left-panel">
     <div class="grid-overlay"></div>
     <div class="left-content">
-      <div class="left-tag">Free 14-Day Trial</div>
+      <div class="left-tag">Free Trial</div>
       <h1 class="left-title">Start screening<br><span>smarter today</span></h1>
-      <p class="left-sub">Join 500+ HR teams who use HireIQ to cut screening time by 90%. Full Pro access. No credit card required.</p>
+      <p class="left-sub">Join 500+ HR teams who use HireIQ to cut screening time by 90%. Free Trial includes 3 free ATS CV scans total and 1-time Premium CV Fix access via WhatsApp.</p>
 
       <ul class="benefit-list">
         <li class="benefit-item"><div class="benefit-icon">⚡</div><span>Screen 100 CVs in under 2 minutes — instead of 8 hours</span></li>
@@ -212,20 +225,24 @@ footer{border-top:1px solid var(--border);padding:2rem 6%;display:flex;align-ite
       <!-- FORM STATE -->
       <div id="formState">
         <div class="form-title">Create your free account</div>
-        <div class="form-sub">14-day trial · No credit card · Cancel anytime</div>
+      <div class="form-sub">Free Trial · 3 free ATS CV scans total · 1-time Premium CV Fix access via WhatsApp</div>
 
-        <div class="plan-selector" id="planSelector">
-          <div class="plan-opt selected" onclick="selectPlan(this,'starter')">
-            <div class="plan-opt-name">Starter</div>
-            <div class="plan-opt-price">$99/mo</div>
+      <div class="plan-selector" id="planSelector">
+        <div class="plan-opt selected" onclick="selectPlan(this,'free')">
+          <div class="plan-opt-name">free trial</div>
+            <div class="plan-opt-price">$0/mo</div>
+          </div>
+          <div class="plan-opt" onclick="selectPlan(this,'starter')">
+            <div class="plan-opt-name">starter</div>
+            <div class="plan-opt-price">$19/mo</div>
           </div>
           <div class="plan-opt" onclick="selectPlan(this,'pro')">
-            <div class="plan-opt-name">Pro ⭐</div>
-            <div class="plan-opt-price">$249/mo</div>
+            <div class="plan-opt-name">pro</div>
+            <div class="plan-opt-price">$49/mo</div>
           </div>
           <div class="plan-opt" onclick="selectPlan(this,'enterprise')">
-            <div class="plan-opt-name">Enterprise</div>
-            <div class="plan-opt-price">$599/mo</div>
+            <div class="plan-opt-name">enterprise</div>
+            <div class="plan-opt-price">Custom</div>
           </div>
         </div>
 
@@ -303,7 +320,7 @@ footer{border-top:1px solid var(--border);padding:2rem 6%;display:flex;align-ite
 </div>
 
 <footer>
-  <div class="footer-copy">© 2025 Autremix · HireIQ — AI CV Screening</div>
+  <div class="footer-copy">© 2025 HireIQ — AI CV Screening</div>
   <div class="footer-legal">
     <a href="privacy.html">Privacy</a>
     <a href="terms.html">Terms</a>
@@ -312,6 +329,11 @@ footer{border-top:1px solid var(--border);padding:2rem 6%;display:flex;align-ite
 </footer>
 
 <script>
+const SUPABASE_URL = 'https://muvdkmfxytywsbzmjbbn.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11dmRrbWZ4eXR5d3Niem1qYmJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4NDEzNjAsImV4cCI6MjA5MzQxNzM2MH0.BLUowstvk8rQKBj6-3GXbzCn2hNTW0q7smIQCPS1ZeA';
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
 function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
 
 // Auto-select plan from URL param
@@ -319,7 +341,7 @@ const params = new URLSearchParams(window.location.search);
 const planParam = params.get('plan');
 if(planParam){
   document.querySelectorAll('.plan-opt').forEach(o=>o.classList.remove('selected'));
-  const plans = ['starter','pro','enterprise'];
+  const plans = ['free','starter','pro','enterprise'];
   const idx = plans.indexOf(planParam);
   if(idx>=0) document.querySelectorAll('.plan-opt')[idx].classList.add('selected');
 }
@@ -329,19 +351,55 @@ function selectPlan(el, plan){
   el.classList.add('selected');
 }
 
-function submitForm(){
+async function getCurrentUserId() {
+  try {
+    const { data } = await sb.auth.getSession();
+    return data?.session?.user?.id || null;
+  } catch (error) {
+    console.warn('Unable to retrieve session:', error);
+    return null;
+  }
+}
+
+async function submitForm(){
   const firstName = document.getElementById('firstName').value.trim();
   const lastName = document.getElementById('lastName').value.trim();
   const email = document.getElementById('email').value.trim();
   const company = document.getElementById('company').value.trim();
+  const companySize = document.getElementById('companySize').value;
+  const role = document.getElementById('role').value;
+  const phone = document.getElementById('phone').value.trim();
+  const selectedPlanEl = document.querySelector('.plan-opt.selected');
+  const plan = selectedPlanEl ? selectedPlanEl.querySelector('.plan-opt-name')?.textContent?.trim().toLowerCase() : 'free';
 
   if(!firstName){alert('Please enter your first name.');return;}
   if(!lastName){alert('Please enter your last name.');return;}
   if(!email||!email.includes('@')){alert('Please enter a valid work email.');return;}
   if(!company){alert('Please enter your company name.');return;}
 
-  document.getElementById('formState').style.display='none';
-  document.getElementById('successState').style.display='block';
+  const userId = await getCurrentUserId();
+
+  try {
+    const { error } = await sb.from('leads').insert([{
+      user_id: userId,
+      email,
+      first_name: firstName,
+      last_name: lastName,
+      company: company || null,
+      role: role || null,
+      subject: 'Early access request',
+      message: `Company size: ${companySize || 'unspecified'}${phone ? ` · Phone: ${phone}` : ''}`,
+      source: 'early_access'
+    }]);
+
+    if(error) throw error;
+
+    document.getElementById('formState').style.display='none';
+    document.getElementById('successState').style.display='block';
+  } catch (err) {
+    console.error('Early access submit failed:', err);
+    alert('Unable to submit your early access request at this time. Please try again later.');
+  }
 }
 
 document.addEventListener('click',function(e){if(!e.target.closest('nav')&&!e.target.closest('#mobileMenu'))document.getElementById('mobileMenu').classList.remove('open')})

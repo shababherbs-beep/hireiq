@@ -366,9 +366,51 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 <script>
 const GEMINI_KEY = 'AIzaSyAQ5d3qpqU7U7YptlGM_rJvaD6kZV-bD1Y';
 
+const ATS_SCAN_STORAGE_KEY = 'hireiq_ats_checker_scans';
+const ATS_PLAN_STORAGE_KEY = 'hireiq_ats_plan';
+const ATS_PLAN_SCAN_LIMITS = {
+  free: 3,
+  starter: 50,
+  pro: 500,
+  enterprise: -1
+};
+
 let cvFile = null;
 let cvText = '';
 let lastReport = null;
+
+function getAtsPlan() {
+  const plan = localStorage.getItem(ATS_PLAN_STORAGE_KEY);
+  return plan === 'starter' || plan === 'pro' || plan === 'enterprise' ? plan : 'free';
+}
+
+function getAtsScanLimit(plan) {
+  return ATS_PLAN_SCAN_LIMITS[plan] ?? ATS_PLAN_SCAN_LIMITS.free;
+}
+
+function getAtsScanState() {
+  let state = { count: 0 };
+  try { state = JSON.parse(localStorage.getItem(ATS_SCAN_STORAGE_KEY) || '{}'); } catch (e) {}
+  if(typeof state.count !== 'number') state.count = 0;
+  return state;
+}
+
+function saveAtsScanState(state) {
+  localStorage.setItem(ATS_SCAN_STORAGE_KEY, JSON.stringify(state));
+}
+
+function canRunAtsCheck() {
+  const plan = getAtsPlan();
+  const limit = getAtsScanLimit(plan);
+  if(limit === -1) return true;
+  return getAtsScanState().count < limit;
+}
+
+function recordAtsScan() {
+  const state = getAtsScanState();
+  state.count += 1;
+  saveAtsScanState(state);
+}
 
 // FILE HANDLING
 function handleFile(file) {
@@ -424,6 +466,23 @@ async function readCVText(file) {
 // ATS CHECK WITH GEMINI
 async function startATSCheck() {
   if(!cvFile) { alert('Please upload your CV first!'); return; }
+  const plan = getAtsPlan();
+  const limit = getAtsScanLimit(plan);
+  if(!canRunAtsCheck()) {
+    let message;
+    if(plan === 'free') {
+      message = 'You have reached your Free plan limit of 3 scans. Upgrade to Starter for 50 scans, Pro for 500 scans, or Enterprise for unlimited scanning.';
+    } else if(plan === 'starter') {
+      message = 'You have reached your Starter plan limit of 50 scans. Upgrade to Pro for 500 scans or Enterprise for unlimited scanning.';
+    } else if(plan === 'pro') {
+      message = 'You have reached your Pro plan limit of 500 scans. Upgrade to Enterprise for unlimited scanning.';
+    } else {
+      message = 'Your Enterprise plan allows unlimited scans. If you are seeing this message, please contact hello@hireiq.com.';
+    }
+    alert(message);
+    window.location.href = 'signup.html';
+    return;
+  }
 
   const btn = document.getElementById('checkBtn');
   btn.disabled = true;
@@ -505,6 +564,7 @@ Respond with ONLY this exact JSON (no markdown):
     await new Promise(r => setTimeout(r, 500));
 
     overlay.classList.remove('show');
+    recordAtsScan();
     displayResults(report);
 
   } catch(e) {

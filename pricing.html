@@ -10,19 +10,24 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;line-height:1.6}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 6%;background:rgba(4,13,26,0.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
-.logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.4rem;font-weight:700;color:var(--text);text-decoration:none}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;background:rgba(4,13,26,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.35rem;font-weight:800;color:var(--text);text-decoration:none;letter-spacing:-.02em}
 .logo span{color:var(--accent)}
-.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
 .nav-links a{color:var(--muted);text-decoration:none;font-size:.9rem;font-weight:500;transition:color .2s}
 .nav-links a:hover{color:var(--text)}
 .nav-links a.active{color:var(--accent)}
-.nav-cta{background:var(--accent);color:#fff;padding:.5rem 1.25rem;border-radius:6px;font-size:.9rem;font-weight:500;text-decoration:none;transition:background .2s}
-.nav-cta:hover{background:var(--accent2)}
+.nav-ats{display:inline-flex;align-items:center;gap:.4rem;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);color:#f59e0b;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.3rem .75rem;border-radius:99px;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-ats:hover{background:rgba(245,158,11,0.18)}
+.nav-right{display:flex;align-items:center;gap:.75rem}
+.nav-signin{color:var(--muted);text-decoration:none;font-size:.88rem;font-weight:500;transition:color .2s}
+.nav-signin:hover{color:var(--text)}
+.nav-cta{background:var(--accent);color:#fff;padding:.5rem 1.25rem;border-radius:6px;font-size:.9rem;font-weight:600;text-decoration:none;transition:all .2s;white-space:nowrap}
+.nav-cta:hover{background:var(--accent2);transform:translateY(-1px)}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
 .hamburger span{width:22px;height:2px;background:var(--text);border-radius:2px;display:block}
-.mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:rgba(4,13,26,0.98);border-bottom:1px solid var(--border);padding:1.5rem 6%;z-index:99;flex-direction:column;gap:1rem}
-.mobile-menu a{color:var(--muted);text-decoration:none;font-size:1rem;padding:.5rem 0;border-bottom:1px solid var(--border)}
+.mobile-menu{display:none;position:fixed;top:62px;left:0;right:0;background:rgba(4,13,26,0.98);border-bottom:1px solid var(--border);padding:1.5rem 5%;z-index:99;flex-direction:column;gap:1rem}
+.mobile-menu a{color:var(--muted);text-decoration:none;font-size:1rem;padding:.6rem 0;border-bottom:1px solid var(--border)}
 .mobile-menu.open{display:flex}
 
 .page-hero{padding:8rem 6% 4rem;text-align:center;position:relative;overflow:hidden}
@@ -39,14 +44,31 @@ section{padding:4rem 6%}
 .section-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.4rem,2.5vw,2rem);font-weight:800;line-height:1.15;letter-spacing:-.01em}
 .section-sub{font-size:1rem;color:var(--muted);margin-top:.75rem;max-width:520px}
 
+/* CURRENCY SELECTOR */
+.currency-selector{display:flex;align-items:center;gap:.5rem;justify-content:center;margin:1.5rem 0 1rem;position:relative;z-index:1;flex-wrap:wrap}
+.currency-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:.5rem 1rem;border-radius:8px;font-size:.9rem;font-weight:500;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.currency-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.currency-btn:hover{border-color:var(--accent);color:var(--accent)}
+.currency-btn.active:hover{background:var(--accent2);border-color:var(--accent2)}
+.currency-divider{color:var(--muted);opacity:0.3}
+
 /* TOGGLE */
-.billing-toggle{display:flex;align-items:center;gap:1rem;justify-content:center;margin:1.5rem 0 2.5rem;position:relative;z-index:1}
-.toggle-label{font-size:.9rem;color:var(--muted);font-weight:500}
+.billing-toggle{display:flex;align-items:center;gap:1rem;justify-content:center;margin:1rem 0 2.5rem;position:relative;z-index:1}
+.toggle-label{font-size:.9rem;color:var(--muted);font-weight:500;cursor:pointer;transition:color .2s}
 .toggle-label.active{color:var(--text)}
-.toggle-switch{width:44px;height:24px;background:var(--accent);border-radius:12px;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0}
-.toggle-switch::after{content:'';position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:3px;left:3px;transition:transform .2s}
-.toggle-switch.annual::after{transform:translateX(20px)}
-.save-badge{background:rgba(245,158,11,0.15);color:var(--gold);font-size:.75rem;font-weight:600;padding:.2rem .6rem;border-radius:20px;border:1px solid rgba(245,158,11,0.3)}
+.toggle-switch{width:52px;height:28px;background:rgba(14,165,233,0.2);border:1px solid var(--border);border-radius:14px;cursor:pointer;position:relative;transition:all .3s;flex-shrink:0}
+.toggle-switch::after{content:'';position:absolute;width:22px;height:22px;background:#fff;border-radius:50%;top:2px;left:2px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,0.3)}
+.toggle-switch.annual{background:var(--accent);border-color:var(--accent)}
+.toggle-switch.annual::after{transform:translateX(24px)}
+.save-badge{background:rgba(245,158,11,0.15);color:var(--gold);font-size:.75rem;font-weight:600;padding:.2rem .6rem;border-radius:20px;border:1px solid rgba(245,158,11,0.3);margin-left:.5rem}
+
+/* PRICE MICRO-INTERACTIONS */
+@keyframes priceFade{0%{opacity:0.6;transform:scale(0.95)};50%{opacity:1;transform:scale(1.05)};100%{opacity:1;transform:scale(1)}}
+@keyframes pulseGlow{0%{box-shadow:0 0 0 0 rgba(14,165,233,0.7);filter:brightness(1)};50%{box-shadow:0 0 20px 10px rgba(14,165,233,0)};100%{filter:brightness(1)}}
+@keyframes savingsBadgeGlow{0%{box-shadow:0 0 0 0 rgba(245,158,11,0.8);transform:scale(1)};50%{box-shadow:0 0 24px 6px rgba(245,158,11,0);transform:scale(1.02)};100%{box-shadow:0 0 0 0 rgba(245,158,11,0);transform:scale(1)}}
+.price-value{display:inline-block;transition:all .4s cubic-bezier(0.34,1.56,0.64,1)}
+.price-value.updating{animation:priceFade .4s ease-out}
+.annual-savings-badge{position:absolute;top:-16px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,rgba(245,158,11,0.95),rgba(245,158,11,0.7));color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.35rem .85rem;border-radius:99px;white-space:nowrap;border:1px solid rgba(245,158,11,0.5);animation:savingsBadgeGlow 2s ease-in-out infinite;box-shadow:0 4px 16px rgba(245,158,11,0.3);backdrop-filter:blur(8px)}
 
 /* PRICING CARDS */
 .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;max-width:1000px;margin:0 auto}
@@ -179,21 +201,27 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
 <nav>
   <a href="index.html" class="logo">Hire<span>IQ</span></a>
   <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
     <li><a href="how-it-works.html">How It Works</a></li>
     <li><a href="features.html">Features</a></li>
     <li><a href="pricing.html" class="active">Pricing</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
-  <a href="early-access.html" class="nav-cta">Get Early Access</a>
+  <div class="nav-right">
+    <a href="login.html" class="nav-signin">Sign In</a>
+    <a href="early-access.html" class="nav-cta">Get Early Access</a>
+  </div>
   <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
   <a href="how-it-works.html">How It Works</a>
   <a href="features.html">Features</a>
-  <a href="pricing.html">Pricing</a>
+  <a href="pricing.html" style="color:var(--accent);font-weight:600">Pricing</a>
   <a href="contact.html">Contact</a>
+  <a href="login.html">Sign In</a>
   <a href="early-access.html" style="color:var(--accent);font-weight:600">Get Early Access →</a>
 </div>
 
@@ -202,11 +230,22 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
   <div class="page-tag">Pricing</div>
   <h1 class="page-title">Simple pricing,<br><span>no surprises</span></h1>
   <p class="page-sub">No per-CV fees. No setup costs. No long-term contracts. Cancel anytime.</p>
+  
+  <!-- CURRENCY SELECTOR -->
+  <div class="currency-selector">
+    <button class="currency-btn active" data-currency="USD" onclick="pricingManager.setCurrency('USD')">USD ($)</button>
+    <span class="currency-divider">·</span>
+    <button class="currency-btn" data-currency="PKR" onclick="pricingManager.setCurrency('PKR')">PKR (Rs.)</button>
+    <span class="currency-divider">·</span>
+    <button class="currency-btn" data-currency="INR" onclick="pricingManager.setCurrency('INR')">INR (₹)</button>
+  </div>
+
+  <!-- BILLING TOGGLE -->
   <div class="billing-toggle">
-    <span class="toggle-label active" id="monthlyLabel">Monthly</span>
-    <div class="toggle-switch" id="billingToggle" onclick="toggleBilling()"></div>
-    <span class="toggle-label" id="annualLabel">Annual</span>
-    <span class="save-badge">Save 20%</span>
+    <span class="toggle-label active" id="monthlyLabel" onclick="pricingManager.setBilling(false)">Monthly Billing</span>
+    <div class="toggle-switch" id="billingToggle" onclick="pricingManager.setBilling(!pricingManager.isAnnual)"></div>
+    <span class="toggle-label" id="annualLabel" onclick="pricingManager.setBilling(true)">Annual Billing</span>
+    <span class="save-badge" id="saveBadge" style="display:none;">Save 20%</span>
   </div>
 </div>
 
@@ -214,79 +253,86 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
 <section style="padding-top:1rem">
   <div class="pricing-grid">
 
-    <div class="price-card">
-      <div class="plan-icon">🌿</div>
+    <div class="price-card" data-plan="free-trial">
+      <div class="plan-icon">🌱</div>
       <div class="plan-name">Free Trial</div>
-      <div class="plan-price">$0<span> / forever</span></div>
-      <div class="plan-desc">Try it out. No commitment.</div>
+      <div class="plan-price">
+        <span class="price-value" data-usd="$0" data-pkr="Rs. 0" data-inr="₹ 0">$0</span>
+        <span> / month</span>
+      </div>
+      <div class="price-badge" id="freeBadge" style="font-size:.75rem;color:var(--muted);margin:.25rem 0 0;display:none"></div>
+      <div class="plan-desc">Experience the core platform capabilities with no risk.</div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
-        <li>5 CVs per month</li>
-        <li>1 active job</li>
-        <li>Basic AI analysis</li>
-        <li>CSV export</li>
-        <li class="no">PDF reports</li>
-        <li class="no">Custom scoring criteria</li>
-        <li class="no">Team collaboration</li>
-        <li class="no">API access</li>
+        <li>3 Total ATS CV Scans (Account Required)</li>
+        <li>1-Time Premium CV Fix via WhatsApp</li>
+        <li>Basic Text Extraction</li>
+        <li class="no">Deep AI Analyses</li>
+        <li class="no">Teams & Collaboration</li>
+        <li class="no">Custom Scan Parameters</li>
+        <li class="no">Developer APIs</li>
       </ul>
       <a href="early-access.html?plan=free" class="plan-btn">Get Started Free</a>
     </div>
 
-    <div class="price-card">
-      <div class="plan-icon">🌱</div>
+    <div class="price-card" data-plan="starter">
+      <div class="plan-icon">💼</div>
       <div class="plan-name">Starter</div>
-      <div class="plan-price" id="starterPrice">$19<span>/month</span></div>
-      <div class="plan-desc">For small teams hiring regularly.</div>
+      <div class="plan-price">
+        <span class="price-value" data-usd="$19" data-usd-annual="$15" data-pkr="Rs. 5,300" data-pkr-annual="Rs. 4,240" data-inr="₹ 1,590" data-inr-annual="₹ 1,272">$19</span>
+        <span class="price-period"> / month</span>
+      </div>
+      <div class="price-badge" id="starterBadge" style="font-size:.75rem;color:var(--muted);margin:.25rem 0 0;display:none"></div>
+      <div class="plan-desc">Built perfectly for small scale or startup hiring nodes.</div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
-        <li>50 CVs per month</li>
-        <li>5 active jobs</li>
-        <li>Full AI analysis</li>
-        <li>PDF reports</li>
-        <li>Email support</li>
-        <li class="no">Custom scoring criteria</li>
-        <li class="no">Team collaboration</li>
-        <li class="no">API access</li>
+        <li>50 ATS CV Scans per month</li>
+        <li>3 Premium CV Fixes via WhatsApp</li>
+        <li>Deep AI Analyses</li>
+        <li>High-Fidelity PDF Report Downloads</li>
+        <li>Standard Email Support</li>
       </ul>
       <a href="early-access.html?plan=starter" class="plan-btn">Start Free Trial</a>
     </div>
 
-    <div class="price-card featured">
+    <div class="price-card featured" data-plan="pro" style="position:relative">
+      <div id="proSavingsBadge" class="annual-savings-badge" style="display:none"></div>
       <div class="featured-badge">Most Popular</div>
       <div class="plan-icon">🚀</div>
       <div class="plan-name">Pro</div>
-      <div class="plan-price" id="proPrice">$49<span>/month</span></div>
-      <div class="plan-desc">For growing teams who hire fast.</div>
+      <div class="plan-price">
+        <span class="price-value" data-usd="$49" data-usd-annual="$39" data-pkr="Rs. 13,500" data-pkr-annual="Rs. 10,800" data-inr="₹ 4,100" data-inr-annual="₹ 3,280">$49</span>
+        <span class="price-period"> / month</span>
+      </div>
+      <div class="price-badge" id="proBadge" style="font-size:.75rem;color:var(--muted);margin:.25rem 0 0;display:none"></div>
+      <div class="plan-desc">Tailored for rapid growth nodes and fast-paced screening.</div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
-        <li>500 CVs per month</li>
-        <li>Unlimited jobs</li>
-        <li>Full AI + custom criteria</li>
-        <li>PDF reports</li>
-        <li>Priority support</li>
-        <li>Team access (3 seats)</li>
-        <li>API access</li>
-        <li class="no">SSO / SAML</li>
+        <li>500 ATS CV Scans per month</li>
+        <li>10 Premium CV Fixes via WhatsApp</li>
+        <li>Custom Scan Criteria Tuning</li>
+        <li>Priority Queue Processing</li>
+        <li>3 Team Collaboration Seats</li>
+        <li>Developer API Key Access Panel</li>
       </ul>
-      <a href="early-access.html?plan=pro" class="plan-btn">Start Free Trial</a>
+      <a href="early-access.html?plan=pro" class="plan-btn">Start Pro Trial</a>
     </div>
 
-    <div class="price-card">
+    <div class="price-card" data-plan="enterprise">
       <div class="plan-icon">🏢</div>
       <div class="plan-name">Enterprise</div>
-      <div class="plan-price" id="entPrice">Custom<span> / contact us</span></div>
-      <div class="plan-desc">For large orgs &amp; agencies.</div>
+      <div class="plan-price">
+        <span class="price-value" data-usd="Custom" data-pkr="Custom" data-inr="Custom">Custom</span>
+      </div>
+      <div class="price-badge" id="enterpriseBadge" style="font-size:.75rem;color:var(--muted);margin:.25rem 0 0;display:none"></div>
+      <div class="plan-desc">Designed for high-scale global agencies and corporations.</div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
-        <li>Unlimited CVs</li>
-        <li>Unlimited jobs</li>
-        <li>Custom AI prompts</li>
-        <li>SSO / SAML</li>
-        <li>Dedicated support</li>
-        <li>SLA guarantee</li>
-        <li>On-prem option</li>
-        <li>Custom onboarding</li>
+        <li>Unlimited CV Scanning</li>
+        <li>Unlimited Premium CV Fixes</li>
+        <li>SAML/SSO Single Sign-On Architecture</li>
+        <li>Dedicated SLA Parameters & Account Engineer</li>
+        <li>Custom Fine-Tuning Systemic Prompts</li>
       </ul>
       <a href="contact.html" class="plan-btn">Contact Sales</a>
     </div>
@@ -311,35 +357,41 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
       <thead>
         <tr>
           <th>Feature</th>
-          <th>Starter</th>
-          <th class="hi">Pro</th>
-          <th>Enterprise</th>
+          <th>free trial</th>
+          <th>starter</th>
+          <th class="hi">pro</th>
+          <th>enterprise</th>
         </tr>
       </thead>
       <tbody>
-        <tr class="cat-row"><td colspan="4">Screening</td></tr>
-        <tr><td>CVs per screening</td><td>50</td><td>Unlimited</td><td>Unlimited</td></tr>
-        <tr><td>AI candidate scoring</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-        <tr><td>Reason per candidate</td><td>Summary</td><td>Detailed</td><td>Detailed</td></tr>
-        <tr><td>Custom scoring criteria</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-        <tr><td>Red flag detection</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-        <tr class="cat-row"><td colspan="4">Reports & Export</td></tr>
-        <tr><td>PDF export</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-        <tr><td>Branded reports</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-        <tr><td>Email reports</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-        <tr><td>Shareable links</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-        <tr class="cat-row"><td colspan="4">Team & Collaboration</td></tr>
-        <tr><td>Team seats</td><td>1</td><td>3</td><td>Unlimited</td></tr>
-        <tr><td>Role-based access</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-        <tr><td>Candidate notes</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-        <tr class="cat-row"><td colspan="4">Integrations & API</td></tr>
-        <tr><td>ATS integration</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-        <tr><td>REST API access</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
-        <tr><td>Slack/Teams notifications</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
-        <tr class="cat-row"><td colspan="4">Support</td></tr>
-        <tr><td>Support type</td><td>Email</td><td>Priority email</td><td>Dedicated manager</td></tr>
-        <tr><td>Onboarding</td><td>Self-serve</td><td>Guided</td><td>Custom</td></tr>
-        <tr><td>SLA guarantee</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
+        <tr class="cat-row"><td colspan="5">Screening</td></tr>
+        <tr><td>Total CV Scans</td><td>3 total</td><td>50/month</td><td>500/month</td><td>Unlimited</td></tr>
+        <tr><td>AI candidate scoring</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>Basic text extraction</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>Deep AI analyses</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>Custom scan criteria</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>Red flag detection</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+        <tr class="cat-row"><td colspan="5">CV Fixes</td></tr>
+        <tr><td>Premium CV fixes via WhatsApp</td><td>1-time</td><td>3/month</td><td>10/month</td><td>Unlimited</td></tr>
+        <tr class="cat-row"><td colspan="5">Reports & Export</td></tr>
+        <tr><td>PDF export</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>High-fidelity reports</td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>Branded reports</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>Email reports</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+        <tr class="cat-row"><td colspan="5">Team & Collaboration</td></tr>
+        <tr><td>Team collaboration seats</td><td><span class="no">✗</span></td><td>1</td><td>3</td><td>Unlimited</td></tr>
+        <tr><td>Role-based access control</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>Candidate collaboration notes</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+        <tr class="cat-row"><td colspan="5">Integrations & APIs</td></tr>
+        <tr><td>Developer API access</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>Custom parameters & tuning</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>ATS integrations</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>Slack/Teams notifications</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
+        <tr class="cat-row"><td colspan="5">Support & Service</td></tr>
+        <tr><td>Support tier</td><td>None</td><td>Email support</td><td>Priority email</td><td>Dedicated manager</td></tr>
+        <tr><td>Onboarding</td><td><span class="no">✗</span></td><td>Self-serve</td><td>Guided</td><td>Custom</td></tr>
+        <tr><td>SLA guarantee</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td></tr>
+        <tr><td>Priority queue processing</td><td><span class="no">✗</span></td><td><span class="no">✗</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td></tr>
       </tbody>
     </table>
   </div>
@@ -364,7 +416,7 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)"><span>Do you offer discounts for Pakistani companies?</span><span class="faq-icon">+</span></div>
-      <div class="faq-a">Yes! We offer special pricing for Pakistani companies and startups. Contact us at hello@autremix.com to discuss. We also offer NGO and educational institution discounts.</div>
+      <div class="faq-a">Yes! We offer special pricing for Pakistani companies and startups. Contact us at hello@hireiq.com to discuss. We also offer NGO and educational institution discounts.</div>
     </div>
     <div class="faq-item">
       <div class="faq-q" onclick="toggleFaq(this)"><span>How does annual billing work?</span><span class="faq-icon">+</span></div>
@@ -394,7 +446,7 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
     <div class="footer-brand">
       <a href="index.html" class="logo">Hire<span>IQ</span></a>
       <p>AI-powered CV screening for enterprise HR teams. Screen smarter. Hire faster.</p>
-      <p style="margin-top:.5rem;font-size:.78rem;color:var(--muted)">by <strong style="color:var(--accent)">Autremix</strong> — Mohsin Munir</p>
+      <p style="margin-top:.5rem;font-size:.78rem;color:var(--muted)">by <strong style="color:var(--accent)">HireIQ</strong> — Mohsin Munir</p>
     </div>
     <div class="footer-col">
       <h4>Product</h4>
@@ -411,13 +463,13 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
     </div>
     <div class="footer-col">
       <h4>Contact</h4>
-      <a href="mailto:hello@autremix.com">hello@autremix.com</a>
+      <a href="mailto:hello@hireiq.com">hello@hireiq.com</a>
       <a href="https://linkedin.com" target="_blank">LinkedIn</a>
       <a href="contact.html">Get in Touch</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2025 Autremix. All rights reserved.</div>
+    <div class="footer-copy">© 2025 HireIQ. All rights reserved.</div>
     <div class="footer-legal">
       <a href="privacy.html">Privacy</a>
       <a href="terms.html">Terms</a>
@@ -427,25 +479,210 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
 </footer>
 
 <script>
-function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
-function toggleFaq(el){el.parentElement.classList.toggle('open')}
+// ============================================
+// ROBUST PRICING STATE MANAGER
+// ============================================
+const pricingManager = {
+  // State
+  currentCurrency: 'USD',
+  isAnnual: false,
 
-let isAnnual = false;
-const prices = {
-  starter:{monthly:19,annual:15},
-  pro:{monthly:49,annual:39}
+  // Pricing lookup table
+  pricing: {
+    'free-trial': {
+      USD: { monthly: 0, annual: 0 },
+      PKR: { monthly: 0, annual: 0 },
+      INR: { monthly: 0, annual: 0 }
+    },
+    'starter': {
+      USD: { monthly: 19, annual: 15 },
+      PKR: { monthly: 5300, annual: 4240 },
+      INR: { monthly: 1590, annual: 1272 }
+    },
+    'pro': {
+      USD: { monthly: 49, annual: 39 },
+      PKR: { monthly: 13500, annual: 10800 },
+      INR: { monthly: 4100, annual: 3280 }
+    },
+    'enterprise': {
+      USD: { monthly: 0, annual: 0 },
+      PKR: { monthly: 0, annual: 0 },
+      INR: { monthly: 0, annual: 0 }
+    }
+  },
+
+  // Currency formatting
+  currencySymbols: {
+    USD: '$',
+    PKR: 'Rs. ',
+    INR: '₹ '
+  },
+
+  // Set currency
+  setCurrency(currency) {
+    this.currentCurrency = currency;
+    
+    // Update UI buttons
+    document.querySelectorAll('.currency-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.currency === currency);
+    });
+
+    // Update all price values with animation
+    this.updateAllPrices();
+    
+    // Update localized badges
+    this.updateBadges();
+  },
+
+  // Set billing frequency
+  setBilling(isAnnual) {
+    this.isAnnual = isAnnual;
+
+    // Update toggle UI
+    const toggle = document.getElementById('billingToggle');
+    const monthlyLabel = document.getElementById('monthlyLabel');
+    const annualLabel = document.getElementById('annualLabel');
+    const saveBadge = document.getElementById('saveBadge');
+
+    toggle.classList.toggle('annual', isAnnual);
+    monthlyLabel.classList.toggle('active', !isAnnual);
+    annualLabel.classList.toggle('active', isAnnual);
+    saveBadge.style.display = isAnnual ? 'inline-block' : 'none';
+
+    // Update prices and badges
+    this.updateAllPrices();
+    this.updateBadges();
+  },
+
+  // Update all price values
+  updateAllPrices() {
+    const priceElements = document.querySelectorAll('.price-value');
+    const period = this.isAnnual ? 'annual' : 'monthly';
+
+    priceElements.forEach(el => {
+      const card = el.closest('.price-card');
+      const plan = card.dataset.plan;
+
+      // Add animation class
+      el.classList.add('updating');
+
+      // Get price
+      let priceValue;
+      if (plan === 'enterprise') {
+        priceValue = 'Custom';
+      } else {
+        priceValue = this.pricing[plan][this.currentCurrency][period];
+      }
+
+      // Format price
+      const formattedPrice = plan === 'enterprise' 
+        ? 'Custom'
+        : `${this.currencySymbols[this.currentCurrency]}${priceValue.toLocaleString()}`;
+
+      // Update text with delay for smooth animation
+      setTimeout(() => {
+        el.textContent = formattedPrice;
+        el.classList.remove('updating');
+      }, 50);
+    });
+
+    // Update period labels
+    const periodLabels = document.querySelectorAll('.price-period');
+    periodLabels.forEach(label => {
+      if (this.isAnnual) {
+        label.textContent = ' / month (billed annually)';
+      } else {
+        label.textContent = ' / month';
+      }
+    });
+  },
+
+  // Update localized badges
+  updateBadges() {
+    const freeBadge = document.getElementById('freeBadge');
+    const starterBadge = document.getElementById('starterBadge');
+    const proBadge = document.getElementById('proBadge');
+    const enterpriseBadge = document.getElementById('enterpriseBadge');
+    const proSavingsBadge = document.getElementById('proSavingsBadge');
+
+    // Free trial badge
+    if (this.currentCurrency === 'PKR') {
+      freeBadge.innerHTML = '(Local Region Rate ✦)<br><span style="font-size:.65rem;color:var(--muted)">Tax Inclusive — Flat Rate</span>';
+      freeBadge.style.display = 'block';
+    } else if (this.currentCurrency === 'INR') {
+      freeBadge.innerHTML = '(South Asia Tier Pricing)<br><span style="font-size:.65rem;color:var(--muted)">Regional Special</span>';
+      freeBadge.style.display = 'block';
+    } else {
+      freeBadge.style.display = 'none';
+    }
+
+    // Starter badge
+    if (this.currentCurrency === 'PKR') {
+      starterBadge.innerHTML = '(Local Region Rate ✦)<br><span style="font-size:.65rem;color:var(--muted)">Tax Inclusive — Flat Rate</span>';
+      starterBadge.style.display = 'block';
+    } else if (this.currentCurrency === 'INR') {
+      starterBadge.innerHTML = '(South Asia Tier Pricing)<br><span style="font-size:.65rem;color:var(--muted)">Regional Special</span>';
+      starterBadge.style.display = 'block';
+    } else {
+      starterBadge.style.display = 'none';
+    }
+
+    // Pro badge
+    if (this.currentCurrency === 'PKR') {
+      proBadge.innerHTML = '(Local Region Rate ✦)<br><span style="font-size:.65rem;color:var(--muted)">Tax Inclusive — Flat Rate</span>';
+      proBadge.style.display = 'block';
+    } else if (this.currentCurrency === 'INR') {
+      proBadge.innerHTML = '(South Asia Tier Pricing)<br><span style="font-size:.65rem;color:var(--muted)">Regional Special</span>';
+      proBadge.style.display = 'block';
+    } else {
+      proBadge.style.display = 'none';
+    }
+
+    // Enterprise badge
+    if (this.currentCurrency === 'PKR') {
+      enterpriseBadge.innerHTML = '(Custom Regional Pricing)<br><span style="font-size:.65rem;color:var(--muted)">Tailored for Your Market</span>';
+      enterpriseBadge.style.display = 'block';
+    } else if (this.currentCurrency === 'INR') {
+      enterpriseBadge.innerHTML = '(Custom Regional Pricing)<br><span style="font-size:.65rem;color:var(--muted)">Tailored for Your Market</span>';
+      enterpriseBadge.style.display = 'block';
+    } else {
+      enterpriseBadge.style.display = 'none';
+    }
+
+    // Pro annual savings badge
+    if (this.isAnnual) {
+      const saved = (this.pricing.pro[this.currentCurrency].monthly - this.pricing.pro[this.currentCurrency].annual) * 12;
+      const savingsText = `Save ${this.currencySymbols[this.currentCurrency]}${saved.toLocaleString()}/yr!`;
+      proSavingsBadge.textContent = savingsText;
+      proSavingsBadge.style.display = 'block';
+    } else {
+      proSavingsBadge.style.display = 'none';
+    }
+  }
 };
-function toggleBilling(){
-  isAnnual = !isAnnual;
-  const toggle = document.getElementById('billingToggle');
-  toggle.classList.toggle('annual', isAnnual);
-  document.getElementById('monthlyLabel').classList.toggle('active', !isAnnual);
-  document.getElementById('annualLabel').classList.toggle('active', isAnnual);
-  const s = isAnnual ? 'annual' : 'monthly';
-  document.getElementById('starterPrice').innerHTML = `${isAnnual?'<span class="original">$19</span>':''}$${prices.starter[s]}<span>/month</span>`;
-  document.getElementById('proPrice').innerHTML = `${isAnnual?'<span class="original">$49</span>':''}$${prices.pro[s]}<span>/month</span>`;
+
+// Initialize pricing manager on page load
+document.addEventListener('DOMContentLoaded', function() {
+  pricingManager.updateAllPrices();
+  pricingManager.updateBadges();
+});
+
+// Menu toggle
+function toggleMenu() {
+  document.getElementById('mobileMenu').classList.toggle('open');
 }
-document.addEventListener('click',function(e){if(!e.target.closest('nav')&&!e.target.closest('#mobileMenu'))document.getElementById('mobileMenu').classList.remove('open')})
+
+// FAQ toggle
+function toggleFaq(el) {
+  el.parentElement.classList.toggle('open');
+}
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('nav') && !e.target.closest('#mobileMenu')) {
+    document.getElementById('mobileMenu').classList.remove('open');
+  }
+});
 </script>
 </body>
 </html>

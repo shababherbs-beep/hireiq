@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Contact — HireIQ</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{--bg:#040d1a;--bg2:#071628;--accent:#0ea5e9;--accent2:#38bdf8;--gold:#f59e0b;--text:#f0f6ff;--muted:#7aa0c0;--border:rgba(14,165,233,0.15);--card:rgba(7,22,40,0.8)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -163,21 +164,27 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
 <nav>
   <a href="index.html" class="logo">Hire<span>IQ</span></a>
   <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
     <li><a href="how-it-works.html">How It Works</a></li>
     <li><a href="features.html">Features</a></li>
     <li><a href="pricing.html">Pricing</a></li>
     <li><a href="contact.html" class="active">Contact</a></li>
   </ul>
-  <a href="early-access.html" class="nav-cta">Get Early Access</a>
+  <div style="display:flex;gap:.75rem;align-items:center">
+    <a href="login.html" style="color:var(--muted);text-decoration:none;font-size:.88rem;font-weight:500;transition:color .2s">Sign In</a>
+    <a href="early-access.html" class="nav-cta">Get Early Access</a>
+  </div>
   <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
   <a href="how-it-works.html">How It Works</a>
   <a href="features.html">Features</a>
   <a href="pricing.html">Pricing</a>
-  <a href="contact.html">Contact</a>
+  <a href="contact.html" style="color:var(--accent);font-weight:600">Contact</a>
+  <a href="login.html" style="color:var(--muted)">Sign In</a>
   <a href="early-access.html" style="color:var(--accent);font-weight:600">Get Early Access →</a>
 </div>
 
@@ -196,9 +203,9 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
       <div class="info-title">Get in touch</div>
       <div class="info-sub">Our team is based in Faisalabad, Pakistan and serves clients worldwide. We typically respond within a few hours during business days.</div>
 
-      <a href="mailto:hello@autremix.com" class="contact-method">
+      <a href="mailto:hello@hireiq.com" class="contact-method">
         <div class="method-icon">📧</div>
-        <div><div class="method-label">Email us</div><div class="method-value">hello@autremix.com</div></div>
+        <div><div class="method-label">Email us</div><div class="method-value">hello@hireiq.com</div></div>
       </a>
       <a href="https://wa.me/923000000000" target="_blank" class="contact-method">
         <div class="method-icon">💬</div>
@@ -206,7 +213,7 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
       </a>
       <a href="https://linkedin.com" target="_blank" class="contact-method">
         <div class="method-icon">💼</div>
-        <div><div class="method-label">LinkedIn</div><div class="method-value">Mohsin Munir — Autremix</div></div>
+        <div><div class="method-label">LinkedIn</div><div class="method-value">Mohsin Munir — HireIQ</div></div>
       </a>
 
       <div class="response-badge">We typically reply within 2–4 hours</div>
@@ -289,7 +296,7 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
     <div class="office-card">
       <div class="office-flag">🇵🇰</div>
       <div class="office-city">Faisalabad, Pakistan</div>
-      <div class="office-address">Main headquarters<br>Autremix — HireIQ<br>Punjab, Pakistan</div>
+      <div class="office-address">Main headquarters<br>HireIQ<br>Punjab, Pakistan</div>
       <div class="office-badge">Headquarters</div>
     </div>
     <div class="office-card">
@@ -312,7 +319,7 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
     <div class="footer-brand">
       <a href="index.html" class="logo">Hire<span>IQ</span></a>
       <p>AI-powered CV screening for enterprise HR teams. Screen smarter. Hire faster.</p>
-      <p style="margin-top:.5rem;font-size:.78rem;color:var(--muted)">by <strong style="color:var(--accent)">Autremix</strong> — Mohsin Munir</p>
+      <p style="margin-top:.5rem;font-size:.78rem;color:var(--muted)">by <strong style="color:var(--accent)">HireIQ</strong> — Mohsin Munir</p>
     </div>
     <div class="footer-col">
       <h4>Product</h4>
@@ -329,13 +336,13 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
     </div>
     <div class="footer-col">
       <h4>Contact</h4>
-      <a href="mailto:hello@autremix.com">hello@autremix.com</a>
+      <a href="mailto:hello@hireiq.com">hello@hireiq.com</a>
       <a href="https://linkedin.com" target="_blank">LinkedIn</a>
       <a href="contact.html">Get in Touch</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2025 Autremix. All rights reserved.</div>
+    <div class="footer-copy">© 2025 HireIQ. All rights reserved.</div>
     <div class="footer-legal">
       <a href="privacy.html">Privacy</a>
       <a href="terms.html">Terms</a>
@@ -345,6 +352,11 @@ footer{border-top:1px solid var(--border);padding:3rem 6% 2rem}
 </footer>
 
 <script>
+const SUPABASE_URL = 'https://muvdkmfxytywsbzmjbbn.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im11dmRrbWZ4eXR5d3Niem1qYmJuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc4NDEzNjAsImV4cCI6MjA5MzQxNzM2MH0.BLUowstvk8rQKBj6-3GXbzCn2hNTW0q7smIQCPS1ZeA';
+const { createClient } = supabase;
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
 function toggleMenu(){document.getElementById('mobileMenu').classList.toggle('open')}
 function selectReason(el, reason){
   document.querySelectorAll('.reason-card').forEach(c=>c.classList.remove('active'));
@@ -352,18 +364,54 @@ function selectReason(el, reason){
   const subjectEl = document.getElementById('subject');
   if(subjectEl) subjectEl.value = reason;
 }
-function submitContact(){
+
+async function getCurrentUserId() {
+  try {
+    const { data } = await sb.auth.getSession();
+    return data?.session?.user?.id || null;
+  } catch (error) {
+    console.warn('Unable to retrieve session:', error);
+    return null;
+  }
+}
+
+async function submitContact(){
   const firstName = document.getElementById('firstName').value.trim();
   const email = document.getElementById('email').value.trim();
+  const company = document.getElementById('company').value.trim();
   const subject = document.getElementById('subject').value;
   const message = document.getElementById('message').value.trim();
+
   if(!firstName){alert('Please enter your first name.');return;}
   if(!email||!email.includes('@')){alert('Please enter a valid email address.');return;}
   if(!subject){alert('Please select a subject.');return;}
   if(!message){alert('Please enter your message.');return;}
-  document.getElementById('formState').style.display='none';
-  document.getElementById('successState').style.display='block';
+
+  const userId = await getCurrentUserId();
+
+  try {
+    const { error } = await sb.from('leads').insert([{
+      user_id: userId,
+      email,
+      first_name: firstName,
+      last_name: document.getElementById('lastName').value.trim() || null,
+      company: company || null,
+      role: null,
+      subject,
+      message,
+      source: 'contact'
+    }]);
+
+    if(error) throw error;
+
+    document.getElementById('formState').style.display='none';
+    document.getElementById('successState').style.display='block';
+  } catch (err) {
+    console.error('Contact submit failed:', err);
+    alert('Unable to submit your request at this time. Please try again later.');
+  }
 }
+
 document.addEventListener('click',function(e){if(!e.target.closest('nav')&&!e.target.closest('#mobileMenu'))document.getElementById('mobileMenu').classList.remove('open')})
 </script>
 </body>

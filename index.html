@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HireIQ — AI CV Screening by Snyapt Agency</title>
+<title>Home — HireIQ</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#040d1a;--bg2:#071628;--accent:#0ea5e9;--accent2:#38bdf8;--gold:#f59e0b;--text:#f0f6ff;--muted:#7aa0c0;--border:rgba(14,165,233,0.15);--card:rgba(7,22,40,0.85)}
@@ -141,7 +141,7 @@ section{padding:5rem 5%}
 .testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2.5rem}
 .testi-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.5rem;transition:transform .2s,border-color .2s}
 .testi-card:hover{transform:translateY(-3px);border-color:rgba(14,165,233,0.25)}
-.testi-stars{color:var(--gold);font-size:.9rem;margin-bottom:.875rem;letter-spacing:.1em}
+.testi-stars{color:#f59e0b !important;fill:#f59e0b !important;font-size:1rem;font-weight:700;margin-bottom:.875rem;letter-spacing:.08em;text-shadow:0 0 2px rgba(245,158,11,0.3);display:block}
 .testi-text{font-size:.875rem;color:var(--muted);line-height:1.8;margin-bottom:1.25rem;font-style:italic;border-left:2px solid rgba(14,165,233,0.3);padding-left:.875rem}
 .testi-author{display:flex;align-items:center;gap:.875rem}
 /* FIX 3: Pure initials avatar — no cartoon images */
@@ -163,6 +163,10 @@ section{padding:5rem 5%}
 .tform-group label{font-size:.8rem;color:var(--muted);display:block;margin-bottom:.35rem;font-weight:600}
 .tform-group input,.tform-group textarea,.tform-group select{width:100%;padding:.7rem .9rem;border-radius:7px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text);font-size:.875rem;outline:none;transition:border-color .2s;font-family:'DM Sans',sans-serif;resize:vertical}
 .tform-group input::placeholder,.tform-group textarea::placeholder{color:var(--muted)}
+.tform-group select{appearance:none;-webkit-appearance:none;-moz-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237aa0c0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .75rem center;padding-right:2.25rem}
+.tform-group select option{background-color:#0f172a !important;color:#f8fafc !important;padding:.5rem;text-shadow:0 0 0 #f8fafc;border:none}
+.tform-group select option:hover{background:linear-gradient(#0ea5e9, #0ea5e9) !important;color:#fff !important}
+.tform-group select option:checked{background:linear-gradient(#0ea5e9, #0ea5e9) !important;color:#fff !important}
 .tform-group input:focus,.tform-group textarea:focus,.tform-group select:focus{border-color:var(--accent)}
 .tform-row{display:grid;grid-template-columns:1fr 1fr;gap:.875rem}
 .tform-submit{width:100%;padding:.8rem;border-radius:8px;background:var(--accent);color:#fff;font-size:.9rem;font-weight:700;border:none;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;margin-top:.5rem}
@@ -229,25 +233,25 @@ footer{border-top:1px solid var(--border);padding:3rem 5% 2rem}
 <nav>
   <a href="index.html" class="logo">Hire<span>IQ</span></a>
   <ul class="nav-links">
-    <li><a href="#how-it-works">How It Works</a></li>
-    <li><a href="#features">Features</a></li>
-    <li><a href="ats-checker.html" class="nav-ats">✦ ATS Checker</a></li>
-    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="how-it-works.html">How It Works</a></li>
+    <li><a href="features.html">Features</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
     <li><a href="contact.html">Contact</a></li>
   </ul>
   <div class="nav-right">
     <a href="login.html" class="nav-signin">Sign In</a>
-    <a href="signup.html" class="nav-cta">Get Early Access</a>
+    <a href="early-access.html" class="nav-cta">Get Early Access</a>
   </div>
   <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="#how-it-works">How It Works</a>
-  <a href="#features">Features</a>
+  <a href="how-it-works.html">How It Works</a>
+  <a href="features.html">Features</a>
   <a href="ats-checker.html">✦ ATS Checker</a>
-  <a href="#pricing">Pricing</a>
+  <a href="pricing.html">Pricing</a>
   <a href="login.html">Sign In</a>
-  <a href="signup.html" style="color:var(--accent);font-weight:600">Get Early Access →</a>
+  <a href="early-access.html" style="color:var(--accent);font-weight:600">Get Early Access →</a>
 </div>
 
 <!-- HERO -->
@@ -259,7 +263,7 @@ footer{border-top:1px solid var(--border);padding:3rem 5% 2rem}
     <h1>Screen 100 CVs in<br><span class="hl">2 Minutes</span> with AI</h1>
     <p class="hero-desc">HireIQ reads every CV, scores each candidate against your job requirements, and delivers a ranked shortlist — automatically. No manual work needed.</p>
     <div class="hero-btns">
-      <a href="signup.html?plan=free" class="btn-primary">Start Free — $0 Forever</a>
+      <a href="early-access.html?plan=free" class="btn-primary">Start Free — $0 Forever</a>
       <a href="#how-it-works" class="btn-secondary">See How It Works</a>
     </div>
     <div class="hero-stats">
@@ -329,7 +333,7 @@ footer{border-top:1px solid var(--border);padding:3rem 5% 2rem}
       <div class="ats-features">
         <div class="ats-feature-row"><div class="ats-feature-icon">🔍</div><div><div class="ats-feature-title">Keyword Gap Analysis</div><div class="ats-feature-desc">Detects missing keywords from the job description that ATS systems scan for.</div></div></div>
         <div class="ats-feature-row"><div class="ats-feature-icon">📐</div><div><div class="ats-feature-title">Format & Structure Check</div><div class="ats-feature-desc">Flags tables, graphics, and formatting that confuse ATS parsers.</div></div></div>
-        <div class="ats-feature-row"><div class="ats-feature-icon">🛠️</div><div><div class="ats-feature-title">Expert Fix by Snyapt Agency</div><div class="ats-feature-desc">Our team will professionally fix all CV issues — usually within 24 hours.</div></div></div>
+        <div class="ats-feature-row"><div class="ats-feature-icon">🛠️</div><div><div class="ats-feature-title">Expert Fix by HireIQ</div><div class="ats-feature-desc">Our team will professionally fix all CV issues — usually within 24 hours.</div></div></div>
       </div>
       <div style="margin-top:1.5rem">
         <a href="ats-checker.html" class="btn-primary">Try ATS Checker Free →</a>
@@ -376,73 +380,76 @@ footer{border-top:1px solid var(--border);padding:3rem 5% 2rem}
   <div class="section-tag">Pricing</div>
   <div class="section-title">Simple, transparent pricing</div>
   <div class="section-sub">Start free forever. No hidden fees. No per-CV charges. Upgrade when you need to.</div>
-  <div class="pricing-grid">
+  
+    <!-- CURRENCY TOGGLE -->
+    <div class="billing-toggle" style="justify-content:center;margin:2rem 0">
+      <span class="toggle-label active" id="currencyUSD" onclick="switchCurrency('USD')">USD ($)</span>
+      <span style="color:var(--muted);opacity:0.5">·</span>
+      <span class="toggle-label" id="currencyPKR" onclick="switchCurrency('PKR')">PKR (Rs.)</span>
+      <span style="color:var(--muted);opacity:0.5">·</span>
+      <span class="toggle-label" id="currencyINR" onclick="switchCurrency('INR')">INR (₹)</span>
+    </div>
+  
+  <div class="pricing-grid" id="pricingGrid">
     <div class="price-card">
       <div class="plan-icon">🌱</div>
-      <div class="plan-name">Free Trial</div>
-      <div class="plan-price">$0<span> / forever</span></div>
+      <div class="plan-name">free trial</div>
+      <div class="plan-price"><span class="price-value" data-usd="$0" data-pkr="Rs.0" data-inr="₹0">$0</span><span> / month</span></div>
       <div class="plan-desc">Try it out. No commitment.</div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
-        <li>5 CVs per month</li>
-        <li>1 active job</li>
-        <li>Basic AI analysis</li>
-        <li>CSV export</li>
-        <li class="no">PDF reports</li>
-        <li class="no">Custom scoring</li>
-        <li class="no">Team access</li>
+        <li class="feature-text">3 Free ATS CV Scans total (Account Required)</li>
+        <li class="feature-text">1-Time Premium CV Fix Access</li>
+        <li class="no">Deep AI Analyses</li>
+        <li class="no">High-Fidelity PDF Report Downloads</li>
+        <li class="no">Email Support</li>
       </ul>
-      <a href="signup.html?plan=free" class="plan-btn">Start Free</a>
+      <a href="early-access.html?plan=free" class="plan-btn">Start Free</a>
     </div>
     <div class="price-card">
       <div class="plan-icon">🚀</div>
-      <div class="plan-name">Starter</div>
-      <div class="plan-price">$19<span>/month</span></div>
+      <div class="plan-name">starter</div>
+      <div class="plan-price"><span class="price-value" data-usd="$19" data-pkr="Rs.5,300" data-inr="₹1,590">$19</span><span>/month</span></div>
       <div class="plan-desc">For small teams hiring regularly.</div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
-        <li>50 CVs per month</li>
-        <li>5 active jobs</li>
-        <li>Full AI analysis</li>
-        <li>PDF reports</li>
-        <li>Email support</li>
-        <li class="no">Custom scoring</li>
-        <li class="no">Team access</li>
+        <li class="feature-text">50 ATS CV Scans per month</li>
+        <li class="feature-text">3 Premium CV Fixes via WhatsApp</li>
+        <li class="feature-text">Deep AI Analyses</li>
+        <li class="feature-text">High-Fidelity PDF Report Downloads</li>
+        <li class="feature-text">Email Support</li>
       </ul>
       <a href="signup.html?plan=starter" class="plan-btn">Get Started</a>
     </div>
     <div class="price-card featured">
       <div class="featured-badge">Most Popular</div>
       <div class="plan-icon">⚡</div>
-      <div class="plan-name">Pro</div>
-      <div class="plan-price">$49<span>/month</span></div>
+      <div class="plan-name">pro</div>
+      <div class="plan-price"><span class="price-value" data-usd="$49" data-pkr="Rs.13,500" data-inr="₹4,100">$49</span><span>/month</span></div>
       <div class="plan-desc">For growing teams who hire fast.</div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
-        <li>500 CVs per month</li>
-        <li>Unlimited jobs</li>
-        <li>Full AI + custom criteria</li>
-        <li>PDF reports</li>
-        <li>Priority support</li>
-        <li>Team access (3 seats)</li>
-        <li>API access</li>
+        <li class="feature-text">500 ATS CV Scans per month</li>
+        <li class="feature-text">10 Premium CV Fixes via WhatsApp</li>
+        <li class="feature-text">Custom Scan Criteria Tuning</li>
+        <li class="feature-text">Priority Processing</li>
+        <li class="feature-text">3 Team Seats Allocation</li>
+        <li class="feature-text">Developer API Key Access Panel</li>
       </ul>
       <a href="signup.html?plan=pro" class="plan-btn">Get Started</a>
     </div>
     <div class="price-card">
       <div class="plan-icon">🏢</div>
-      <div class="plan-name">Enterprise</div>
-      <div class="plan-price" style="font-size:1.4rem">Custom<span> pricing</span></div>
+      <div class="plan-name">enterprise</div>
+      <div class="plan-price"><span class="price-value" data-usd="Custom" data-pkr="Custom" data-inr="Custom">Custom</span><span> pricing</span></div>
       <div class="plan-desc">For large orgs &amp; agencies.</div>
       <div class="plan-divider"></div>
       <ul class="plan-features">
-        <li>Unlimited CVs</li>
-        <li>Unlimited jobs</li>
-        <li>Custom AI prompts</li>
-        <li>SSO / SAML</li>
-        <li>Dedicated support</li>
-        <li>SLA guarantee</li>
-        <li>On-prem option</li>
+        <li class="feature-text">Unlimited CV Scanning</li>
+        <li class="feature-text">Unlimited Premium CV Fixes</li>
+        <li class="feature-text">SAML/SSO Single Sign-On Architecture</li>
+        <li class="feature-text">Dedicated SLA Parameters</li>
+        <li class="feature-text">Custom Fine-Tuning Prompts</li>
       </ul>
       <a href="signup.html?plan=enterprise" class="plan-btn">Contact Sales</a>
     </div>
@@ -501,7 +508,7 @@ footer{border-top:1px solid var(--border);padding:3rem 5% 2rem}
   <p class="cta-ok" id="ctaErr" style="color:#f87171">Something went wrong. Please try again or email us directly.</p>
   <div class="email-info">
     <strong>📬 What happens with your email?</strong><br>
-    When you submit, it goes directly to the <strong>Snyapt Agency</strong> team. We'll send a personal onboarding link within 24 hours. No spam — only product updates. Unsubscribe anytime.
+    When you submit, it goes directly to the <strong>HireIQ</strong> team. We'll send a personal onboarding link within 24 hours. No spam — only product updates. Unsubscribe anytime.
   </div>
   <div class="trust-row">
     <span class="trust-item">🆓 Free plan — no credit card</span>
@@ -517,7 +524,7 @@ footer{border-top:1px solid var(--border);padding:3rem 5% 2rem}
     <div class="footer-brand">
       <a href="index.html" class="logo">Hire<span>IQ</span></a>
       <p>AI-powered CV screening for enterprise HR teams. Screen smarter. Hire faster.</p>
-      <p style="margin-top:.5rem;font-size:.75rem;color:var(--muted)">by <strong style="color:var(--accent)">Snyapt Agency</strong></p>
+<p style="margin-top:.5rem;font-size:.78rem;color:var(--muted)">by <strong style="color:var(--accent)">HireIQ</strong> — Mohsin Munir</p>
     </div>
     <div class="footer-col">
       <h4>Product</h4>
@@ -525,25 +532,25 @@ footer{border-top:1px solid var(--border);padding:3rem 5% 2rem}
       <a href="#features">Features</a>
       <a href="ats-checker.html">ATS Checker</a>
       <a href="#pricing">Pricing</a>
-      <a href="signup.html?plan=free">Start Free</a>
+      <a href="early-access.html?plan=free">Start Free</a>
     </div>
     <div class="footer-col">
       <h4>Account</h4>
-      <a href="signup.html">Sign Up</a>
       <a href="login.html">Sign In</a>
+      <a href="early-access.html">Get Early Access</a>
       <a href="dashboard.html">Dashboard</a>
       <a href="privacy.html">Privacy Policy</a>
       <a href="terms.html">Terms of Service</a>
     </div>
     <div class="footer-col">
       <h4>Contact</h4>
-      <a href="mailto:hello@snyaptagency.com">hello@snyaptagency.com</a>
+      <a href="mailto:hello@HireIQ.com">hello@HireIQ.com</a>
       <a href="https://linkedin.com" target="_blank">LinkedIn</a>
       <a href="contact.html">Get in Touch</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2025 Snyapt Agency. All rights reserved.</div>
+    <div class="footer-copy">© 2025 HireIQ. All rights reserved.</div>
     <div class="footer-legal"><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="contact.html">Contact</a></div>
   </div>
 </footer>
@@ -696,6 +703,28 @@ window.addEventListener('DOMContentLoaded', function(){
       setTimeout(()=>{ b.style.width=w; },100);
     });
   },600);
+
+// ─── CURRENCY SWITCHING ─────────────────────────────────────────────────────
+let currentCurrency = 'USD';
+
+function switchCurrency(currency) {
+  currentCurrency = currency;
+  
+  // Update label active states
+  document.getElementById('currencyUSD').classList.toggle('active', currency === 'USD');
+  document.getElementById('currencyPKR').classList.toggle('active', currency === 'PKR');
+  document.getElementById('currencyINR').classList.toggle('active', currency === 'INR');
+  
+  // Update all price values
+  const priceElements = document.querySelectorAll('.price-value');
+  priceElements.forEach(el => {
+    const dataAttr = 'data-' + currency.toLowerCase();
+    if (el.hasAttribute(dataAttr)) {
+      el.textContent = el.getAttribute(dataAttr);
+    }
+  });
+}
+
 });
 
 // ─── PARTICLE CANVAS ────────────────────────────────────────────────────────
