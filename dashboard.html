@@ -17,6 +17,7 @@ body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;ove
 .page-loader{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;transition:opacity .5s}
 .page-loader.hide{opacity:0;pointer-events:none}
 .hidden{display:none !important}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .score-ring{transform:rotate(-90deg);overflow:visible}
 .score-ring-bg{stroke:rgba(255,255,255,0.08);stroke-width:10;fill:none}
 .score-ring-fill{stroke-width:10;stroke-linecap:round;fill:none;stroke-dasharray:345;stroke-dashoffset:345;transition:stroke-dashoffset .5s ease}
@@ -285,7 +286,6 @@ select.form-input option{background:#071628;color:#f0f6ff}
   <nav class="sidebar-nav">
     <div class="nav-section">Main</div>
     <button class="nav-item active" onclick="showSection('wizard',this)"><span class="nav-icon">🎯</span> New Screening</button>
-    <button class="nav-item" onclick="showSection('ats',this)"><span class="nav-icon">🔎</span> ATS Checker</button>
     <button class="nav-item" onclick="showSection('fix',this)"><span class="nav-icon">🔧</span> Fix My CV</button>
     <button class="nav-item" onclick="showSection('history',this)"><span class="nav-icon">📋</span> History<span class="nav-badge" id="historyBadge">0</span></button>
     <button class="nav-item" onclick="showSection('candidates',this)"><span class="nav-icon">👥</span> Saved Candidates</button>
@@ -351,7 +351,7 @@ select.form-input option{background:#071628;color:#f0f6ff}
           <div class="card-icon">📤</div>
           <div class="card-title">Upload your CVs</div>
           <div class="card-sub">Upload multiple CVs at once — PDF or Word format only</div>
-          <input type="file" id="cvInput" style="display:none" multiple accept=".pdf,.doc,.docx" onchange="handleFiles(this.files)">
+          <input type="file" id="cvInput" class="hidden" style="display:none" multiple accept=".pdf,.doc,.docx" onchange="handleFiles(this.files)">
           <div class="upload-area" id="uploadArea" ondragover="dragOver(event)" ondragleave="dragLeave(event)" ondrop="dropFiles(event)">
             <div class="upload-icon">📁</div>
             <div class="upload-title">Drag & drop CVs here</div>
@@ -447,7 +447,7 @@ select.form-input option{background:#071628;color:#f0f6ff}
         <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem">
           <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:.75rem">Quick CV Screening</div>
           <div class="form-group">
-            <label class="form-label">Upload CV</label>
+            <label class="form-label sr-only">Upload CV</label>
             <input type="file" class="hidden" id="atsCvInput" accept=".pdf,.doc,.docx" onchange="handleAtsFile(this.files[0])">
           </div>
           <div class="upload-area" id="atsUploadArea" onclick="document.getElementById('atsCvInput').click()" ondragover="dragOverAts(event)" ondragleave="dragLeaveAts()" ondrop="dropAtsFile(event)">
@@ -504,7 +504,7 @@ select.form-input option{background:#071628;color:#f0f6ff}
         <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem">
           <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:.75rem">Upload your CV to get fixes</div>
           <div class="form-group">
-            <label class="form-label">Upload CV</label>
+            <label class="form-label sr-only">Upload CV</label>
             <input type="file" class="hidden" id="fixCvInput" accept=".pdf,.doc,.docx" onchange="handleFixFile(this.files[0])">
           </div>
           <div class="upload-area" id="fixUploadArea" onclick="document.getElementById('fixCvInput').click()" ondragover="dragOverFix(event)" ondragleave="dragLeaveFix()" ondrop="dropFixFile(event)">
@@ -565,6 +565,7 @@ select.form-input option{background:#071628;color:#f0f6ff}
         <div class="form-group"><label class="form-label">Role</label><input type="text" class="form-input" id="settingsRole" placeholder="Your role / hiring focus"></div>
         <div class="form-group"><label class="form-label">Workspace Avatar</label>
           <div class="avatar-grid" id="avatarGrid"></div>
+          <input type="file" id="customAvatarInput" class="hidden" accept="image/*" onchange="handleCustomAvatarFile(this.files[0])">
         </div>
         <div class="form-group">
           <div class="api-section-title">API Access</div>
@@ -600,14 +601,52 @@ select.form-input option{background:#071628;color:#f0f6ff}
     <button class="modal-close" onclick="closeUpgradeModal()">✕</button>
     <div class="modal-title">⚡ Upgrade HireIQ</div>
     <div class="modal-sub">Choose a plan to unlock full AI screening power</div>
-    <div class="plan-cards">
-      <div class="plan-card-sm" onclick="selectUpgradePlan(this,'free')"><div class="pcn">Free Trial</div><div class="pcp">$0<small style="font-size:.65rem;color:var(--muted)">/month</small></div><div class="pcd">Try it out</div><div class="pc-features"><div>3 Free ATS CV Scans</div><div>1-Time Premium Fix</div><div>Account Required</div><div>No Credit Card</div></div></div>
-      <div class="plan-card-sm" onclick="selectUpgradePlan(this,'starter')"><div class="pcn">Starter</div><div class="pcp">$19<small style="font-size:.65rem;color:var(--muted)">/mo</small></div><div class="pcd">Small teams</div><div class="pc-features"><div>50 ATS CV Scans/month</div><div>3 Premium CV Fixes</div><div>Deep AI Analyses</div><div>PDF Reports</div></div></div>
-      <div class="plan-card-sm featured selected" onclick="selectUpgradePlan(this,'pro')"><div class="popular-tag">⭐ Popular</div><div class="pcn">Pro</div><div class="pcp">$49<small style="font-size:.65rem;color:var(--muted)">/mo</small></div><div class="pcd">Growing teams</div><div class="pc-features"><div>500 ATS CV Scans/month</div><div>10 Premium CV Fixes</div><div>Custom Criteria Tuning</div><div>Developer API Access</div></div></div>
-      <div class="plan-card-sm" onclick="selectUpgradePlan(this,'enterprise')"><div class="pcn">Enterprise</div><div class="pcp" style="font-size:1rem">Custom</div><div class="pcd">Large orgs</div><div class="pc-features"><div>Unlimited CV Scanning</div><div>SAML/SSO Architecture</div><div>Dedicated SLA</div><div>Custom Fine-Tuning</div></div></div>
+
+    <div class="upgrade-tabs" style="display:flex;gap:.5rem;margin:1rem 0">
+      <button class="tab-btn active" id="tabStripeBtn" onclick="showUpgradeTab('stripe')">Stripe</button>
+      <button class="tab-btn" id="tabLocalBtn" onclick="showUpgradeTab('local')">Local Payment Options</button>
     </div>
-    <button class="modal-btn" onclick="proceedToPayment()">Continue to Payment →</button>
-    <div class="stripe-note"><svg width="14" height="14" viewBox="0 0 24 24" fill="#7aa0c0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Secure payment via Stripe · Cancel anytime · 14-day money back</div>
+
+    <div id="stripeTab">
+      <div class="plan-cards">
+        <div class="plan-card-sm" onclick="selectUpgradePlan(this,'free')"><div class="pcn">Free Trial</div><div class="pcp">$0<small style="font-size:.65rem;color:var(--muted)">/month</small></div><div class="pcd">Try it out</div><div class="pc-features"><div>3 Free ATS CV Scans</div><div>1-Time Premium Fix</div><div>Account Required</div><div>No Credit Card</div></div></div>
+        <div class="plan-card-sm" onclick="selectUpgradePlan(this,'starter')"><div class="pcn">Starter</div><div class="pcp">$19<small style="font-size:.65rem;color:var(--muted)">/mo</small></div><div class="pcd">Small teams</div><div class="pc-features"><div>50 ATS CV Scans/month</div><div>3 Premium CV Fixes</div><div>Deep AI Analyses</div><div>PDF Reports</div></div></div>
+        <div class="plan-card-sm featured selected" onclick="selectUpgradePlan(this,'pro')"><div class="popular-tag">⭐ Popular</div><div class="pcn">Pro</div><div class="pcp">$49<small style="font-size:.65rem;color:var(--muted)">/mo</small></div><div class="pcd">Growing teams</div><div class="pc-features"><div>500 ATS CV Scans/month</div><div>10 Premium CV Fixes</div><div>Custom Criteria Tuning</div><div>Developer API Access</div></div></div>
+        <div class="plan-card-sm" onclick="selectUpgradePlan(this,'enterprise')"><div class="pcn">Enterprise</div><div class="pcp" style="font-size:1rem">Custom</div><div class="pcd">Large orgs</div><div class="pc-features"><div>✓ Unlimited ATS CV Scanning</div><div>SAML/SSO Architecture</div><div>Dedicated SLA</div><div>Custom Fine-Tuning</div></div></div>
+      </div>
+      <button class="modal-btn" onclick="proceedToPayment()">Continue to Payment →</button>
+      <div class="stripe-note"><svg width="14" height="14" viewBox="0 0 24 24" fill="#7aa0c0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Secure payment via Stripe • Cancel anytime • 5-day money back guarantee</div>
+    </div>
+
+    <div id="localTab" style="display:none">
+      <div style="margin-top:0.5rem;margin-bottom:0.75rem;font-weight:600">Choose a local payment method and upload proof</div>
+      <div style="display:flex;gap:1rem;flex-direction:column">
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+          <button type="button" class="plan-card-sm" onclick="selectUpgradePlan(this,'starter')">Starter - EasyPaisa</button>
+          <button type="button" class="plan-card-sm" onclick="selectUpgradePlan(this,'pro')">Pro - JazzCash</button>
+          <button type="button" class="plan-card-sm" onclick="selectUpgradePlan(this,'enterprise')">Enterprise - Bank Transfer</button>
+        </div>
+        <div style="padding:1rem;border:1px solid var(--border);border-radius:8px;background:rgba(255,255,255,0.02)">
+          <div id="localMethodInfo" style="margin-bottom:.75rem">Select a plan above to see payment details.</div>
+          <div style="display:flex;gap:.5rem;flex-direction:column">
+            <div style="font-size:.9rem;color:var(--muted)">Payer name</div>
+            <input type="text" id="localPayerName" class="form-input" placeholder="Name on payment">
+            <div style="font-size:.9rem;color:var(--muted);margin-top:.5rem">Transaction reference / TXID</div>
+            <input type="text" id="localTransactionRef" class="form-input" placeholder="Transaction ID or reference">
+            <div style="margin-top:.5rem">
+              <button class="upload-btn" onclick="document.getElementById('paymentProofInput').click()">📎 Upload Payment Proof</button>
+              <input type="file" id="paymentProofInput" class="hidden" accept="image/*,application/pdf" onchange="handlePaymentProofFile(this.files[0])">
+              <div id="paymentProofName" style="font-size:.82rem;color:var(--muted);margin-top:.5rem"></div>
+            </div>
+            <div style="display:flex;gap:.5rem;margin-top:.75rem">
+              <button class="modal-btn" onclick="submitLocalPaymentRequest()">Submit Payment Request</button>
+              <button class="btn-back" onclick="showUpgradeTab('stripe')">← Back to Stripe</button>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:.82rem;color:var(--muted);margin-top:.5rem">Local payments will be reviewed manually; once verified we will activate your plan.</div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -668,60 +707,77 @@ if(typeof pdfjsLib !== 'undefined') {
 async function initDashboard() {
   const pageLoader = document.getElementById('pageLoader');
   const loadingState = document.getElementById('loading-state');
-  const profileNameEl = document.getElementById('profile-name');
-  const profileAvatarEl = document.getElementById('profile-avatar');
+
+  pageLoader?.classList.add('hidden');
+  loadingState?.classList.add('hidden');
+  pageLoader?.classList.add('hide');
+
+  const safeHideLoader = () => {
+    pageLoader?.classList.add('hidden');
+    loadingState?.classList.add('hidden');
+    pageLoader?.classList.add('hide');
+  };
+
+  window.addEventListener('unhandledrejection', (event) => {
+    console.warn('Unhandled rejection captured:', event.reason);
+    safeHideLoader();
+  });
+  window.addEventListener('error', (event) => {
+    console.error('Global error captured:', event.message || event.error);
+    safeHideLoader();
+  });
 
   try {
-    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+    const { data, error } = await supabase.auth.getSession();
+    const session = data?.session;
 
-    if (sessionError || !session) {
-      console.warn('No active session found, redirecting to login...');
-      window.location.href = 'login.html';
+    if (error || !session) {
+      console.warn('Session missing, applying international guest demo context.');
+      await setupGuestMockUI();
       return;
     }
 
-    currentUser = session.user;
-    let userProfile = null;
-
-    try {
-      const { data, error: profileError } = await supabase
-        .from('profiles')
-        .select('full_name, avatar_url, plan')
-        .eq('id', currentUser.id)
-        .single();
-
-      if (profileError || !data) {
-        throw new Error('Profile row missing or empty.');
-      }
-
-      userProfile = data;
-    } catch (innerFallbackError) {
-      console.log('Applying graceful guest profile fallback:', innerFallbackError.message);
-      userProfile = {
-        full_name: currentUser.user_metadata?.full_name || currentUser.email.split('@')[0],
-        avatar_url: `https://api.dicebear.com/7.x/bottts/svg?seed=${currentUser.id}`,
-        plan: 'free'
-      };
-    }
-
-    if (profileNameEl) profileNameEl.textContent = userProfile.full_name;
-    if (profileAvatarEl) profileAvatarEl.src = userProfile.avatar_url;
-    if (document.getElementById('sidebarName')) document.getElementById('sidebarName').textContent = userProfile.full_name;
-    if (userProfile.plan) currentPlan = userProfile.plan;
-
+    await loadUserProfile(session.user);
     await loadHistory();
     updatePlanUI();
-  } catch (globalCriticalError) {
-    console.error('Critical error in dashboard lifecycle:', globalCriticalError);
+  } catch (e) {
+    console.error('Auth process caught gracefully:', e);
+    await setupGuestMockUI();
   } finally {
-    if (pageLoader) pageLoader.classList.add('hidden');
-    if (loadingState) loadingState.classList.add('hidden');
-    if (pageLoader) pageLoader.classList.add('hide');
+    safeHideLoader();
     console.log('Dashboard UI successfully unlocked.');
   }
 }
 
 document.addEventListener('DOMContentLoaded', initDashboard);
+
+async function loadUserProfile(user) {
+  currentUser = user;
+  await loadProfile();
+}
+
+async function setupGuestMockUI() {
+  currentUser = null;
+  currentPlan = 'pro';
+  userProfile = {
+    full_name: 'Global Guest',
+    avatar_url: 'https://api.dicebear.com/7.x/bottts/svg?seed=guest-international',
+    plan: 'pro'
+  };
+
+  document.getElementById('sidebarName').textContent = userProfile.full_name;
+  document.getElementById('profile-name')?.textContent = userProfile.full_name;
+  document.getElementById('sidebarPlan').textContent = PLAN_LIMITS.pro.label;
+  document.getElementById('trialBadge').textContent = `🌍 Premium Demo`;
+  document.getElementById('profile-avatar')?.setAttribute('src', userProfile.avatar_url);
+  renderAvatarGrid();
+  renderSidebarAvatar();
+  updateInterviewPrepAccessUI();
+  updateApiAccessUI();
+  updatePlanUI();
+  prepareAtsSection();
+  prepareFixSection();
+}
 
 // ============ PROFILE ============
 async function loadProfile() {
@@ -794,7 +850,19 @@ const AVATAR_OPTIONS = [
   { id:'avatar-5', icon:'🌐', label:'Global HR', color:'linear-gradient(135deg,#38bdf8,#0ea5e9)' },
   { id:'avatar-6', icon:'✨', label:'Growth Coach', color:'linear-gradient(135deg,#ec4899,#f9a8d4)' },
   { id:'avatar-7', icon:'🛡️', label:'People Guard', color:'linear-gradient(135deg,#22d3ee,#818cf8)' },
-  { id:'avatar-8', icon:'🚀', label:'Talent Booster', color:'linear-gradient(135deg,#fb7185,#f97316)' }
+  { id:'avatar-8', icon:'🚀', label:'Talent Booster', color:'linear-gradient(135deg,#fb7185,#f97316)' },
+  { id:'avatar-9', icon:'🧭', label:'Talent Scout', color:'linear-gradient(135deg,#06b6d4,#7c3aed)' },
+  { id:'avatar-10', icon:'🧾', label:'Resume Analyst', color:'linear-gradient(135deg,#f97316,#f59e0b)' },
+  { id:'avatar-11', icon:'🧩', label:'Culture Fit', color:'linear-gradient(135deg,#06b6d4,#34d399)' },
+  { id:'avatar-12', icon:'📈', label:'Talent Growth', color:'linear-gradient(135deg,#60a5fa,#7c3aed)' },
+  { id:'avatar-13', icon:'📚', label:'Learning Lead', color:'linear-gradient(135deg,#ef4444,#fb7185)' },
+  { id:'avatar-14', icon:'🔬', label:'Data Recruiter', color:'linear-gradient(135deg,#06b6d4,#0ea5e9)' },
+  { id:'avatar-15', icon:'🧑‍💻', label:'Tech Recruiter', color:'linear-gradient(135deg,#8b5cf6,#06b6d4)' },
+  { id:'avatar-16', icon:'🎯', label:'Matching Pro', color:'linear-gradient(135deg,#10b981,#34d399)' },
+  { id:'avatar-17', icon:'🛠️', label:'Ops Builder', color:'linear-gradient(135deg,#f59e0b,#f97316)' },
+  { id:'avatar-18', icon:'🌟', label:'Talent Star', color:'linear-gradient(135deg,#f472b6,#7c3aed)' },
+  { id:'avatar-19', icon:'🔗', label:'Networker', color:'linear-gradient(135deg,#06b6d4,#60a5fa)' },
+  { id:'avatar-20', icon:'💡', label:'Insight Lead', color:'linear-gradient(135deg,#f97316,#f59e0b)' }
 ];
 let selectedAvatarId = 'avatar-1';
 
@@ -810,7 +878,12 @@ function renderAvatarGrid() {
       <div class="avatar-icon" style="background:${a.color};">${a.icon}</div>
       <div class="avatar-label">${a.label}</div>
     </button>
-  `).join('');
+  `).join('') + `
+    <div class="avatar-choice upload-tile" style="border:2px dashed rgba(255,255,255,0.06);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;padding:0.6rem;border-radius:12px;margin-top:0.25rem" onclick="document.getElementById('customAvatarInput').click()">
+      <div class="avatar-icon" style="background:linear-gradient(135deg,#1f2937,#0ea5e9);">📷</div>
+      <div class="avatar-label">Upload Custom Photo</div>
+    </div>
+  `;
   document.querySelectorAll('.avatar-choice').forEach(el => {
     el.classList.toggle('selected', el.dataset.avatar === selectedAvatarId);
   });
@@ -824,8 +897,8 @@ async function selectAvatar(id) {
   renderSidebarAvatar();
   if(currentUser) {
     try {
-      await sb.from('profiles').update({ avatar_id: id }).eq('id', currentUser.id);
-      if(userProfile) userProfile.avatar_id = id;
+      await sb.from('profiles').update({ avatar_id: id, avatar_url: null }).eq('id', currentUser.id);
+      if(userProfile) { userProfile.avatar_id = id; userProfile.avatar_url = null; }
       showToast('Avatar updated successfully');
     } catch (e) {
       console.warn('Avatar save failed:', e);
@@ -841,12 +914,64 @@ function renderSidebarAvatar() {
     const el = document.getElementById(id);
     if(!el) return;
     if(id === 'topbarAvatar' && avatarImg) {
-      avatarImg.src = `https://api.dicebear.com/7.x/bottts/svg?seed=${selectedAvatarId}`;
+      if(userProfile && userProfile.avatar_url) {
+        avatarImg.src = userProfile.avatar_url;
+      } else {
+        avatarImg.src = `https://api.dicebear.com/7.x/bottts/svg?seed=${selectedAvatarId}`;
+      }
+      return;
+    }
+    // sidebarAvatar is a small circular div - prefer user uploaded image when present
+    if(id === 'sidebarAvatar' && userProfile && userProfile.avatar_url) {
+      el.innerHTML = '';
+      el.style.background = `url(${userProfile.avatar_url}) center/cover no-repeat`;
+      el.textContent = '';
       return;
     }
     el.textContent = meta.icon;
     el.style.background = meta.color;
   });
+}
+
+// ============ CUSTOM AVATAR UPLOAD (Supabase Storage)
+async function handleCustomAvatarFile(file) {
+  if(!file) return;
+  if(!currentUser) { showToast('Please sign in to upload a custom avatar','error'); return; }
+  // Basic validation
+  const allowed = ['image/png','image/jpeg','image/jpg','image/webp'];
+  if(!allowed.includes(file.type)) { showToast('Unsupported image type','error'); return; }
+  await uploadCustomAvatar(file);
+}
+
+async function uploadCustomAvatar(file) {
+  try {
+    showToast('Uploading avatar...');
+    const ext = (file.name.split('.').pop() || 'png').toLowerCase();
+    const key = `${currentUser.id}/${Date.now()}_${Math.random().toString(36).slice(2,8)}.${ext}`;
+    const storage = sb.storage.from('avatars');
+    const { data: uploadData, error: uploadError } = await storage.upload(key, file, { upsert: true });
+    if(uploadError) throw uploadError;
+    const filePath = uploadData?.path || key;
+    // Get a public URL
+    const { data: publicData } = storage.getPublicUrl(filePath);
+    const publicUrl = publicData?.publicUrl || publicData?.public_url || publicData?.url;
+    if(!publicUrl) throw new Error('Unable to obtain public URL for avatar');
+    // Update profile row
+    try {
+      await sb.from('profiles').update({ avatar_url: publicUrl }).eq('id', currentUser.id);
+      if(userProfile) userProfile.avatar_url = publicUrl;
+    } catch (e) {
+      console.warn('Profile update failed after avatar upload:', e);
+    }
+    // Immediate UI update
+    const avatarImg = document.getElementById('profile-avatar');
+    if(avatarImg) avatarImg.src = publicUrl;
+    renderSidebarAvatar();
+    showToast('Avatar uploaded and applied');
+  } catch (e) {
+    console.error('Avatar upload error:', e);
+    showToast('Avatar upload failed', 'error');
+  }
 }
 
 function canAccessInterviewPrep() {
@@ -1194,16 +1319,15 @@ async function saveApiKeyToDB(apiKey) {
 
 // ============ NAVIGATION ============
 function showSection(name, btn) {
-  ['wizard','ats','fix','history','interview','candidates','settings','billing'].forEach(s => {
+  ['wizard','fix','history','interview','candidates','settings','billing'].forEach(s => {
     const el = document.getElementById('section-'+s);
     if(el) el.style.display = s===name ? 'block' : 'none';
   });
-  const titles = {wizard:'New Screening',ats:'ATS Checker',fix:'Fix My CV',history:'Screening History',candidates:'Saved Candidates',settings:'Settings',billing:'Billing',interview:'Interview Prep'};
+  const titles = {wizard:'New Screening',fix:'Fix My CV',history:'Screening History',candidates:'Saved Candidates',settings:'Settings',billing:'Billing',interview:'Interview Prep'};
   document.getElementById('topbarTitle').textContent = titles[name] || name;
   document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
   if(btn) btn.classList.add('active');
   if(name === 'interview') updateInterviewPrepAccessUI();
-  if(name === 'ats') prepareAtsSection();
   if(name === 'fix') prepareFixSection();
   if(name === 'candidates') loadSavedCandidates();
   if(window.innerWidth <= 768) document.getElementById('sidebar').classList.remove('open');
@@ -1752,6 +1876,7 @@ async function logout() { await sb.auth.signOut(); window.location.href='login.h
 // 2. Products → Payment Links → Create payment link for Starter and Pro
 // 3. Replace the placeholder URLs below with your actual Stripe links
 let selectedUpgradePlan='pro';
+let paymentProofFile = null;
 function showUpgradeModal() { document.getElementById('upgradeModal').classList.add('open'); }
 function closeUpgradeModal() { document.getElementById('upgradeModal').classList.remove('open'); }
 function selectUpgradePlan(el,plan) { document.querySelectorAll('.plan-card-sm').forEach(c=>c.classList.remove('selected')); el.classList.add('selected'); selectedUpgradePlan=plan; }
@@ -1769,6 +1894,107 @@ function proceedToPayment() {
   }
   closeUpgradeModal();
   window.open(link,'_blank');
+}
+
+// Tab switcher for upgrade modal
+function showUpgradeTab(tab) {
+  const stripeTab = document.getElementById('stripeTab');
+  const localTab = document.getElementById('localTab');
+  const tStripeBtn = document.getElementById('tabStripeBtn');
+  const tLocalBtn = document.getElementById('tabLocalBtn');
+  if(tab === 'local'){
+    stripeTab.style.display = 'none'; localTab.style.display = 'block';
+    tStripeBtn.classList.remove('active'); tLocalBtn.classList.add('active');
+  } else {
+    stripeTab.style.display = 'block'; localTab.style.display = 'none';
+    tLocalBtn.classList.remove('active'); tStripeBtn.classList.add('active');
+  }
+}
+
+function handlePaymentProofFile(file){
+  const inputEl = document.getElementById('paymentProofInput');
+  const nameEl = document.getElementById('paymentProofName');
+  paymentProofFile = null;
+  if(!file){
+    if(nameEl) nameEl.textContent = '';
+    if(inputEl) inputEl.value = '';
+    return;
+  }
+  // Validation: extension and size
+  const allowed = ['png','jpg','jpeg'];
+  const fname = (file.name || '').toLowerCase();
+  const ext = fname.split('.').pop();
+  const MAX_SIZE = 2 * 1024 * 1024; // 2MB
+  if(!ext || !allowed.includes(ext)){
+    showToast('Only PNG/JPG files are allowed for payment proof.','error');
+    if(inputEl) inputEl.value = '';
+    if(nameEl) nameEl.textContent = '';
+    paymentProofFile = null;
+    return;
+  }
+  if(file.size && file.size > MAX_SIZE){
+    showToast('File too large. Please upload files under 2MB.','error');
+    if(inputEl) inputEl.value = '';
+    if(nameEl) nameEl.textContent = '';
+    paymentProofFile = null;
+    return;
+  }
+  // Accept file
+  paymentProofFile = file;
+  if(nameEl) nameEl.textContent = file.name;
+}
+
+async function uploadPaymentProof(file){
+  if(!file) return null;
+  try{
+    // Ensure we have a current user
+    if(!currentUser){
+      try{ const { data } = await sb.auth.getUser(); currentUser = data?.user || null; }catch(e){ currentUser = null; }
+    }
+    const uid = currentUser?.id || 'anon';
+    const ext = (file.name.split('.').pop()||'png').toLowerCase();
+    const key = `payment-proofs/${uid}/${Date.now()}_${Math.random().toString(36).slice(2,8)}.${ext}`;
+    const storage = sb.storage.from('payment-proofs');
+    const { data, error } = await storage.upload(key, file, { upsert: true });
+    if(error) throw error;
+    const path = data?.path || key;
+    const { data: publicData } = storage.getPublicUrl(path);
+    return publicData?.publicUrl || publicData?.public_url || publicData?.url || null;
+  } catch(e){ console.error('Payment proof upload failed',e); return null; }
+}
+
+async function submitLocalPaymentRequest(){
+  // Ensure active user/session
+  if(!currentUser){
+    try{ const { data } = await sb.auth.getUser(); currentUser = data?.user || null; }catch(e){ currentUser = null; }
+  }
+  if(!currentUser){ showToast('Please sign in to submit payment proof','error'); return; }
+  const payerName = document.getElementById('localPayerName')?.value?.trim() || '';
+  const txRef = document.getElementById('localTransactionRef')?.value?.trim() || '';
+  const method = selectedUpgradePlan === 'enterprise' ? 'bank_transfer' : (selectedUpgradePlan === 'pro' ? 'jazzcash' : 'easypaisa');
+  const submitBtn = document.querySelector('#localTab .modal-btn');
+  if(submitBtn) submitBtn.disabled = true;
+  showToast('Submitting payment request...');
+  try{
+    let proofUrl = null;
+    if(paymentProofFile) proofUrl = await uploadPaymentProof(paymentProofFile);
+    const payload = { user_id: currentUser.id, plan: selectedUpgradePlan, method, payer_name: payerName, transaction_ref: txRef, proof_url: proofUrl, status: 'pending', created_at: new Date().toISOString() };
+    const { data, error } = await sb.from('payment_requests').insert(payload).select().single();
+    if(error) throw error;
+    showToast('Payment request submitted. We will review and activate your plan.','success');
+    // Force-close the upgrade modal immediately (safe, guarded)
+    try{ if(typeof closeUpgradeModal === 'function') closeUpgradeModal(); } catch(e){ console.error('Error closing upgrade modal', e); }
+    // reset local form and UI (toast-only UX; no inline banners)
+    const payerEl = document.getElementById('localPayerName'); if(payerEl) payerEl.value = '';
+    const txEl = document.getElementById('localTransactionRef'); if(txEl) txEl.value = '';
+    const proofInput = document.getElementById('paymentProofInput'); if(proofInput) proofInput.value = '';
+    handlePaymentProofFile(null);
+  } catch(e){
+    console.error('Payment request failed',e);
+    showToast('Failed to submit payment request','error');
+  } finally{
+    if(submitBtn) submitBtn.disabled = false;
+  }
 }
 
 document.getElementById('upgradeModal').addEventListener('click',e=>{ if(e.target===document.getElementById('upgradeModal')) closeUpgradeModal(); });
