@@ -16,6 +16,10 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;line-height:1.6;min-height:100vh}
 .page-loader{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;transition:opacity .5s}
 .page-loader.hide{opacity:0;pointer-events:none}
+.hidden{display:none !important}
+.score-ring{transform:rotate(-90deg);overflow:visible}
+.score-ring-bg{stroke:rgba(255,255,255,0.08);stroke-width:10;fill:none}
+.score-ring-fill{stroke-width:10;stroke-linecap:round;fill:none;stroke-dasharray:345;stroke-dashoffset:345;transition:stroke-dashoffset .5s ease}
 .loader-spinner{width:48px;height:48px;border:3px solid rgba(14,165,233,0.15);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite}
 .loader-logo{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.8rem;font-weight:800}
 .loader-logo span{color:var(--accent)}
@@ -270,6 +274,7 @@ select.form-input option{background:#071628;color:#f0f6ff}
   <div class="loader-spinner"></div>
   <div class="loader-text">Loading your dashboard...</div>
 </div>
+<div id="loading-state" class="hidden"></div>
 
 <div class="toast-el" id="toast"></div>
 
@@ -293,8 +298,8 @@ select.form-input option{background:#071628;color:#f0f6ff}
     <div class="user-info">
       <div class="user-avatar" id="sidebarAvatar">?</div>
       <div>
-        <div class="user-name" id="sidebarName">Loading...</div>
-        <div class="user-plan" id="sidebarPlan">...</div>
+        <div class="user-name" id="sidebarName"><span id="profile-name">Guest</span></div>
+        <div class="user-plan" id="sidebarPlan">Free Trial</div>
       </div>
     </div>
   </div>
@@ -307,8 +312,8 @@ select.form-input option{background:#071628;color:#f0f6ff}
       <div class="topbar-title" id="topbarTitle">New Screening</div>
     </div>
     <div class="topbar-right">
-      <div class="user-avatar" id="topbarAvatar">?</div>
-      <span class="trial-badge" id="trialBadge">⏰ Loading...</span>
+      <div class="user-avatar" id="topbarAvatar"><img id="profile-avatar" alt="Profile avatar" style="width:100%;height:100%;border-radius:50%;display:block" /></div>
+      <span class="trial-badge" id="trialBadge">Free Trial</span>
       <button class="upgrade-btn" onclick="showUpgradeModal()">⚡ Upgrade</button>
     </div>
   </div>
@@ -441,8 +446,11 @@ select.form-input option{background:#071628;color:#f0f6ff}
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start">
         <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem">
           <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:.75rem">Quick CV Screening</div>
-          <div class="form-group"><label class="form-label">Upload CV</label><input type="file" class="form-input" id="atsCvInput" accept=".pdf,.doc,.docx" onchange="handleAtsFile(this.files[0])"></div>
-          <div class="upload-area" id="atsUploadArea" ondragover="dragOverAts(event)" ondragleave="dragLeaveAts()" ondrop="dropAtsFile(event)">
+          <div class="form-group">
+            <label class="form-label">Upload CV</label>
+            <input type="file" class="hidden" id="atsCvInput" accept=".pdf,.doc,.docx" onchange="handleAtsFile(this.files[0])">
+          </div>
+          <div class="upload-area" id="atsUploadArea" onclick="document.getElementById('atsCvInput').click()" ondragover="dragOverAts(event)" ondragleave="dragLeaveAts()" ondrop="dropAtsFile(event)">
             <div class="upload-icon">📁</div>
             <div class="upload-title">Drag & drop your CV</div>
             <div class="upload-sub">PDF, DOC, DOCX supported for ATS analysis</div>
@@ -463,8 +471,8 @@ select.form-input option{background:#071628;color:#f0f6ff}
             <div class="score-label">ATS Compatibility Score</div>
             <div class="score-ring-wrap" style="margin:1rem auto 1rem;">
               <svg class="score-ring" viewBox="0 0 120 120" width="140" height="140">
-                <circle class="score-ring-bg" cx="60" cy="60" r="55"></circle>
-                <circle class="score-ring-fill" id="atsScoreRingFill" cx="60" cy="60" r="55" style="stroke:var(--accent);"></circle>
+                <circle class="score-ring-bg" cx="60" cy="60" r="55" fill="none"></circle>
+                <circle class="score-ring-fill" id="atsScoreRingFill" cx="60" cy="60" r="55" fill="none" style="stroke:var(--accent);"></circle>
               </svg>
               <div class="score-number">
                 <div class="score-num" id="atsScoreNum">0</div>
@@ -495,8 +503,11 @@ select.form-input option{background:#071628;color:#f0f6ff}
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start">
         <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem">
           <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:.75rem">Upload your CV to get fixes</div>
-          <div class="form-group"><label class="form-label">Upload CV</label><input type="file" class="form-input" id="fixCvInput" accept=".pdf,.doc,.docx" onchange="handleFixFile(this.files[0])"></div>
-          <div class="upload-area" id="fixUploadArea" ondragover="e=>e.preventDefault()" ondrop="e=>{e.preventDefault(); if(e.dataTransfer.files[0]) handleFixFile(e.dataTransfer.files[0]);}">
+          <div class="form-group">
+            <label class="form-label">Upload CV</label>
+            <input type="file" class="hidden" id="fixCvInput" accept=".pdf,.doc,.docx" onchange="handleFixFile(this.files[0])">
+          </div>
+          <div class="upload-area" id="fixUploadArea" onclick="document.getElementById('fixCvInput').click()" ondragover="dragOverFix(event)" ondragleave="dragLeaveFix()" ondrop="dropFixFile(event)">
             <div class="upload-icon">📁</div>
             <div class="upload-title">Drag & drop your CV</div>
             <div class="upload-sub">PDF, DOC, DOCX supported</div>
@@ -651,46 +662,81 @@ if(typeof pdfjsLib !== 'undefined') {
   pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 }
 
-// ============ INIT ============
-async function init() {
+// ========================================================
+// BULLETPROOF DASHBOARD AUTH & PROFILE INITIALIZATION LOGIC
+// ========================================================
+async function initDashboard() {
+  const pageLoader = document.getElementById('pageLoader');
+  const loadingState = document.getElementById('loading-state');
+  const profileNameEl = document.getElementById('profile-name');
+  const profileAvatarEl = document.getElementById('profile-avatar');
+
   try {
-    const { data: { session } } = await sb.auth.getSession();
-    if(!session) {
-      // Graceful fallback when no auth session is available (avoid stuck loading state)
-      currentUser = null;
-      currentPlan = 'free';
-      userProfile = { full_name: 'Guest', scan_count: 0, scan_month: `${new Date().getFullYear()}-${String(new Date().getMonth()+1).padStart(2,'0')}`, plan: 'free', avatar_id: 'avatar-1' };
-      document.getElementById('sidebarName').textContent = userProfile.full_name;
-      document.getElementById('sidebarPlan').textContent = PLAN_LIMITS.free.label;
-      document.getElementById('trialBadge').textContent = `📦 ${PLAN_LIMITS.free.label}`;
-      document.getElementById('settingsEmail').value = '';
-      renderAvatarGrid(); renderSidebarAvatar(); updateUsageUI(); prepareAtsSection();
-    } else {
-      currentUser = session.user;
-      await loadProfile();
-      await loadHistory();
-      updatePlanUI();
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+
+    if (sessionError || !session) {
+      console.warn('No active session found, redirecting to login...');
+      window.location.href = 'login.html';
+      return;
     }
-  } catch(e) {
-    console.error('Init error:', e);
-    showToast('Connection issue — some features may be limited', 'error');
+
+    currentUser = session.user;
+    let userProfile = null;
+
+    try {
+      const { data, error: profileError } = await supabase
+        .from('profiles')
+        .select('full_name, avatar_url, plan')
+        .eq('id', currentUser.id)
+        .single();
+
+      if (profileError || !data) {
+        throw new Error('Profile row missing or empty.');
+      }
+
+      userProfile = data;
+    } catch (innerFallbackError) {
+      console.log('Applying graceful guest profile fallback:', innerFallbackError.message);
+      userProfile = {
+        full_name: currentUser.user_metadata?.full_name || currentUser.email.split('@')[0],
+        avatar_url: `https://api.dicebear.com/7.x/bottts/svg?seed=${currentUser.id}`,
+        plan: 'free'
+      };
+    }
+
+    if (profileNameEl) profileNameEl.textContent = userProfile.full_name;
+    if (profileAvatarEl) profileAvatarEl.src = userProfile.avatar_url;
+    if (document.getElementById('sidebarName')) document.getElementById('sidebarName').textContent = userProfile.full_name;
+    if (userProfile.plan) currentPlan = userProfile.plan;
+
+    await loadHistory();
+    updatePlanUI();
+  } catch (globalCriticalError) {
+    console.error('Critical error in dashboard lifecycle:', globalCriticalError);
   } finally {
-    // Hide loaders if present
-    document.getElementById('pageLoader')?.classList.add('hide');
-    document.getElementById('loading-state')?.classList.add('hidden');
+    if (pageLoader) pageLoader.classList.add('hidden');
+    if (loadingState) loadingState.classList.add('hidden');
+    if (pageLoader) pageLoader.classList.add('hide');
+    console.log('Dashboard UI successfully unlocked.');
   }
 }
 
+document.addEventListener('DOMContentLoaded', initDashboard);
+
 // ============ PROFILE ============
 async function loadProfile() {
-  const { data } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
-  if(data) {
+  try {
+    const { data, error } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
+    if (!data || error) {
+      throw new Error('Profile row missing or unavailable');
+    }
     userProfile = data;
     currentPlan = data.plan || 'free';
     const name = data.full_name || currentUser.email.split('@')[0];
     const initials = name.split(' ').map(n=>n[0]||'').join('').toUpperCase().slice(0,2) || '?';
     const trialDays = data.trial_start ? Math.max(0, 14 - Math.floor((Date.now() - new Date(data.trial_start)) / 86400000)) : 14;
     document.getElementById('sidebarName').textContent = name;
+    document.getElementById('profile-name')?.textContent = name;
     document.getElementById('sidebarPlan').textContent = PLAN_LIMITS[currentPlan]?.label || 'Free';
     document.getElementById('trialBadge').textContent = currentPlan === 'trial' ? `⏰ ${trialDays} days left` : `📦 ${PLAN_LIMITS[currentPlan]?.label || 'Free'}`;
     document.getElementById('settingsName').value = data.full_name || '';
@@ -700,12 +746,32 @@ async function loadProfile() {
     selectedAvatarId = data.avatar_id || data.avatar || 'avatar-1';
     renderAvatarGrid();
     renderSidebarAvatar();
+    if (document.getElementById('profile-avatar') && data.avatar_url) {
+      document.getElementById('profile-avatar').src = data.avatar_url;
+    }
     updateInterviewPrepAccessUI();
     updateApiAccessUI();
     const limits = PLAN_LIMITS[currentPlan] || PLAN_LIMITS.free;
     document.getElementById('billingPlan').textContent = 'Current Plan: ' + (limits.label || 'Free');
     document.getElementById('billingDays').textContent = currentPlan === 'trial' ? `${trialDays} days remaining in your free trial` : 'Active plan';
     document.getElementById('billingLimits').innerHTML = `CVs per month: <strong style="color:var(--text)">${limits.cvLimit === -1 ? 'Unlimited' : limits.cvLimit}</strong> &nbsp;|&nbsp; PDF export: <strong style="color:${limits.pdf ? 'var(--success)' : '#f87171'}">${limits.pdf ? 'Yes' : 'No'}</strong> &nbsp;|&nbsp; Email reports: <strong style="color:${limits.emailReport ? 'var(--success)' : '#f87171'}">${limits.emailReport ? 'Yes' : 'No'}</strong>`;
+  } catch (e) {
+    console.log('Applying graceful guest profile fallback:', e.message);
+    userProfile = {
+      full_name: currentUser.user_metadata?.full_name || currentUser.email.split('@')[0],
+      avatar_url: `https://api.dicebear.com/7.x/bottts/svg?seed=${currentUser.id}`,
+      plan: 'free'
+    };
+    currentPlan = 'free';
+    document.getElementById('sidebarName').textContent = userProfile.full_name;
+    document.getElementById('profile-name')?.textContent = userProfile.full_name;
+    document.getElementById('profile-avatar')?.setAttribute('src', userProfile.avatar_url);
+    document.getElementById('sidebarPlan').textContent = PLAN_LIMITS.free.label;
+    document.getElementById('trialBadge').textContent = `📦 ${PLAN_LIMITS.free.label}`;
+    renderAvatarGrid();
+    renderSidebarAvatar();
+    updateInterviewPrepAccessUI();
+    updateApiAccessUI();
   }
 }
 
@@ -770,12 +836,16 @@ async function selectAvatar(id) {
 
 function renderSidebarAvatar() {
   const meta = getAvatarMeta(selectedAvatarId);
+  const avatarImg = document.getElementById('profile-avatar');
   ['sidebarAvatar','topbarAvatar'].forEach(id => {
     const el = document.getElementById(id);
-    if(el) {
-      el.textContent = meta.icon;
-      el.style.background = meta.color;
+    if(!el) return;
+    if(id === 'topbarAvatar' && avatarImg) {
+      avatarImg.src = `https://api.dicebear.com/7.x/bottts/svg?seed=${selectedAvatarId}`;
+      return;
     }
+    el.textContent = meta.icon;
+    el.style.background = meta.color;
   });
 }
 
@@ -904,8 +974,9 @@ function prepareAtsSection() {
 function prepareFixSection() {
   const btn = document.getElementById('fixRunBtn');
   const preview = document.getElementById('fixFilePreview');
+  const fixInput = document.getElementById('fixCvInput');
   if(btn) btn.disabled = false;
-  if(preview && !document.getElementById('fixFile')) preview.textContent = 'No file selected.';
+  if(preview && !fixInput?.files?.length) preview.textContent = 'No file selected.';
 }
 
 let fixCvFile = null;
@@ -915,6 +986,10 @@ function handleFixFile(file) {
   const preview = document.getElementById('fixFilePreview');
   if(preview) preview.textContent = `${file.name} • ${(file.size/1024).toFixed(0)} KB`;
 }
+
+function dragOverFix(e) { e.preventDefault(); document.getElementById('fixUploadArea')?.classList.add('dragover'); }
+function dragLeaveFix() { document.getElementById('fixUploadArea')?.classList.remove('dragover'); }
+function dropFixFile(e) { e.preventDefault(); dragLeaveFix(); if(e.dataTransfer.files[0]) handleFixFile(e.dataTransfer.files[0]); }
 
 async function startFixMyCv() {
   if(!fixCvFile) { showToast('Please upload a CV first.','error'); return; }
@@ -1719,7 +1794,6 @@ function getTimeAgo(date) {
   return date.toLocaleDateString();
 }
 
-init();
 </script>
 </body>
 </html>

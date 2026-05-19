@@ -74,8 +74,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .submit-btn:hover{background:var(--accent2);transform:translateY(-1px)}
 .google-btn{width:100%;padding:.9rem;border-radius:8px;background:rgba(255,255,255,0.05);color:var(--text);font-size:1rem;font-weight:600;border:1px solid var(--border);cursor:pointer;margin:1.25rem 0;transition:background .2s;font-family:'DM Sans',sans-serif}
 .google-btn:hover{background:rgba(14,165,233,0.1)}
-.form-note{font-size:.78rem;color:var(--muted);text-align:center;margin-top:.75rem}
-
+.form-note{font-size:.78rem;color:var(--muted);text-align:center;margin-top:.75rem}  .form-error{color:#f87171;font-size:.9rem;margin-top:1rem;line-height:1.5}
 /* SUCCESS STATE */
 .success-state{display:none;text-align:center;padding:1rem 0}
 .success-icon{font-size:3rem;margin-bottom:1rem}
@@ -226,11 +225,12 @@ footer{border-top:1px solid var(--border);padding:2rem 6%;display:flex;align-ite
 
       <!-- FORM STATE -->
       <div id="formState">
+        <form id="signupForm" onsubmit="submitForm(event)">
         <div class="form-title">Create your free account</div>
-      <div class="form-sub">Free Trial · 3 free ATS CV scans total · 1-time Premium CV Fix access via WhatsApp</div>
-      <button class="google-btn" type="button" onclick="startGoogleSignup()">Continue with Google</button>
+        <div class="form-sub">Free Trial · 3 free ATS CV scans total · 1-time Premium CV Fix access via WhatsApp</div>
+        <button class="google-btn" type="button" onclick="startGoogleSignup()">Continue with Google</button>
 
-      <div class="plan-selector" id="planSelector">
+        <div class="plan-selector" id="planSelector">
         <div class="plan-opt selected" onclick="selectPlan(this,'free')">
           <div class="plan-opt-name">free trial</div>
             <div class="plan-opt-price">$0/mo</div>
@@ -306,9 +306,10 @@ footer{border-top:1px solid var(--border);padding:2rem 6%;display:flex;align-ite
           <input type="tel" class="form-input" id="phone" placeholder="+92 300 0000000">
         </div>
 
-        <button class="submit-btn" onclick="submitForm()">Start My Free Trial →</button>
+        <button class="submit-btn" type="submit">Start My Free Trial →</button>
+        <div class="form-error" id="formError" aria-live="polite"></div>
         <div class="form-note">By signing up you agree to our <a href="terms.html" style="color:var(--accent)">Terms</a> and <a href="privacy.html" style="color:var(--accent)">Privacy Policy</a></div>
-      </div>
+      </form>
 
       <!-- SUCCESS STATE -->
       <div class="success-state" id="successState">
@@ -369,7 +370,8 @@ async function getCurrentUserId() {
   }
 }
 
-async function submitForm(){
+async function submitForm(e){
+  e.preventDefault();
   const firstName = document.getElementById('firstName').value.trim();
   const lastName = document.getElementById('lastName').value.trim();
   const email = document.getElementById('email').value.trim();
@@ -381,22 +383,35 @@ async function submitForm(){
   const selectedPlanEl = document.querySelector('.plan-opt.selected');
   const plan = selectedPlanEl ? selectedPlanEl.querySelector('.plan-opt-name')?.textContent?.trim().toLowerCase() : 'free';
 
-  if(!firstName){alert('Please enter your first name.');return;}
-  if(!lastName){alert('Please enter your last name.');return;}
-  if(!email||!email.includes('@')){alert('Please enter a valid work email.');return;}
-  if(!password||password.length < 6){alert('Please create a password with at least 6 characters.');return;}
-  if(!company){alert('Please enter your company name.');return;}
+  if(!firstName){ showFormError('Please enter your first name.'); return; }
+  if(!lastName){ showFormError('Please enter your last name.'); return; }
+  if(!email||!email.includes('@')){ showFormError('Please enter a valid work email.'); return; }
+  if(!password||password.length < 6){ showFormError('Please create a password with at least 6 characters.'); return; }
+  if(!company){ showFormError('Please enter your company name.'); return; }
 
-  const signUpPayload = { email, password, options: { data: { first_name: firstName, last_name: lastName, company, company_size: companySize || null, role: role || null, phone: phone || null, selected_plan: plan } } };
+  clearFormError();
+  const fullName = [firstName, lastName].filter(Boolean).join(' ').trim();
+  const signUpPayload = {
+    email,
+    password,
+    options: {
+      data: {
+        full_name: fullName,
+        first_name: firstName,
+        last_name: lastName,
+        company,
+        company_size: companySize || null,
+        role: role || null,
+        phone: phone || null,
+        selected_plan: plan
+      },
+      redirectTo: window.location.origin + '/dashboard.html'
+    }
+  };
 
   try {
     const { data: authData, error: authError } = await sb.auth.signUp(signUpPayload);
     if(authError){
-      if(authError.message?.toLowerCase().includes('already registered')){
-        const { data: signInData, error: signInError } = await sb.auth.signInWithPassword({ email, password });
-        if(signInError) throw signInError;
-        if(signInData?.session){ window.location.href = 'dashboard.html'; return; }
-      }
       throw authError;
     }
 
@@ -409,12 +424,22 @@ async function submitForm(){
       return;
     }
 
-    document.getElementById('formState').style.display='none';
-    document.getElementById('successState').style.display='block';
+    // If Supabase does not return an immediate session, still push them into the workspace.
+    window.location.href = 'dashboard.html';
   } catch (err) {
     console.error('Early access submit failed:', err);
-    alert(err.message || 'Unable to sign you up right now. Please try again later.');
+    showFormError(err.message || 'Unable to sign you up right now. Please try again later.');
   }
+}
+
+function showFormError(message){
+  const err = document.getElementById('formError');
+  if(err) err.textContent = message;
+}
+
+function clearFormError(){
+  const err = document.getElementById('formError');
+  if(err) err.textContent = '';
 }
 
 async function startGoogleSignup(){
@@ -422,7 +447,7 @@ async function startGoogleSignup(){
     await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin + '/dashboard.html' } });
   } catch (err) {
     console.error('Google signup failed:', err);
-    alert('Unable to sign in with Google right now. Please try again later.');
+    showFormError('Unable to sign in with Google right now. Please try again later.');
   }
 }
 
