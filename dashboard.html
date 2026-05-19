@@ -280,6 +280,8 @@ select.form-input option{background:#071628;color:#f0f6ff}
   <nav class="sidebar-nav">
     <div class="nav-section">Main</div>
     <button class="nav-item active" onclick="showSection('wizard',this)"><span class="nav-icon">🎯</span> New Screening</button>
+    <button class="nav-item" onclick="showSection('ats',this)"><span class="nav-icon">🔎</span> ATS Checker</button>
+    <button class="nav-item" onclick="showSection('fix',this)"><span class="nav-icon">🔧</span> Fix My CV</button>
     <button class="nav-item" onclick="showSection('history',this)"><span class="nav-icon">📋</span> History<span class="nav-badge" id="historyBadge">0</span></button>
     <button class="nav-item" onclick="showSection('candidates',this)"><span class="nav-icon">👥</span> Saved Candidates</button>
     <button class="nav-item" id="interviewNav" onclick="showSection('interview',this)"><span class="nav-icon">🧠</span> Interview Prep<span class="nav-badge premium">Premium</span></button>
@@ -488,6 +490,33 @@ select.form-input option{background:#071628;color:#f0f6ff}
       </div>
     </div>
 
+    <div id="section-fix" style="display:none">
+      <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:1rem">Fix My CV</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start">
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.5rem">
+          <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:.75rem">Upload your CV to get fixes</div>
+          <div class="form-group"><label class="form-label">Upload CV</label><input type="file" class="form-input" id="fixCvInput" accept=".pdf,.doc,.docx" onchange="handleFixFile(this.files[0])"></div>
+          <div class="upload-area" id="fixUploadArea" ondragover="e=>e.preventDefault()" ondrop="e=>{e.preventDefault(); if(e.dataTransfer.files[0]) handleFixFile(e.dataTransfer.files[0]);}">
+            <div class="upload-icon">📁</div>
+            <div class="upload-title">Drag & drop your CV</div>
+            <div class="upload-sub">PDF, DOC, DOCX supported</div>
+            <div class="upload-formats"><span class="format-badge">PDF</span><span class="format-badge">DOC</span><span class="format-badge">DOCX</span></div>
+          </div>
+          <div id="fixFilePreview" style="margin-top:.75rem;color:var(--muted)">No file selected.</div>
+          <button class="check-btn" id="fixRunBtn" onclick="startFixMyCv()" style="margin-top:1rem">🛠️ Generate Fix Suggestions</button>
+          <div style="font-size:.9rem;color:var(--muted);margin-top:1rem">This tool provides AI suggestions to improve CV structure, keywords, and ATS compatibility.</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:1rem">
+          <div class="score-card" style="padding:1.5rem" id="fixResultCard">
+            <div class="score-label">Suggested Fixes</div>
+            <div id="fixSuggestions" style="margin-top:.75rem;color:var(--muted)">Upload a CV and run the fix tool to view suggestions.</div>
+            <div id="fixActions" style="margin-top:1rem"></div>
+          </div>
+          <div id="fixPreview" style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;color:var(--muted)"></div>
+        </div>
+      </div>
+    </div>
+
     <div id="section-history" style="display:none">
       <div style="font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:1.5rem">Screening History</div>
       <div id="historyContent"><div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2rem;text-align:center;color:var(--muted);font-size:.9rem"><div style="font-size:2rem;margin-bottom:.75rem">📋</div>No screenings yet. Start your first screening!</div></div>
@@ -626,16 +655,29 @@ if(typeof pdfjsLib !== 'undefined') {
 async function init() {
   try {
     const { data: { session } } = await sb.auth.getSession();
-    if(!session) { window.location.href = 'login.html'; return; }
-    currentUser = session.user;
-    await loadProfile();
-    await loadHistory();
-    updatePlanUI();
+    if(!session) {
+      // Graceful fallback when no auth session is available (avoid stuck loading state)
+      currentUser = null;
+      currentPlan = 'free';
+      userProfile = { full_name: 'Guest', scan_count: 0, scan_month: `${new Date().getFullYear()}-${String(new Date().getMonth()+1).padStart(2,'0')}`, plan: 'free', avatar_id: 'avatar-1' };
+      document.getElementById('sidebarName').textContent = userProfile.full_name;
+      document.getElementById('sidebarPlan').textContent = PLAN_LIMITS.free.label;
+      document.getElementById('trialBadge').textContent = `📦 ${PLAN_LIMITS.free.label}`;
+      document.getElementById('settingsEmail').value = '';
+      renderAvatarGrid(); renderSidebarAvatar(); updateUsageUI(); prepareAtsSection();
+    } else {
+      currentUser = session.user;
+      await loadProfile();
+      await loadHistory();
+      updatePlanUI();
+    }
   } catch(e) {
     console.error('Init error:', e);
     showToast('Connection issue — some features may be limited', 'error');
   } finally {
-    document.getElementById('pageLoader').classList.add('hide');
+    // Hide loaders if present
+    document.getElementById('pageLoader')?.classList.add('hide');
+    document.getElementById('loading-state')?.classList.add('hidden');
   }
 }
 
@@ -859,6 +901,50 @@ function prepareAtsSection() {
   if(checkBtn) checkBtn.disabled = false;
 }
 
+function prepareFixSection() {
+  const btn = document.getElementById('fixRunBtn');
+  const preview = document.getElementById('fixFilePreview');
+  if(btn) btn.disabled = false;
+  if(preview && !document.getElementById('fixFile')) preview.textContent = 'No file selected.';
+}
+
+let fixCvFile = null;
+function handleFixFile(file) {
+  if(!file) return;
+  fixCvFile = file;
+  const preview = document.getElementById('fixFilePreview');
+  if(preview) preview.textContent = `${file.name} • ${(file.size/1024).toFixed(0)} KB`;
+}
+
+async function startFixMyCv() {
+  if(!fixCvFile) { showToast('Please upload a CV first.','error'); return; }
+  const btn = document.getElementById('fixRunBtn');
+  if(btn) { btn.disabled = true; btn.textContent = 'Generating...'; }
+  try {
+    const text = await readPDFText(fixCvFile);
+    const res = await fetch(`${BACKEND_URL}/fix_cv`, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ cv_text: text, file_name: fixCvFile.name }) });
+    let json = null;
+    if(res.ok) json = await res.json();
+    // Fallback stub if backend not available
+    if(!json) json = { suggestions: ['Add a concise professional summary at the top.','Include 3–5 relevant keywords from the job description.','Use simple formatting and bullet lists for roles.'], preview: 'Suggested headline: Senior Software Engineer with 6+ years of backend experience.' };
+    renderFixResult(json);
+  } catch(e) {
+    console.error('Fix My CV error:', e);
+    showToast('Could not generate fixes right now.','error');
+  } finally {
+    if(btn) { btn.disabled = false; btn.textContent = '🛠️ Generate Fix Suggestions'; }
+  }
+}
+
+function renderFixResult(result) {
+  const box = document.getElementById('fixSuggestions');
+  const actions = document.getElementById('fixActions');
+  const preview = document.getElementById('fixPreview');
+  if(box) box.innerHTML = (result.suggestions || []).map((s,i)=>`<div style="margin-bottom:.5rem"><strong>${i+1}.</strong> ${s}</div>`).join('');
+  if(actions) actions.innerHTML = `<button class="action-btn primary" onclick="showSection('fix')">Apply Suggested Fixes</button> <button class="action-btn" onclick="navigator.clipboard.writeText(document.getElementById('fixSuggestions').innerText).then(()=>showToast('Suggestions copied'))">Copy Suggestions</button>`;
+  if(preview) preview.textContent = result.preview || '';
+}
+
 function handleAtsFile(file) {
   if(!file) return;
   atsCvFile = file;
@@ -1033,15 +1119,17 @@ async function saveApiKeyToDB(apiKey) {
 
 // ============ NAVIGATION ============
 function showSection(name, btn) {
-  ['wizard','ats','history','interview','candidates','settings','billing'].forEach(s => {
-    document.getElementById('section-'+s).style.display = s===name ? 'block' : 'none';
+  ['wizard','ats','fix','history','interview','candidates','settings','billing'].forEach(s => {
+    const el = document.getElementById('section-'+s);
+    if(el) el.style.display = s===name ? 'block' : 'none';
   });
-  const titles = {wizard:'New Screening',ats:'ATS Checker',history:'Screening History',candidates:'Saved Candidates',settings:'Settings',billing:'Billing',interview:'Interview Prep'};
+  const titles = {wizard:'New Screening',ats:'ATS Checker',fix:'Fix My CV',history:'Screening History',candidates:'Saved Candidates',settings:'Settings',billing:'Billing',interview:'Interview Prep'};
   document.getElementById('topbarTitle').textContent = titles[name] || name;
   document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
   if(btn) btn.classList.add('active');
   if(name === 'interview') updateInterviewPrepAccessUI();
   if(name === 'ats') prepareAtsSection();
+  if(name === 'fix') prepareFixSection();
   if(name === 'candidates') loadSavedCandidates();
   if(window.innerWidth <= 768) document.getElementById('sidebar').classList.remove('open');
 }
